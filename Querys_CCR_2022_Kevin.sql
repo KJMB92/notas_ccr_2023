@@ -1276,12 +1276,18 @@ insert into inv_bodegas_userpermisos values ('31','01','01','CP',3010,'0');
 
 
 --Transaciones de bogega
-insert into inv_bodegas_userpermisos values ('22','01','01','CM',3010,'0');
-insert into inv_bodegas_userpermisos values ('24','01','01','CM',3010,'0');
-insert into inv_bodegas_userpermisos values ('26','01','01','CM',3010,'0');
-insert into inv_bodegas_userpermisos values ('29','01','01','CM',3010,'0');
-insert into inv_bodegas_userpermisos values ('31','01','01','CM',3010,'0');
-insert into inv_bodegas_userpermisos values ('31','01','01','CP',3010,'0');
+insert into inv_bodegas_userpermisos values ('17','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('18','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('19','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('20','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('21','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('23','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('24','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('26','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('27','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('29','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('30','01','01','F3',2803,'1');
+insert into inv_bodegas_userpermisos values ('31','01','01','F3',2803,'1');
 
 --Reportes
 INSERT INTO usuarios_asigna_reportes  VALUES(54,3010,3010,now()); -- INSERTA REPORTE Existencias Actuales
@@ -1713,13 +1719,13 @@ delete from cg_mov_01.cg_mov_contable_01_detalle where documento_contable_id=394
 
 
 --ELIMINAR RESPUESTA GLOSA IPS
-DELETE FROM glosas_respuestas_cargos WHERE glosa_respuesta_id=252797;
-DELETE FROM glosas_respuestas_inventarios WHERE glosa_respuesta_id=252797;
-DELETE FROM glosas_respuestas_cuentas WHERE glosa_respuesta_id=252797;
+DELETE FROM glosas_respuestas_cargos WHERE glosa_respuesta_id=262837;
+DELETE FROM glosas_respuestas_inventarios WHERE glosa_respuesta_id=262837;
+DELETE FROM glosas_respuestas_cuentas WHERE glosa_respuesta_id=262837;
 --EPS
-DELETE FROM glosas_respuestas_eps_cargos WHERE glosa_respuesta_eps_id=250278;
-DELETE FROM glosas_respuestas_eps_inventarios WHERE glosa_respuesta_eps_id=250278;
-DELETE FROM glosas_respuestas_eps_cuentas WHERE glosa_respuesta_eps_id=250278;
+DELETE FROM glosas_respuestas_eps_cargos WHERE glosa_respuesta_eps_id=119659;
+DELETE FROM glosas_respuestas_eps_inventarios WHERE glosa_respuesta_eps_id=119659;
+DELETE FROM glosas_respuestas_eps_cuentas WHERE glosa_respuesta_eps_id=119659;
 
 DELETE FROM glosas_respuestas_eps WHERE glosa_id=55369;58554
 --GLOS
@@ -1997,26 +2003,53 @@ WHERE i.ingreso = CAST(o.pv1_visit_id as INT)
 AND o.obr_procedure_start_date::date BETWEEN '2021-01-01' AND '2022-03-16' 
 ORDER BY 4
 
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
-UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------TOMA FISICA-------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+UPDATE bodegas_estaciones SET  bodega ='BF'  WHERE bodega='OU';--inicio en OU
+
+UPDATE bodegas_estaciones SET bodega = 'OU' WHERE bodega='BF' AND estacion_id IN ( 'OBSE', 'URG8', 'OBS8');--fin en OU
+
+--por si la cagan
+
+DELETE FROM bodegas_estaciones WHERE bodega='OU';--eliminar todo lo de la bodega para ponerlo de nuevo
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'OU', 'OBSE', 0);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'OU', 'URG8', 0);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'OU', 'OBS8', 0);
+
+
+
+
+UPDATE bodegas_estaciones SET bodega = 'OU' WHERE bodega = 'BF';--inicio en BF
+
+UPDATE bodegas_estaciones SET bodega = 'BF' WHERE bodega = 'OU' 
+AND estacion_id IN ('CX01','HP3','HP4','HP5','HP6','HPV8','UCP4','UP3','UP5','UP6','UP7A','UP7B','UP7C','URGC','VUC3','VUC4','VUC5','VUC6','VUC7','VUCN');--fin en BF
+
+--por si la cagan
+DELETE FROM bodegas_estaciones WHERE bodega='BF';--eliminar todo lo de la bodega para ponerlo de nuevo
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'CX01', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'HP3',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'HP4',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'HP5',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'HP6',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'HPV8', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UCP4', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UP3',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UP5',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UP6',  1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UP7A', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UP7B', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'UP7C', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'URGC', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'VUC3', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'VUC4', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'VUC5', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'VUC6', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'VUC7', 1);
+INSERT INTO bodegas_estaciones(empresa_id, centro_utilidad, bodega, estacion_id, sw_bodega_principal) VALUES ('01', '01', 'BF', 'VUCN', 1);
+
+
 
 UPDATE bodegas_estaciones SET  bodega ='OU'  WHERE estacion_id='CX01' AND estacion_id='BF';
 UPDATE bodegas_estaciones SET  bodega ='OU'  WHERE estacion_id='HP3' AND estacion_id='BF';
@@ -2344,6 +2377,18 @@ ENABLE TRIGGER trigger_hc_formulacion_suministro_medicamentos;
 
 
 
+-------------------- cambiar el suministro 0102070044 a las 30/01/23 05:51
+ALTER TABLE hc_formulacion_suministro_medicamentos 
+DISABLE TRIGGER trigger_hc_formulacion_suministro_medicamentos;
+
+UPDATE hc_formulacion_suministro_medicamentos
+SET fecha_realizado=    '2023-02-01 08:00:00'
+WHERE suministro_id=5610141;
+
+ALTER TABLE hc_formulacion_suministro_medicamentos 
+ENABLE TRIGGER trigger_hc_formulacion_suministro_medicamentos;
+
+
 
 
   ---- REPORTE GLOSAS(fecha Registro Eps y fecha Ratificacion, NIT.) 
@@ -2595,6 +2640,12 @@ SELECT estacion_id,2954,--usuario al que necesitamos que se le inserten los perm
 estacion_perfil_id AS ep FROM estaciones_enfermeria_usuarios 
 WHERE usuario_id=523 ;--usuario que necesitamos copiar.
 
+--insert con consulta permiso de medicos
+INSERT INTO estaciones_enfermeria_usuarios_componentes(estacion_id, usuario_id, estacion_componente_id, sw_permiso)
+SELECT estacion_id, 1860, 60, 1 
+FROM estaciones_enfermeria_usuarios 
+WHERE usuario_id = 1860;
+
 --actualizar usaurio en estacion enfermeria con subconsulta para igualarlo a otro usuario.
 UPDATE estaciones_enfermeria_usuarios 
 SET estacion_perfil_id= '03'
@@ -2603,16 +2654,16 @@ WHERE usuario_id=1261
 
 -- insert con subconsulta (Bodegas usuarios)
 INSERT INTO bodegas_usuarios(empresa_id, centro_utilidad, bodega, usuario_id) 
-SELECT empresa_id, centro_utilidad,bodega, 3128 --usuario al que necesitamos que se le inserten los permisos.
+SELECT empresa_id, centro_utilidad,bodega, 3189 --usuario al que necesitamos que se le inserten los permisos.
 FROM bodegas_usuarios 
 WHERE usuario_id=3072;--usuario que necesitamos copiar.
 
 
 -- insert subconsulta para reportes CSV
 INSERT INTO usuarios_asigna_reportes (reporte_empresa_id, usuario_id, usuario_registra, fecha_registro)
-SELECT reporte_empresa_id, 1085, 2803, NOW()
+SELECT reporte_empresa_id, 3189, 2803, NOW()
 FROM usuarios_asigna_reportes
-WHERE usuario_id= 770--usuario que necesitamos copiar.
+WHERE usuario_id= 2845--usuario que necesitamos copiar.
 
 
 -- insert copia usuario subconsulta para trasnsacciones de bodega KARDEX
@@ -3503,7 +3554,7 @@ INNER JOIN inv_grupos_inventarios ig ON iv.grupo_id=ig.grupo_id
 WHERE 
 --c.facturado='1'
 --AND (c.sw_paquete_facturado IS NULL OR c.sw_paquete_facturado='1')
-c.numerodecuenta = 447681
+c.numerodecuenta = 476759
 ORDER BY bdd.fecha, c.facturado
 
 
@@ -4164,65 +4215,829 @@ g.codigo_concepto_general,
 gcg.descripcion_concepto_general,  
 g.codigo_concepto_especifico, 
 gce.descripcion_concepto_especifico, ff.total_factura, gre.prefijo, gre.numero, gre.valor_aceptado, gre.valor_no_aceptado, gre.fecha_ratificacion, gre.fecha_registro, gre.glosa_respuesta_eps_id
-
-
 _______________________________________________________________________________________
-SELECT cgc.documento_contable_id AS Documento_Contable,
-        cgc.tercero_id,
-        t.nombre_tercero,
-        cgcd.debito,
-        cgcd.credito,
-        cgc.fecha_documento AS Fecha_Documento,
-        cgc.prefijo AS Prefijo_Factura,
-        cgc.numero AS Numero_Factura,
-        cgcd.cuenta AS Cuenta_UnoE,
-        CASE WHEN cgcd.centro_de_costo_id IS NOT NULL THEN cc.centro_de_costo_id ELSE 'SIN CENTRO DE COSTO' END AS ID_centro_de_costo,
-        CASE WHEN cgcd.centro_de_costo_id IS NOT NULL THEN cc.descripcion ELSE 'SIN CENTRO DE COSTO' END AS DESC_centro_de_costo,
-        cgcd.documento_cruce_id,
-        (SELECT prefijo ||' '|| numero FROM cg_mov_01.cg_mov_contable_01 cmc WHERE cgcd.documento_contable_id = cmc.documento_contable_id) AS documento_cruce_id,
-        cgcd.documento_cxc,
-        (SELECT prefijo ||' '|| numero FROM cg_mov_01.cg_mov_contable_01 cmc WHERE cgcd.documento_contable_id = cmc.documento_contable_id) AS documento_cruce_cxc,
-        cgcd.documento_cxp,
-        (SELECT prefijo ||' '|| numero FROM cg_mov_01.cg_mov_contable_01 cmc WHERE cgcd.documento_contable_id = cmc.documento_contable_id) AS documento_cruce_id_cxp
-FROM cg_mov_01.cg_mov_contable_01 cgc
-INNER JOIN cg_mov_01.cg_mov_contable_01_detalle cgcd ON cgc.documento_contable_id = cgcd.documento_contable_id
-INNER JOIN terceros t ON cgc.tercero_id = t.tercero_id
-LEFT JOIN cg_conf.centros_de_costo cc ON cgcd.centro_de_costo_id=cc.centro_de_costo_id
-WHERE cgc.fecha_documento BETWEEN _1 AND _2
---WHERE cgc.fecha_documento BETWEEN '2022-12-01' AND '20202-12-31'
---Ultima actualizacion 05-01-2023 por Kevin Muriel
+
+--insert con consulta permiso de medicos
+INSERT INTO estaciones_enfermeria_usuarios_componentes(estacion_id, usuario_id, estacion_componente_id, sw_permiso)
+SELECT estacion_id, 1805, 60, 1 
+FROM estaciones_enfermeria_usuarios 
+WHERE usuario_id = 1805;
 
 ____________________________________________________________________________________________________________
 
---visualiza los reportes que tiene usuario
-SELECT 
-syu.nombre,
-ree.titulo_reporte
-FROM usuarios_asigna_reportes uar
-JOIN system_usuarios syu ON uar.usuario_id = syu.usuario_id
-JOIN reportes_empresa ree ON uar.reporte_empresa_id = ree.reporte_empresa_id
-WHERE uar.usuario_id='3'
+INSERT INTO envios_glosas_detalle(envio_id, prefijo, factura_fiscal, empresa_id, glosa_id, valor) 
+VALUES (9221, 'CCR', factura_fiscal,'01', glosa_id, valor)
+
 
 _____________________________________________________________________________________________________________
 
-relacion_id	fecha_registro	usuario_entrega	estado	departamento_entrega	departamento_recibe	usuario_recibe	fecha_recibe
+UPDATE inv_bodegas_movimiento
+SET fecha_registro= '2023-02-28'
+WHERE prefijo = 'IFR'
+AND numero in (34555	,
+34556	,
+34557	,
+34558	,
+34559	,
+34560	,
+34561	,
+34562	,
+34563	,
+34564	,
+34565	,
+34567	,
+34568	,
+34569	,
+34570	,
+34571	,
+34572	,
+34573	,
+34574	,
+34575	,
+34576	,
+34577	,
+34578	,
+34579	,
+34580	,
+34581	,
+34582	,
+34583	,
+34584	,
+34585	,
+34586	,
+34587	,
+34588	,
+34589	,
+34590	,
+34591	,
+34592	,
+34593	,
+34594	,
+34595	,
+34596	,
+34597	,
+34598	,
+34599	,
+34600	,
+34601	,
+34602	,
+34603	
+);
 
-relaciones_cuentas_relaciones_cuentas_detalle
-rc_relaciones_cuentas_detalle
+
+_______________________________________________________________________
+
 
 SELECT 
-rcd.relacion_id,
-rcd.numerodecuenta,
-CASE WHEN rcd.estado= 'E' THEN 'Entregado' ELSE 'Relacionado' END AS estado,
-rcd.prefijo,
-rcd.factura_fiscal,
-rc.fecha_registro,
-rc.departamento_entrega,
-rc.departamento_recibe
+pro.tercero_id,
+syu.nombre AS nombre_SYU,
+pro.nombre AS nombre_PROF,
+syu.descripcion AS cargo,
+tip.descripcion AS nombre_tipo_profesional,
+esp.descripcion AS nombre_esp,
+CASE WHEN syu.activo = '1' THEN 'activo' WHEN syu.activo = '0' THEN 'inactivo' END AS estado,
+CASE WHEN pro.estado = '1' THEN 'activo' WHEN pro.estado = '0' THEN 'inactivo' END AS estado_profesional
+FROM system_usuarios syu
+LEFT JOIN profesionales pro ON syu.usuario_id = pro.usuario_id
+LEFT JOIN tipos_profesionales tip ON pro.tipo_profesional = tip.tipo_profesional
+LEFT JOIN profesionales_especialidades pre ON pro.tercero_id = pre.tercero_id
+LEFT JOIN especialidades esp ON pre.especialidad = esp.especialidad
+
+
+SELECT 
+pro.tercero_id,
+syu.usuario_id,
+syu.usuario,
+syu.nombre AS nombre_SYU,
+pro.nombre AS nombre_PROF,
+syu.descripcion AS cargo,
+tip.descripcion AS nombre_tipo_profesional,
+esp.descripcion AS nombre_esp,
+CASE WHEN syu.activo = '1' THEN 'activo' WHEN syu.activo = '0' THEN 'inactivo' END AS estado,
+CASE WHEN pro.estado = '1' THEN 'activo' WHEN pro.estado = '0' THEN 'inactivo' END AS estado_profesional
+FROM system_usuarios_perfiles sys
+LEFT JOIN system_usuarios syu ON sys.usuario_id = syu.usuario_id
+LEFT JOIN profesionales pro ON syu.usuario_id = pro.usuario_id
+LEFT JOIN tipos_profesionales tip ON pro.tipo_profesional = tip.tipo_profesional
+LEFT JOIN profesionales_especialidades pre ON pro.tercero_id = pre.tercero_id
+LEFT JOIN especialidades esp ON pre.especialidad = esp.especialidad
+
+SELECT  MAX(GR.glosa_respuesta_id ) AS  glosa_respuesta_id 	,
+                  ED.id
+          FROM    envios_glosas_detalle AS ED,
+                  envios_glosas EG,
+                  glosas_respuestas GR
+          WHERE   ED.glosa_id = GR.glosa_id 
+          AND     ED.envio_id = EG.envio_id
+          AND     EG.fecha_registro >= GR.fecha_registro
+
+
+SELECT 
+TO_CHAR(MAX(sul.fecha), 'dd-mm-yyyy') AS fecha_log,
+sul.usuario_id,
+sys.usuario,
+sys.nombre
+FROM system_usuarios_log sul
+JOIN system_usuarios sys ON sul.usuario_id = sys.usuario_id
+WHERE sys.activo = '1'
+GROUP BY sul.usuario_id, sys.nombre, sys.usuario
+
+
+______________________________________________________________________________________________________________
+
+INSERT
+INTO (
+  cargo	
+  ,descripcion	
+  ,grupo_tarifario_id	
+  ,subgrupo_tarifario_id	
+  ,grupo_tipo_cargo	
+  ,tipo_cargo	
+  ,nivel	
+  ,concepto_rips	
+  ,precio	
+  ,gravamen	
+  ,sw_cantidad	
+  ,sw_honorarios	
+  ,sw_uvrs	
+  ,nivel_autorizador_id	
+  ,sw_pos	
+  ,grupos_mapipos	
+  ,grupo_qx	
+  ,sw_bilateral	
+  ,sw_internacion	
+  ,sw_estado	
+  ,sw_costo_variable	
+  ,sw_notaoperatoria	
+  ,sw_activo	
+  ,sw_estadoa	
+  ,sw_vacuna	
+  ,sw_odontologia	
+  ,sexo_id	
+  ,sw_parto	
+  ,sw_add_perfusion	
+  ,sw_add_hemodilucion	
+  ,sw_requiere_comentario	
+  ,bys_producto_id
+)
+VALUES
+(
+
+)
+
+=CONCATENAR("INSERT INTO (cargo,descripcion,grupo_tarifario_id,subgrupo_tarifario_id,grupo_tipo_cargo,tipo_cargo,nivel,concepto_rips,precio,gravamen,sw_cantidad,sw_honorarios,sw_uvrs,nivel_autorizador_id,sw_pos,grupos_mapipos,grupo_qx,sw_bilateral,sw_internacion,sw_estado,sw_costo_variable,sw_notaoperatoria,sw_activo,sw_estadoa,sw_vacuna,sw_odontologia,sexo_id,sw_parto,sw_add_perfusion,sw_add_hemodilucion,sw_requiere_comentario,bys_producto_id) VALUES()")
+=CONCATENAR("INSERT INTO cups VALUES()")
+
+=CONCATENAR("INSERT INTO cups(";$A$1;",";$B$1;",";$C$1;",";$D$1;",";$E$1;",";$F$1;",";$G$1;",";$H$1;",";$I$1;",";$J$1;",";$K$1;",";$L$1;",";$M$1;",";$N$1;",";$O$1;",";$P$1;",";$Q$1;",";$R$1;",";$S$1;",";$T$1;",";$U$1;",";$V$1;",";$W$1;",";$X$1;",";$Y$1;",";$Z$1;",";$AA$1;",";$AB$1;",";$AC$1;",";$AD$1;",";$AF$1;") VALUES('";A2;"','";B2;"','";C2;"','";D2;"','";E2;"','";F2;"','";G2;"','";H2;"',";I2;",";J2;",'";K2;"','";L2;"','";M2;"','";N2;"','";O2;"','";P2;"','";Q2;"','";R2;"',";S2;",'";T2;"','";U2;"','";V2;"','";W2;"','";X2;"','";Y2;"','";Z2;"','";AA2;"','";AB2;"','";AC2;"','";AD2;"','";AF2;"')")
+
+
+
+UPDATE glosas SET sw_estado=3 , valor_pendiente=0 WHERE glosa_id= AND prefijo_glosa='GLF' AND numero=
+
+
+
+
+SELECT numerodecuenta, consecutivo FROM cuentas_detalle WHERE numerodecuenta=526528 AND consecutivo IS NOT NULL
+
+
+________________________________________________________________________________________________________________
+-- conocer los productos a partir de la cuenta
+
+SELECT 
+invp.descripcion,
+bdd.cantidad,
+bdd.total_costo_inv,
+bdd.total_costo,
+cud.numerodecuenta,
+cud.transaccion,
+cud.consecutivo,
+cud.precio,
+cud.cantidad
 FROM
-relacion_cuentas_detalle rcd,
-relacion_cuentas rc
-WHERE rcd.relacion_id = rc.relacion_id
---AND rc.fecha_registro::DATE BETWEEN '2021-01-01' AND '2021-12-31'
-AND rc.fecha_registro::DATE BETWEEN _1 AND _2
-ORDER BY fecha_registro
+cuentas_detalle cud
+LEFT JOIN bodegas_documentos_d bdd ON cud.consecutivo = bdd.consecutivo
+LEFT JOIN inventarios_productos invp ON bdd.codigo_producto = invp.codigo_producto
+WHERE numerodecuenta = 443930
+ORDER BY invp.descripcion
+
+
+
+
+DELETE FROM bodegas_documentos WHERE bodegas_doc_id=31
+
+DELETE FROM bodegas_documentos WHERE bodegas_doc_id=32
+
+
+ 
+SELECT * FROM bodegas_documentos WHERE bodegas_doc_id=31
+
+DELETE FROM tarifarios_equivalencias WHERE tarifario_id='0017'
+DELETE FROM tarifarios_detalle WHERE tarifario_id='0017'
+
+
+
+HA OCURRIDO UN ERROR AL MOMENTO DE CREAR EL ACTA
+ERROR:  la suma de los valores aceptados y no aceptados es mayor que el valor de la glosa 80881
+CONTEXT:  función PL/pgSQL verificar_valor_glosa() en la línea 26 en RAISE
+sentencia SQL: «UPDATE  glosas
+      SET     valor_pendiente = valorp,
+              sw_estado = estado
+      WHERE   glosa_id = OLD.glosa_id»
+función PL/pgSQL actualizar_valor_glosas() en la línea 95 en sentencia SQL
+<br>UPDATE glosas 
+SET    valor_no_aceptado = 173462815.00 - 59924,        
+valor_pendiente = 173462815.00 - 59924 
+WHERE  glosa_id = 80881 
+
+____________________________________________________________________________________________________________________
+DECLARE 
+    valor_glosa_aux NUMERIC(12,2); 
+    valor_aceptado_aux NUMERIC(12,2);
+    valor_no_aceptado_aux NUMERIC(12,2); 
+    glosa_aux integer;
+BEGIN
+    IF TG_OP = 'UPDATE' THEN
+
+        glosa_aux := (SELECT glosa_id
+                        FROM glosas
+                        WHERE glosa_id = OLD.glosa_id);80881
+
+        valor_glosa_aux := (SELECT valor_glosa
+                        FROM glosas
+                        WHERE glosa_id = OLD.glosa_id);173.462.815
+
+        valor_aceptado_aux := (SELECT valor_aceptado
+                            FROM glosas
+                            WHERE glosa_id = OLD.glosa_id);3.265.633
+
+        valor_no_aceptado_aux := (SELECT valor_no_aceptado
+                            FROM glosas
+                            WHERE glosa_id = OLD.glosa_id);132.642.482
+
+        IF (valor_aceptado_aux + valor_no_aceptado_aux) > valor_glosa_aux THEN 
+            RAISE EXCEPTION 'la suma de los valores aceptados y no aceptados es mayor que el valor de la glosa %',glosa_aux;
+        END IF; 
+
+    END IF;
+
+    RETURN NEW; 
+    
+END
+
+
+HA OCURRIDO UN ERROR AL MOMENTO DE CREAR EL ACTA
+ERROR:  la suma de los valores aceptados y no aceptados es mayor que el valor de la glosa 80881
+CONTEXT:  función PL/pgSQL verificar_valor_glosa() en la línea 26 en RAISE
+sentencia SQL: «UPDATE  glosas
+      SET     valor_pendiente = valorp,
+              sw_estado = estado
+      WHERE   glosa_id = OLD.glosa_id»
+función PL/pgSQL actualizar_valor_glosas() en la línea 95 en sentencia SQL<br>
+UPDATE glosas 
+SET    
+valor_no_aceptado = 173462815.00 - 59924,        
+valor_pendiente = 173462815.00 - 59924 
+WHERE  glosa_id = 80881 
+
+
+_____________________________________________________________________________________________________________________
+
+DECLARE 
+  valor1 NUMERIC;
+  valor2 NUMERIC;
+  valor3 NUMERIC;
+  valorp NUMERIC;
+  estado CHARACTER(1);
+  cantidad INTEGER;
+  cantidad_acta INTEGER;
+BEGIN
+  IF TG_OP='INSERT' THEN
+    IF NEW.sw_glosa_total_factura = '1' THEN
+      UPDATE glosas
+      SET valor_glosa = (SELECT CASE WHEN saldo > 0 THEN saldo 
+                            ELSE total_factura END
+                         FROM   fac_facturas
+                         WHERE  prefijo = NEW.prefijo
+                         AND    factura_fiscal = NEW.factura_fiscal
+                         AND    empresa_id = NEW.empresa_id)
+      WHERE glosa_id = NEW.glosa_id;
+    END IF;
+  RETURN NEW;
+  END IF;
+
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.sw_glosa_total_factura <> OLD.sw_glosa_total_factura THEN
+      IF NEW.sw_estado <> '0' THEN
+        IF NEW.sw_glosa_total_factura = '1' THEN
+          UPDATE glosas
+          SET valor_glosa = (SELECT CASE WHEN saldo > 0 THEN saldo 
+                       ELSE total_factura END
+                       FROM fac_facturas
+                 WHERE prefijo = NEW.prefijo
+                 AND factura_fiscal = NEW.factura_fiscal
+                 AND empresa_id = NEW.empresa_id)
+          WHERE glosa_id = OLD.glosa_id;
+        ELSE
+          UPDATE glosas
+          SET valor_glosa = 0
+          WHERE glosa_id = OLD.glosa_id;
+        END IF;
+      END IF;
+    END IF;
+    
+    IF NEW.valor_glosa <> OLD.valor_glosa OR NEW.valor_aceptado <> OLD.valor_aceptado OR NEW.valor_no_aceptado <> OLD.valor_no_aceptado THEN
+      cantidad := COALESCE(( SELECT  COUNT(*)
+                    FROM    notas_credito_glosas
+                    WHERE   glosa_id = OLD.glosa_id ),0);
+      IF cantidad = 0 THEN
+        cantidad := COALESCE(( SELECT  COUNT(*)
+                      FROM    auditoria_glosas_no_aceptadas
+                      WHERE   glosa_id = OLD.glosa_id ),0);
+      END IF;
+      
+      cantidad_acta := COALESCE((SELECT COUNT(*)
+                        FROM    actas_conciliacion_glosas AG,
+                                actas_conciliacion_glosas_detalle AD
+                        WHERE   AG.acta_conciliacion_id = AD.acta_conciliacion_id
+                        AND     AG.sw_activo = '0'
+                        AND     AD.glosa_id = OLD.glosa_id ),0);
+                      
+      valor1 := NEW.valor_glosa;
+      IF valor1 ISNULL THEN
+        valor1 := OLD.valor_glosa;
+      END IF;
+      
+      valor2 := NEW.valor_aceptado;
+      IF valor2 ISNULL THEN
+        valor2 := OLD.valor_aceptado;
+      END IF;
+      
+      valor3 := NEW.valor_no_aceptado;
+      IF valor3 ISNULL THEN
+        valor3 := OLD.valor_no_aceptado;
+      END IF;
+      
+      valorp := NEW.valor_pendiente;
+      estado := '1';
+      IF NEW.valor_glosa = 0 THEN
+        estado := '0';
+      END IF;
+      IF NEW.valor_aceptado > 0 OR NEW.valor_no_aceptado > 0 THEN 
+        estado := '2';
+      END IF;
+      IF valorp = 0 AND cantidad > 0 AND cantidad_acta = 0 THEN
+        estado := '3';
+      END IF;
+
+      IF NEW.sw_estado = '4' AND valorp > 0 THEN
+        estado := '4';
+      END IF;
+      
+      --RAISE EXCEPTION 'estado %',estado;
+      
+      UPDATE  glosas
+      SET     valor_pendiente = valorp,
+              sw_estado = estado
+      WHERE   glosa_id = OLD.glosa_id;
+
+    END IF;
+    RETURN NEW;
+  END IF;
+END;
+
+______________________________________________________________________________________________________________________
+--Reporte NIF
+
+SELECT a.numerodecuenta,
+    a.fecha_registro::date AS fecha_cuenta,
+	ig.ingreso,
+    ig.fecha_ingreso::date AS fecha_ingreso,
+	ig.tipo_id_paciente,
+    ig.paciente_id,
+	ff.prefijo,
+	ff.factura_fiscal,
+	CASE  WHEN ff.estado = '0' THEN 'FACTURADO'
+	WHEN ff.estado = '1' THEN 'PAGADO'
+	WHEN ff.estado = '2' THEN 'ANULADO'
+	WHEN ff.estado = '3' THEN 'ANULADA CON NOTA'
+	WHEN ff.estado IS NULL THEN 'SIN FACTURA'
+	ELSE 'SIN ESTADO'
+	END AS estado_factura,
+	ff.fecha_registro AS fecha_factura,
+    ce.descripcion AS estado_cuenta,
+	a.fecha_cierre::date AS fec_cierre_cta, 
+    cd.departamento,
+    cd.cargo_prod,
+	cd.descripcion,
+    cd.grupo_actividad,
+	g.tipo_tercero_id,
+    g.tercero_id,
+	g.plan_descripcion,
+    cd.cantidad,
+    cd.vlr_unt,
+    cd.vlr_total,
+    cd.valor_nocubierto,
+    cd.valor_cubierto,
+    cd.cargo_cups,
+	cd.desc_cargo_cups,
+	cd.fecha_cargo,
+    cd.fecha_registro,
+	ins.fecha_registro::date as fecha_registro_salida,
+	cd.departamento_solicitud,
+	cd.cargo_procedimiento,
+	cd.desc_procedimiento,
+	cd.consecutivo_procedimiento,
+	cd.secuencia,
+	cd.porcentaje,
+	cd.tipo_cargo_qx_id,
+	cd.cargo_cups_proced,
+	cd.desc_cargo_cups_proced,
+	cd.suma_proc
+	--cd.identifacion_cirujano,
+	--cd.nombre_cirujano,
+	--cd.especialidad
+	
+   FROM ( SELECT c.numerodecuenta,
+            c.cargo as cargo_prod,
+            c.cargo_cups,
+			cu.descripcion as desc_cargo_cups,
+            c.tarifario_id,
+            e.descripcion,
+            c.cantidad,
+            c.precio AS vlr_unt,
+            c.valor_cargo AS vlr_total,
+            c.valor_nocubierto,
+            c.valor_cubierto,
+            c.fecha_cargo::date AS fecha_cargo,
+            c.fecha_registro::date AS fecha_registro,
+            d.descripcion AS departamento,
+            f.descripcion AS grupo_actividad,
+			c.departamento_solicitud,
+            qx.cargo AS cargo_procedimiento,
+            tdq.descripcion AS desc_procedimiento,
+			qx.consecutivo_procedimiento,
+			qx.secuencia,
+			qx.porcentaje,
+			qx.tipo_cargo_qx_id,
+			qxc.cargo_cups AS cargo_cups_proced,
+			cup.descripcion AS desc_cargo_cups_proced,
+			ab.suma_proc
+			--pro.tipo_id_tercero||' '||pro.tercero_id AS identifacion_cirujano,
+			--pro.nombre as nombre_cirujano,
+			--esp.descripcion as especialidad
+
+           FROM cuentas_detalle c
+             JOIN departamentos d ON c.departamento::text = d.departamento::text
+             JOIN tarifarios_detalle e ON c.cargo::text = e.cargo::text AND c.tarifario_id::text = e.tarifario_id::text
+             JOIN grupos_tipos_cargo f ON e.grupo_tipo_cargo::text = f.grupo_tipo_cargo::text
+			 LEFT JOIN cups cu ON c.cargo_cups=cu.cargo
+             LEFT JOIN cuentas_cargos_qx_procedimientos qx ON c.transaccion = qx.transaccion
+             LEFT JOIN tarifarios_detalle tdq ON qx.cargo::text = tdq.cargo::text AND qx.tarifario_id::text = tdq.tarifario_id::text
+			 LEFT JOIN (SELECT SUM (cd.precio) AS suma_proc,qx.cargo,qx.consecutivo_procedimiento,qx.secuencia
+				FROM cuentas_detalle cd,
+				cuentas_cargos_qx_procedimientos qx
+				WHERE qx.transaccion=cd.transaccion
+				GROUP BY 2,3,4
+				ORDER BY 2
+				) ab ON  (ab.cargo=qx.cargo AND ab.consecutivo_procedimiento=qx.consecutivo_procedimiento AND ab.secuencia=qx.secuencia)
+			 LEFT JOIN cuentas_liquidaciones_qx_procedimientos qxc ON (qx.consecutivo_procedimiento=qxc.consecutivo_procedimiento)
+			 LEFT JOIN cups cup ON (qxc.cargo_cups=cup.cargo)
+			--LEFT JOIN profesionales as pro ON pro.tercero_id = qxc.cirujano_id AND qxc.tipo_id_cirujano=pro.tipo_id_tercero
+			--LEFT JOIN profesionales_especialidades as pe ON pe.tercero_id = pro.tercero_id AND pe.tipo_id_tercero=pro.tipo_id_tercero
+			--LEFT JOIN especialidades as esp ON esp.especialidad = pe.especialidad
+          WHERE c.consecutivo IS NULL
+		  AND c.facturado='1'
+		  AND (c.sw_paquete_facturado IS NULL OR c.sw_paquete_facturado='1')
+        UNION ALL
+         SELECT c.numerodecuenta,
+            iv.codigo_producto AS cargo_prod,
+            ''::character varying AS cargo_cups,
+			 ''::character varying AS desc_cargo_cups,
+            'IMD'::character varying AS tarifario_id,
+            c.descripcion,
+            c.cantidad,
+            c.valor_cargo AS vlr_unt,
+            c.valor_cargo AS vlr_total,
+            0 AS valor_nocubierto,
+            c.valor_cubierto,
+            c.fecha_cargo::date AS fecha_cargo,
+            c.fecha_cargo::date AS fecha_registro,
+            c.departamento_descripcion AS departamento,
+            ig.descripcion AS grupo_actividad,
+			''::character varying AS departamento_solicitud,
+            ''::character varying AS cargo_procedimiento,
+            ''::character varying AS desc_procedimiento,
+			0 AS consecutivo_procedimiento,
+			''::character varying AS secuencia,
+			0 AS porcentaje,
+			''::character varying AS tipo_cargo_qx_id,
+			''::character varying AS cargo_cups_proced,
+			''::character varying AS desc_cargo_cups_proced,
+			0 AS suma_proc
+			--''::character varying AS identifacion_cirujano,
+			--''::character varying AS nombre_cirujano,
+			--''::character varying AS especialidad
+           FROM view_cuentas_detalle_productos c
+           INNER JOIN inventarios_productos iv ON c.codigo_producto::text = iv.codigo_producto::text 
+           INNER JOIN inv_grupos_inventarios ig ON iv.grupo_id=ig.grupo_id
+		) cd,
+    cuentas a
+	INNER JOIN cuentas_estados ce ON a.estado = ce.estado
+    INNER JOIN ingresos ig ON a.ingreso = ig.ingreso 
+	INNER JOIN planes g ON a.plan_id = g.plan_id 
+	LEFT JOIN ingresos_salidas ins ON ig.ingreso=ins.ingreso
+	LEFT JOIN (
+                    select  f.*,
+                            ffc.numerodecuenta
+                    from    fac_facturas f
+                        left join fac_facturas_cuentas ffc on (f.empresa_id = ffc.empresa_id and f.prefijo = ffc.prefijo and f.factura_fiscal = ffc.factura_fiscal)
+                    where f.estado NOT IN ('2','3')
+					and f.tipo_factura != '0'
+                ) ff on (ff.numerodecuenta = a.numerodecuenta)
+  WHERE a.numerodecuenta = cd.numerodecuenta
+  AND a.numerodecuenta IN ( '482385',
+'485017',
+'479105',
+'485504',
+'487636',
+'492680',
+'485317',
+'485495',
+'492720')
+
+
+
+
+
+
+SELECT tarifario_id, cargo FROM tarifarios_detalle WHERE tarifario_id='0017'
+
+DELETE FROM tarifarios_detalle WHERE tarifario_id='0017' AND cargo='';
+
+
+UPDATE tarifarios_detalle SET cargo = REPLACE(cargo, ' ', '') WHERE cargo ILIKE '547505P%'
+UPDATE tarifarios_detalle SET cargo = '547505P' WHERE cargo ILIKE '547505P%'
+UPDATE excepciones_auditoria_eliminadas SET cargo = '547505P' WHERE cargo ILIKE '547505P%'
+
+
+UPDATE tarifarios_detalle SET cargo = '547505P' WHERE cargo ILIKE '% %'
+
+
+________________________________________________________________________________________________________________________
+--INSERT PARA CUPS
+INSERT INTO cups(cargo,descripcion,grupo_tarifario_id,subgrupo_tarifario_id,grupo_tipo_cargo,tipo_cargo,nivel,concepto_rips,precio,gravamen,sw_cantidad,sw_honorarios,sw_uvrs,nivel_autorizador_id,sw_pos,grupos_mapipos,grupo_qx,sw_bilateral,sw_internacion,sw_estado,sw_costo_variable,sw_notaoperatoria,sw_activo,sw_estadoa,sw_vacuna,sw_odontologia,sexo_id,sw_parto,sw_add_perfusion,sw_add_hemodilucion,bys_producto_id) VALUES('088903','LIGADURA Y ESCISIÓN DE SAFENA EXTERNA','07','38','07','38','3','04',1052100,0,'1','0','0','1','1','0','NULL','0',0,'1','0','NULL','1','1','0','NULL','NULL','NULL','0','0','NULL')
+
+UPDATE cups SET B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF WHERE
+
+=CONCATENAR("INSERT INTO 
+cups(";$B$1;"= '";B2;"', ";$C$1;"= '";C2;"', ";$D$1;"= '";D2;"', ";$E$1;"= '";E2;"', ";$F$1;"= '";F2;"', ";$G$1;"= '";G2;"', ";$H$1;"= '";H2;"', ";$I$1;"= ";I2;", ";$J$1;"= ";J2;", ";$K$1;"= '";K2;"', ";$L$1;"= '";L2;"', ";$M$1;"= '";M2;"', ";$N$1;"= '";N2;"', ";$O$1;"= '";O2;"', ";$P$1;"= '";P2;"', ";$Q$1;"= '";Q2;"', ";$R$1;"= ";R2;", ";$S$1;"= '";S2;"', ";$T$1;"= '";T2;"', ";$U$1;"= '";U2;"', ";$V$1;"= '";V2;"', ";$W$1;"= '";W2;"', ";$X$1;"= '";X2;"', ";$Y$1;"= '";Y2;"', ";$Z$1;"= '";Z2;"', ";A$A$1;"= ";AA2;", ";A$B$1;"= ";AB2;", ";A$C$1;"= '";AC2;"', ";A$D$1;"= '";AD2;"', ";A$E$1;"= '";AE2;"', ";A$F$1;"= '";AF2;"'")
+
+
+____________________________________________________________________________________________________________________
+SELECT 
+rc.fecha_ingcaja,
+rc.prefijo,
+rc.recibo_caja,
+rc.total_abono,
+rc.tipo_id_tercero,
+rc.tercero_id,
+CASE WHEN rc.estado = '0' THEN 'Activo' WHEN rc.estado = '1' THEN 'Inactivo' WHEN rc.estado = '2' THEN 'Cerrado' END AS estado,
+rc.fecha_registro,
+rc.total_cuota,
+'rc_detalle_saldos_anticipos ---->' AS tabla_compara1,
+rcdsa.prefijo AS prefijo,
+rcdsa.recibo_caja,
+rcdsa.valor_anticipo,
+rcdsa.saldo_anticipo,
+'rc_detalle_cruce_saldos_anticipos --->' AS tabla_compara,
+rcdcsa.prefijo,
+rcdcsa.recibo_caja,
+rcdcsa.prefijo_cruce,
+rcdcsa.recibo_caja_cruce,
+rcdcsa.valor_cruce
+FROM recibos_caja rc
+LEFT JOIN rc_detalle_saldos_anticipos rcdsa ON rcdsa.prefijo = rc.prefijo AND rcdsa.recibo_caja = rc.recibo_caja
+LEFT JOIN rc_detalle_cruce_saldos_anticipos rcdcsa ON rcdcsa.prefijo = rc.prefijo AND rcdcsa.recibo_caja = rc.recibo_caja
+WHERE rc.prefijo = 'RTA' OR rc.prefijo = 'RTC'
+ORDER BY rc.fecha_ingcaja
+
+
+287,
+288,
+307,
+311,
+345,
+349,
+387,
+396,
+429,
+451,
+477,
+646
+____________________________________________________________________________________________________________________________________________________________________________________________________
+SELECT 
+'recibos_caja ---->' AS TABLA1,
+rc.documento_id,
+rd.descripcion,
+rc.fecha_ingcaja,
+rc.prefijo,
+rc.recibo_caja,
+rc.total_abono,
+rc.tipo_id_tercero,
+rc.tercero_id,
+rc.observacion,
+CASE WHEN rc.estado = '0' THEN 'Activo' WHEN rc.estado = '1' THEN 'Inactivo' WHEN rc.estado = '2' THEN 'Cerrado' END AS estado,
+rc.fecha_registro,
+rc.total_cuota,
+'rc_detalle_saldos_anticipos ---->' AS tabla_compara1,
+rcdsa.prefijo AS prefijo,
+rcdsa.recibo_caja,
+rcdsa.valor_anticipo,
+rcdsa.saldo_anticipo,
+'rc_detalle_cruce_saldos_anticipos --->' AS tabla_compara2,
+rcdcsa.prefijo,
+rcdcsa.recibo_caja,
+rcdcsa.prefijo_cruce,
+rcdcsa.recibo_caja_cruce,
+rcdcsa.valor_cruce
+FROM recibos_caja rc
+LEFT JOIN rc_detalle_saldos_anticipos rcdsa ON rcdsa.prefijo = rc.prefijo AND rcdsa.recibo_caja = rc.recibo_caja
+LEFT JOIN rc_detalle_cruce_saldos_anticipos rcdcsa ON rcdcsa.prefijo = rc.prefijo AND rcdcsa.recibo_caja = rc.recibo_caja
+INNER JOIN rc_tipos_documentos rd ON (rc.rc_tipo_documento = rd.rc_tipo_documento)
+WHERE rc.prefijo = 'RTA' OR rc.prefijo = 'RTC'
+ORDER BY rc.fecha_ingcaja DESC
+
+
+________________________
+
+SELECT 
+rc.prefijo,
+rc.recibo_caja,
+to_char(rc.fecha_registro, 'YYYY-MM-DD') as fecha_registro,
+rc.total_abono,
+rc.total_efectivo,
+rc.total_cheques,
+rc.total_tarjetas,
+rc.tipo_id_tercero,
+rc.tercero_id,
+rd.descripcion,
+CASE WHEN rc.estado = '2' THEN 'CERRADO' WHEN rc.estado = '1' THEN 'INACTIVO' WHEN rc.estado = '0' THEN 'ACTIVO' END AS Estado
+FROM  
+  recibos_caja rc
+    INNER JOIN rc_tipos_documentos rd ON (rc.rc_tipo_documento = rd.rc_tipo_documento)
+WHERE rd.sw_cruzar_anticipos = '1'
+ORDER BY rc.fecha_registro DESC;
+
+________________________
+
+SELECT 
+    rcs.prefijo,
+    rcs.recibo_caja,
+    rcs.valor_anticipo,
+    rcs.saldo_anticipo,
+    to_char(rc.fecha_registro, 'YYYY-MM-DD') as fecha_registro
+FROM rc_detalle_saldos_anticipos rcs
+LEFT JOIN recibos_caja rc ON (rcs.prefijo=rc.prefijo AND rcs.recibo_caja=rc.recibo_caja)
+
+WHERE rcs.prefijo='RTA'
+ORDER BY fecha_registro DESC;
+
+
+
+SELECT 
+'recibos_caja ---->' AS TABLA1,
+rc.documento_id,
+rd.descripcion,
+rc.fecha_ingcaja,
+rc.prefijo,
+rc.recibo_caja,
+rc.total_abono,
+rc.tipo_id_tercero,
+rc.tercero_id,
+REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(rc.observacion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', '-'),'  ', '') AS observacion,
+CASE WHEN rc.estado = '0' THEN 'Activo' WHEN rc.estado = '1' THEN 'Inactivo' WHEN rc.estado = '2' THEN 'Cerrado' END AS estado,
+rc.fecha_registro,
+rc.total_cuota,
+'rc_detalle_saldos_anticipos ---->' AS tabla_compara1,
+rcdsa.prefijo AS prefijo,
+rcdsa.recibo_caja,
+rcdsa.valor_anticipo,
+rcdsa.saldo_anticipo,
+'rc_detalle_cruce_saldos_anticipos --->' AS tabla_compara2,
+rcdcsa.prefijo,
+rcdcsa.recibo_caja,
+rcdcsa.prefijo_cruce,
+rcdcsa.recibo_caja_cruce,
+rcdcsa.valor_cruce
+FROM recibos_caja rc
+LEFT JOIN rc_detalle_saldos_anticipos rcdsa ON rcdsa.prefijo = rc.prefijo AND rcdsa.recibo_caja = rc.recibo_caja
+LEFT JOIN rc_detalle_cruce_saldos_anticipos rcdcsa ON rcdcsa.prefijo = rc.prefijo AND rcdcsa.recibo_caja = rc.recibo_caja
+INNER JOIN rc_tipos_documentos rd ON (rc.rc_tipo_documento = rd.rc_tipo_documento)
+WHERE rc.prefijo = 'RTA' OR rc.prefijo = 'RTC'
+AND rc.fecha_ingcaja  BETWEEN '_1' AND '_2'
+ORDER BY rc.fecha_ingcaja DESC
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________________
+
+SELECT
+hcl.usuario,
+syu.nombre,
+syu.descripcion,
+hcl.fecha::DATE AS fecha,
+hcl.fecha::TIME AS hora,
+CASE WHEN hcl.estado_v = 1 THEN 'visualizacion' WHEN hcl.estado_v = 2 THEN 'impresion' END AS accion,
+syl.ip_address AS direccion_ip
+FROM hc_log hcl
+JOIN system_usuarios syu ON hcl.usuario = syu.usuario_id
+JOIN ingresos ing ON hcl.ingreso_n = ing.ingreso
+JOIN system_usuarios_log syl ON hcl.usuario = syl.usuario_id AND hcl.fecha::DATE AND hcl.fecha::DATE = suy.fecha::DATE
+WHERE ing.paciente_id = '1061803096'
+ORDER BY hcl.fecha DESC
+
+_______________________________________________________________________
+-- Validacion soat-ingresos que tengan la misma cedula.
+
+SELECT
+i.ingreso,
+i.tipo_id_paciente AS tipo_doc_ingreso,
+i.paciente_id AS documento_ingreso,
+(pac.primer_nombre ||' '|| pac.segundo_nombre ||' '|| pac.primer_apellido ||' '|| pac.segundo_apellido ) AS full_name_ingreso,
+' --comparacion-- ' AS compara,
+e.evento,
+e.tipo_id_paciente AS tipo_doc_evento,
+e.paciente_id AS pacienteID_evento,
+(paci.primer_nombre ||' '|| paci.segundo_nombre ||' '|| paci.primer_apellido ||' '|| paci.segundo_apellido ) AS full_name_evento
+FROM ingresos_soat iso
+JOIN ingresos i ON iso.ingreso = i.ingreso
+JOIN soat_eventos e ON iso.evento = e.evento
+JOIN pacientes pac ON i.paciente_id = pac.paciente_id AND i.tipo_id_paciente = pac.tipo_id_paciente
+JOIN pacientes paci ON i.paciente_id = paci.paciente_id AND i.tipo_id_paciente = paci.tipo_id_paciente
+ORDER BY e.fecha_registro
+
+
+SELECT
+i.fecha_ingreso,
+i.ingreso,
+i.tipo_id_paciente AS tipo_doc_ingreso,
+i.paciente_id AS documento_ingreso,
+  (
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.primer_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', '-'),'  ', '') ||' '|| 
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.segundo_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', '-'),'  ', '') ||' '|| 
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.primer_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', '-'),'  ', '') ||' '||
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.segundo_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', '-'),'  ', '')
+  ) AS full_name_ingreso,
+syu2.nombre AS quien_ingreso,
+syu2.descripcion AS cargo,
+e.fecha_registro AS fecha_evento,
+e.evento,
+e.tipo_id_paciente AS tipo_doc_evento,
+e.paciente_id AS pacienteID_evento,
+(paci.primer_nombre ||' '|| paci.segundo_nombre ||' '|| paci.primer_apellido ||' '|| paci.segundo_apellido ) AS full_name_evento,
+syu.nombre AS quien_asocio_evento,
+syu.descripcion AS cargo_doliente
+FROM ingresos_soat iso
+JOIN ingresos i ON iso.ingreso = i.ingreso
+JOIN soat_eventos e ON iso.evento = e.evento
+JOIN pacientes pac ON i.paciente_id = pac.paciente_id AND i.tipo_id_paciente = pac.tipo_id_paciente
+JOIN pacientes paci ON e.paciente_id = paci.paciente_id AND e.tipo_id_paciente = paci.tipo_id_paciente
+JOIN system_usuarios syu ON e.usuario_id = syu.usuario_id
+JOIN system_usuarios syu2 ON i.usuario_id = syu2.usuario_id
+WHERE i.paciente_id != e.paciente_id
+ORDER BY 11, e.fecha_registro
+
+
+SELECT
+i.fecha_ingreso,
+i.ingreso,
+i.tipo_id_paciente AS tipo_doc_ingreso,
+i.paciente_id AS documento_ingreso,
+TRIM(BOTH(
+  REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.primer_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '') ||' '|| 
+  REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.segundo_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '') ||' '|| 
+  REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.primer_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '') ||' '||
+  REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.segundo_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '')
+)) AS full_name_ingreso,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(syu2.nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS quien_ingreso,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(syu2.descripcion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS cargo,
+e.fecha_registro AS fecha_evento,
+e.evento,
+e.tipo_id_paciente AS tipo_doc_evento,
+e.paciente_id AS pacienteID_evento,
+TRIM(BOTH(
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(paci.primer_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '') ||' '|| 
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(paci.segundo_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '') ||' '|| 
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(paci.primer_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '') ||' '||
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(paci.segundo_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ''),'  ', '')
+  )) AS full_name_evento,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(syu.nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS quien_asocio_evento,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(syu.descripcion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS cargo_doliente
+FROM ingresos_soat iso
+JOIN ingresos i ON iso.ingreso = i.ingreso
+JOIN soat_eventos e ON iso.evento = e.evento
+JOIN pacientes pac ON i.paciente_id = pac.paciente_id AND i.tipo_id_paciente = pac.tipo_id_paciente
+JOIN pacientes paci ON e.paciente_id = paci.paciente_id AND e.tipo_id_paciente = paci.tipo_id_paciente
+JOIN system_usuarios syu ON e.usuario_id = syu.usuario_id
+JOIN system_usuarios syu2 ON i.usuario_id = syu2.usuario_id
+WHERE i.paciente_id != e.paciente_id
+ORDER BY 11, e.fecha_registro
