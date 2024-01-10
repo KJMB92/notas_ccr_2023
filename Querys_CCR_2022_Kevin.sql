@@ -5041,3 +5041,1204 @@ JOIN system_usuarios syu ON e.usuario_id = syu.usuario_id
 JOIN system_usuarios syu2 ON i.usuario_id = syu2.usuario_id
 WHERE i.paciente_id != e.paciente_id
 ORDER BY 11, e.fecha_registro
+
+
+-------------------------------------------------------------
+parametrizar para que pueda contener 8 caracteres estaciones_enfermeria_reservas_camas
+--
+DEPARTAMENTO Gineco
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'HPGINE', 'Hospitalizacion Ginecologia', '1', '1', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+ESTACION GINECO
+INSERT INTO estaciones_enfermeria VALUES ('HPGN', 'Hospitalizacion Ginecologia - P4 TA', 'HPGINE', 'Hospitalizacion', 'EnfermeriaHosp', 'UrgenciasConsulta', 'Hospitalizacion Ginecologia - Piso o 4 Torre A', 2, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaHosp', '0', '0', 2, '2023-11-25 13:12:02.221463', '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+piezas o habitaciones para hospi gineco
+INSERT INTO piezas VALUES('HB1GN','HPGN','HAB GINECOLOGIA 1',1,'HAB GINECOLOGIA 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB2GN','HPGN','HAB GINECOLOGIA 2',1,'HAB GINECOLOGIA 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB3GN','HPGN','HAB GINECOLOGIA 3',1,'HAB GINECOLOGIA 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB4GN','HPGN','HAB GINECOLOGIA 4',1,'HAB GINECOLOGIA 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB5GN','HPGN','HAB GINECOLOGIA 5',1,'HAB GINECOLOGIA 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB6GN','HPGN','HAB GINECOLOGIA 6',1,'HAB GINECOLOGIA 6',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB7GN','HPGN','HAB GINECOLOGIA 7',1,'HAB GINECOLOGIA 7',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB8GN','HPGN','HAB GINECOLOGIA 8',1,'HAB GINECOLOGIA 8',NULL,2,NOW());
+cups de la habitacion S11201
+camas para gineco
+INSERT INTO camas VALUES ('HB1GN', 'HB1C1GN', 'S11201',1,'HOSP GINECO P4 TA H1', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB2GN', 'HB2C1GN', 'S11201',1,'HOSP GINECO P4 TA H2', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB3GN', 'HB3C1GN', 'S11201',1,'HOSP GINECO P4 TA H3', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB4GN', 'HB4C1GN', 'S11201',1,'HOSP GINECO P4 TA H4', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB5GN', 'HB5C1GN', 'S11201',1,'HOSP GINECO P4 TA H5', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB6GN', 'HB6C1GN', 'S11201',1,'HOSP GINECO P4 TA H6', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB7GN', 'HB7C1GN', 'S11201',1,'HOSP GINECO P4 TA H7', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB8GN', 'HB8C1GN', 'S11201',1,'HOSP GINECO P4 TA H8', 'CAMA PERSONAL HOSPITALIZACION GINECOLOGIA', 1, 14, 2, NOW(), 2);
+Insertar a los usuarios
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('HPGN', '2803','10');
+
+--------------------------------------------------------
+ADULTOS
+--------------------------------------------------------
+--DEPARTAMENTO ADULTOS
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'HPADU', 'Hospitalizacion Adultos', '1', '1', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION ADULTOS
+INSERT INTO estaciones_enfermeria VALUES ('HPAD', 'Hospitalizacion Adultos - P4 TB', 'HPADU', 'Hospitalizacion', 'EnfermeriaHosp', 'UrgenciasConsulta', 'Hospitalizacion Ginecologia - Piso o 4 Torre B', 2, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaHosp', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi ADULTOS
+INSERT INTO piezas VALUES('HB1AD','HPAD','HAB ADULTOS 1',1,'HAB ADULTOS 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB2AD','HPAD','HAB ADULTOS 2',1,'HAB ADULTOS 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB3AD','HPAD','HAB ADULTOS 3',1,'HAB ADULTOS 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB4AD','HPAD','HAB ADULTOS 4',1,'HAB ADULTOS 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB5AD','HPAD','HAB ADULTOS 5',1,'HAB ADULTOS 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB6AD','HPAD','HAB ADULTOS 6',1,'HAB ADULTOS 6',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB7AD','HPAD','HAB ADULTOS 7',1,'HAB ADULTOS 7',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB8AD','HPAD','HAB ADULTOS 8',1,'HAB ADULTOS 8',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para adultos
+INSERT INTO camas VALUES ('HB1AD', 'HB1C1AD', 'S11201',1,'HOSP ADULTO P4 TB H1', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB2AD', 'HB2C1AD', 'S11201',1,'HOSP ADULTO P4 TB H2', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB3AD', 'HB3C1AD', 'S11201',1,'HOSP ADULTO P4 TB H3', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB4AD', 'HB4C1AD', 'S11201',1,'HOSP ADULTO P4 TB H4', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB5AD', 'HB5C1AD', 'S11201',1,'HOSP ADULTO P4 TB H5', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB6AD', 'HB6C1AD', 'S11201',1,'HOSP ADULTO P4 TB H6', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB7AD', 'HB7C1AD', 'S11201',1,'HOSP ADULTO P4 TB H7', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB8AD', 'HB8C1AD', 'S11201',1,'HOSP ADULTO P4 TB H8', 'CAMA PERSONAL HOSPITALIZACION ADULTOS', 1, 14, 2, NOW(), 2);
+--Insertar a los usuarios para ADULTOS
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('HPAD', '2803','10');
+
+
+--------------------------------------------------------
+PEDIATRICA
+--------------------------------------------------------
+DEPARTAMENTO PEDIATRICA
+--empresa_id	centro_utilidad	unidad_funcional	departamento	descripcion	sw_internacion	servicio	codigo_alterno	ubicacion	telefono	text1	text2	formato_cumplimiento	sw_control_placas	sw_maneja_vitros	sw_tomado_automatico	sw_tomado_vitros	sw_cargos_adicionales	sw_sv_uci	sw_cerrar_evolucion	tipo_atencion_plano_factura_id	sw_sv_hemodialisis	interface_externa_id	sw_estado	pyp	sw_paquete	sw_fecha_toma	sw_autorizacion_automatica	rips_modalidad_grupo_servicio_id	rips_grupo_servicio_id
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'HPPED', 'Hospitalizacion Pediatrica', '1', '1', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION ADULTOS
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('HPPD', 'Hospitalizacion Pediatrica - P7 TA', 'HPPED', 'Hospitalizacion', 'EnfermeriaHosp', 'UrgenciasConsulta', 'Hospitalizacion Ginecologia - Piso 7 Torre A', 2, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaHosp', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi ADULTOS
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('HB1PD','HPPD','HAB PEDIATRICA 1',1,'HAB PED 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB2PD','HPPD','HAB PEDIATRICA 2',1,'HAB PED 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB3PD','HPPD','HAB PEDIATRICA 3',1,'HAB PED 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB4PD','HPPD','HAB PEDIATRICA 4',1,'HAB PED 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB5PD','HPPD','HAB PEDIATRICA 5',1,'HAB PED 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB6PD','HPPD','HAB PEDIATRICA 6',1,'HAB PED 6',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB7PD','HPPD','HAB PEDIATRICA 7',1,'HAB PED 7',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB8PD','HPPD','HAB PEDIATRICA 8',1,'HAB PED 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB9PD','HPPD','HAB PEDIATRICA 9',1,'HAB PED 9',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para adultos
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('HB1PD', 'HB1C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H1', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB2PD', 'HB2C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H2', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB3PD', 'HB3C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H3', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB4PD', 'HB4C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H4', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB5PD', 'HB5C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H5', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB6PD', 'HB6C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H6', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB7PD', 'HB7C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H7', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB8PD', 'HB8C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H8', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB9PD', 'HB9C1PD', 'S11201',1,'HOSP PEDIAT P4 TB H9', 'CAMA PERSONAL HOSPITALIZACION PEDIATRICA', 1, 14, 2, NOW(), 2);
+--Insertar a los usuarios para ADULTOS
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('HPPD', '2803','10');
+
+--------------------------------------------------------
+HEMODINAMIA
+--------------------------------------------------------
+--DEPARTAMENTO HEMODINAMIA
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'HEMOD', 'Hemodinamia', '1', '8', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION HEMODINAMIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('HPHE', 'Hospitalizacion Hemodinamia', 'HEMOD', 'Hospitalizacion', 'EnfermeriaHosp', 'UrgenciasConsulta', 'Hospitalizacion Hemodinamia', 2, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaHosp', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi HEMODINAMIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('HB1HE','HPHE','HAB HEMODINAMIA 1',1,'HAB PED 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB2HE','HPHE','HAB HEMODINAMIA 2',1,'HAB PED 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB3HE','HPHE','HAB HEMODINAMIA 3',1,'HAB PED 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB4HE','HPHE','HAB HEMODINAMIA 4',1,'HAB PED 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB5HE','HPHE','HAB HEMODINAMIA 5',1,'HAB PED 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB6HE','HPHE','HAB HEMODINAMIA 6',1,'HAB PED 6',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB7HE','HPHE','HAB HEMODINAMIA 7',1,'HAB PED 7',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB8HE','HPHE','HAB HEMODINAMIA 8',1,'HAB PED 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB9HE','HPHE','HAB HEMODINAMIA 9',1,'HAB PED 9',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB10HE','HPHE','HAB HEMODINAMIA 10',1,'HAB PED 10',NULL,2,NOW());
+INSERT INTO piezas VALUES('HB11HE','HPHE','HAB HEMODINAMIA 11',1,'HAB PED 11',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para HEMODINAMIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('HB1HE', 'HB1C1HE', 'S11201',1,'HOSP HEMOD H1', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB2HE', 'HB2C1HE', 'S11201',1,'HOSP HEMOD H2', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB3HE', 'HB3C1HE', 'S11201',1,'HOSP HEMOD H3', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB4HE', 'HB4C1HE', 'S11201',1,'HOSP HEMOD H4', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB5HE', 'HB5C1HE', 'S11201',1,'HOSP HEMOD H5', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB6HE', 'HB6C1HE', 'S11201',1,'HOSP HEMOD H6', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB7HE', 'HB7C1HE', 'S11201',1,'HOSP HEMOD H7', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB8HE', 'HB8C1HE', 'S11201',1,'HOSP HEMOD H8', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB9HE', 'HB9C1HE', 'S11201',1,'HOSP HEMOD H9', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB10HE', 'HB10C1HE', 'S11201',1,'HOSP HEMOD H10', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HB11HE', 'HB11C1HE', 'S11201',1,'HOSP HEMOD H11', 'CAMA PERSONAL HOSPITALIZACION HEMODI', 1, 14, 2, NOW(), 2);
+--Insertar a los usuarios para HEMODINAMIA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('HPHE', '2803','10');
+
+
+--------------------------------------------------------
+SALA DE PROCEDIMIENTOS
+--------------------------------------------------------
+--DEPARTAMENTO SALA DE PROCEDIMIENTOS
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'SPROC', 'Sala Procedimientos', '1', '1', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION HEMODINAMIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('SAPR', 'Sala Procedimientos', 'SPROC', 'Hospitalizacion', 'EnfermeriaHosp', 'UrgenciasConsulta', 'Sala Procedimientos', 2, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaHosp', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi HEMODINAMIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('SP1','SAPR','SALA PROCEDIMIENTO 1',1,'SAL PRO 1',NULL,2,NOW());
+
+--cups de la habitacion S11201
+--camas para HEMODINAMIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('SP1', 'SAPR1', 'S11201',1,'SAL PRO 1', 'PROCEDIMIENTOS', 1, 14, 2, NOW(), 2);
+--Insertar a los usuarios para HEMODINAMIA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('SAPR', '2803','10');
+
+--------------------------------------------------------
+UCI ADULTOS
+--------------------------------------------------------
+--DEPARTAMENTO UCI ADULTO
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'UCIADU', 'UCI ADULTO P3 TB', '1', '7', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '1', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION UCI ADULTO
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('UCAD', 'UCI ADULTO', 'UCIADU', 'UCI', 'EnfermeriaUCI', 'UrgenciasConsulta', 'UCI ADULTO', 3, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaUCI', '0', '0', 2, NOW(), '0', '1', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi UCI ADULTO
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('UCI1AD','UCAD','HAB UCI 1',1,'HAB UCI 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI2AD','UCAD','HAB UCI 2',1,'HAB UCI 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI3AD','UCAD','HAB UCI 3',1,'HAB UCI 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI4AD','UCAD','HAB UCI 4',1,'HAB UCI 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI5AD','UCAD','HAB UCI 5',1,'HAB UCI 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI6AD','UCAD','HAB UCI 6',1,'HAB UCI 6',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI7AD','UCAD','HAB UCI 7',1,'HAB UCI 7',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI8AD','UCAD','HAB UCI 8',1,'HAB UCI 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('UCI9AD','UCAD','HAB UCI 9',1,'HAB UCI 9',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para UCI ADULTO
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('UCI1AD', 'HB1C1UA', 'S12103',1,'UCI ADULTO H1', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI2AD', 'HB2C1UA', 'S12103',1,'UCI ADULTO H2', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI3AD', 'HB3C1UA', 'S12103',1,'UCI ADULTO H3', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI4AD', 'HB4C1UA', 'S12103',1,'UCI ADULTO H4', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI5AD', 'HB5C1UA', 'S12103',1,'UCI ADULTO H5', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI6AD', 'HB6C1UA', 'S12103',1,'UCI ADULTO H6', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI7AD', 'HB7C1UA', 'S12103',1,'UCI ADULTO H7', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI8AD', 'HB8C1UA', 'S12103',1,'UCI ADULTO H8', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UCI9AD', 'HB9C1UA', 'S12103',1,'UCI ADULTO H9', 'CAMA PERSONAL UCI ADULTO', 1, 3, 2, NOW(), 2);
+--Insertar a los usuarios para UCI ADULTO
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('UCAD', '2803','10');
+
+--------------------------------------------------------
+UCI NEO
+--------------------------------------------------------
+--DEPARTAMENTO UCI NEO
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'UCINEO', 'UCI NEO P3 TB', '1', '7', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '1', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION UCI NEO
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('UCNE', 'UCI NEO', 'UCINEO', 'UCI', 'EnfermeriaUCI', 'UrgenciasConsulta', 'UCI NEO', 3, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaUCI', '0', '0', 2, NOW(), '0', '1', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi UCI NEO
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('UC1NE','UCNE','CUNA BASICA 1',1,'CUNA BASICA 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC2NE','UCNE','CUNA BASICA 2',1,'CUNA BASICA 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC3NE','UCNE','CUNA BASICA 3',1,'CUNA BASICA 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC4NE','UCNE','CUNA INTERMEDIA 1',1,'CUNA INTERMEDIA 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC5NE','UCNE','CUNA INTERMEDIA 2',1,'CUNA INTERMEDIA 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC6NE','UCNE','CUNA INTERMEDIA 3',1,'CUNA INTERMEDIA 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC7NE','UCNE','CUNA INTERMEDIA 4',1,'CUNA INTERMEDIA 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC8NE','UCNE','CUNA INTERMEDIA 5',1,'CUNA INTERMEDIA 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC9NE','UCNE','CUNA INTENSIVA 1',1,'CUNA INTENSIVA 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC10NE','UCNE','CUNA INTENSIVA 2',1,'CUNA INTENSIVA 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC11NE','UCNE','CUNA INTENSIVA 3',1,'CUNA INTENSIVA 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC12NE','UCNE','CUNA INTENSIVA 4',1,'CUNA INTENSIVA 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC13NE','UCNE','CUNA INTENSIVA 5',1,'CUNA INTENSIVA 5',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para UCI NEO
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('UC1NE', 'HB1C1NE', 'S12103',1,'UCI NEO H1', 'CUNA BASICA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC2NE', 'HB2C1NE', 'S12103',1,'UCI NEO H2', 'CUNA BASICA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC3NE', 'HB3C1NE', 'S12103',1,'UCI NEO H3', 'CUNA BASICA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC4NE', 'HB4C1NE', 'S12103',1,'UCI NEO H4', 'CUNA INTERMEDIO UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC5NE', 'HB5C1NE', 'S12103',1,'UCI NEO H5', 'CUNA INTERMEDIO UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC6NE', 'HB6C1NE', 'S12103',1,'UCI NEO H6', 'CUNA INTERMEDIO UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC7NE', 'HB7C1NE', 'S12103',1,'UCI NEO H7', 'CUNA INTERMEDIO UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC8NE', 'HB8C1NE', 'S12103',1,'UCI NEO H8', 'CUNA INTERMEDIO UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC9NE', 'HB9C1NE', 'S12103',1,'UCI NEO H9', 'CUNA INTENSIVA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC10NE', 'HB10C1NE', 'S12103',1,'UCI NEO H10', 'CAMA INTENSIVA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC11NE', 'HB11C1NE', 'S12103',1,'UCI NEO H11', 'CAMA INTENSIVA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC12NE', 'HB12C1NE', 'S12103',1,'UCI NEO H12', 'CAMA INTENSIVA UCI NEO', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC13NE', 'HB13C1NE', 'S12103',1,'UCI NEO H13', 'CAMA INTENSIVA UCI NEO', 1, 3, 2, NOW(), 2);
+--Insertar a los usuarios para UCI NEO
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('UCNE', '2803','10');
+
+--------------------------------------------------------
+UCI PEDIATRICA
+--------------------------------------------------------
+
+--DEPARTAMENTO UCI PEDIATRICA
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'UCIPED', 'UCI PEDIATRICA', '1', '7', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '1', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION UCI PEDIATRICA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('UCPE', 'UCI PEDIATRICA', 'UCIPED', 'UCI', 'EnfermeriaUCI', 'UrgenciasConsulta', 'UCI PEDIATRICA', 3, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaUCI', '0', '0', 2, NOW(), '0', '1', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi UCI PEDIATRICA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('UC1PE','UCPE','UCI INTERMEDIA PED 1',1,'UCI INTERMEDIA PED 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC2PE','UCPE','UCI INTERMEDIA PED 2',1,'UCI INTERMEDIA PED 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC3PE','UCPE','UCI INTERMEDIA PED 3',1,'UCI INTERMEDIA PED 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC4PE','UCPE','UCI INTENSIVA PED 1',1,'UCI INTENSIVA PED 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC5PE','UCPE','UCI INTENSIVA PED 2',1,'UCI INTENSIVA PED 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC6PE','UCPE','UCI INTENSIVA PED 3',1,'UCI INTENSIVA PED 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC7PE','UCPE','UCI INTENSIVA PED 4',1,'UCI INTENSIVA PED 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC8PE','UCPE','UCI INTENSIVA PED 5',1,'UCI INTENSIVA PED 5',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para UCI PEDIATRICA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('UC1PE', 'HB1C1PE', 'S12103',1,'UCI PEDIATRICA H1', 'HABITACION INTERMEDIA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC2PE', 'HB2C1PE', 'S12103',1,'UCI PEDIATRICA H2', 'HABITACION INTERMEDIA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC3PE', 'HB3C1PE', 'S12103',1,'UCI PEDIATRICA H3', 'HABITACION INTERMEDIA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC4PE', 'HB4C1PE', 'S12103',1,'UCI PEDIATRICA H4', 'HABITAICON INTENSIVA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC5PE', 'HB5C1PE', 'S12103',1,'UCI PEDIATRICA H5', 'HABITAICON INTENSIVA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC6PE', 'HB6C1PE', 'S12103',1,'UCI PEDIATRICA H6', 'HABITAICON INTENSIVA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC7PE', 'HB7C1PE', 'S12103',1,'UCI PEDIATRICA H7', 'HABITAICON INTENSIVA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC8PE', 'HB8C1PE', 'S12103',1,'UCI PEDIATRICA H8', 'HABITAICON INTENSIVA UCI PEDIATRICA', 1, 3, 2, NOW(), 2);
+--Insertar a los usuarios para UCI PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('UCPE', '2803','10');
+
+--------------------------------------------------------
+TRABAJO DE PARTO
+--------------------------------------------------------
+--DEPARTAMENTO TRABAJO DE PARTO
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'TRAPA', 'Trabajo De Parto', '1', '7', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', NULL, NULL, NULL, '3', '1', '0', '1', '0', '1', '1', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION TRABAJO DE PARTO
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('TRPA', 'TRABAJO DE PARTO', 'TRAPA', 'UCI', 'EnfermeriaUCI', 'UrgenciasConsulta', 'TRABAJO DE PARTO', 3, '1', '0', '0', NULL, 'QX_Cirujano', '', '', '', '', 'EnfermeriaUCI', '0', '0', 2, NOW(), '0', '1', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi TRABAJO DE PARTO
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('UC1TP','TRPA','SALA PARTOS 1',1,'SALA PARTOS 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC2TP','TRPA','SALA PARTOS 2',1,'SALA PARTOS 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC3TP','TRPA','SALA PARTOS 3',1,'SALA PARTOS 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UC4TP','TRPA','SALA PARTOS 4',1,'SALA PARTOS 4',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para TRABAJO DE PARTO
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('UC1TP', 'SA1C1TP', 'S12103',1,'SALA PARTOS H1', 'SALA PARTOS', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC2TP', 'SA2C1TP', 'S12103',1,'SALA PARTOS H2', 'SALA PARTOS', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC3TP', 'SA3C1TP', 'S12103',1,'SALA PARTOS H3', 'SALA PARTOS', 1, 3, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UC4TP', 'SA4C1TP', 'S12103',1,'SALA PARTOS H4', 'SALA PARTOS', 1, 3, 2, NOW(), 2);
+--Insertar a los usuarios para UCI PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('TRPA', '2803','10');
+
+--------------------------------------------------------
+URGENCIAS
+--------------------------------------------------------
+--DEPARTAMENTO URGENCIAS
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'URG', 'URGENCIAS', '1', '4', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION URGENCIAS
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('URG', 'URGENCIAS', 'URG', 'UrgenciasConsulta', 'Estacion_Enfermeria_Urgencias', 'UrgenciasConsulta', 'URGENCIAS', 1, '1', '0', '1', '0', 'QX_Cirujano', '', '', '', '', 'Estacion_Enfermeria_Urgencias', '0', '0', 2, '2016-03-29 21:52:51.171449', '0', '0', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi URGENCIAS
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('UR1C','URG','CAMILLA URGENCIAS 1',1,'CAMILLA URGENCIAS 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR2C','URG','CAMILLA URGENCIAS 2',1,'CAMILLA URGENCIAS 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR3C','URG','CAMILLA URGENCIAS 3',1,'CAMILLA URGENCIAS 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR4C','URG','CAMILLA URGENCIAS 4',1,'CAMILLA URGENCIAS 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR5C','URG','CAMILLA URGENCIAS 5',1,'CAMILLA URGENCIAS 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR6C','URG','CAMILLA URGENCIAS 6',1,'CAMILLA URGENCIAS 6',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR7C','URG','CAMILLA URGENCIAS 7',1,'CAMILLA URGENCIAS 7',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR8C','URG','CAMILLA URGENCIAS 8',1,'CAMILLA URGENCIAS 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR9C','URG','CAMILLA URGENCIAS 9',1,'CAMILLA URGENCIAS 9',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR10C','URG','CAMILLA URGENCIAS 10',1,'CAMILLA URGENCIAS 10',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR11C','URG','CAMILLA URGENCIAS 11',1,'CAMILLA URGENCIAS 11',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR12C','URG','CAMILLA URGENCIAS 12',1,'CAMILLA URGENCIAS 12',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR13C','URG','CAMILLA URGENCIAS 13',1,'CAMILLA URGENCIAS 13',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR14C','URG','CAMILLA URGENCIAS 14',1,'CAMILLA URGENCIAS 14',NULL,2,NOW());
+--cups de la habitacion S20100
+--camas para URGENCIAS
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('UR1C', 'CM1C1UR', 'S20100',1,'CAMILLA URGENCIAS 1', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR2C', 'CM2C1UR', 'S20100',1,'CAMILLA URGENCIAS 2', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR3C', 'CM3C1UR', 'S20100',1,'CAMILLA URGENCIAS 3', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR4C', 'CM4C1UR', 'S20100',1,'CAMILLA URGENCIAS 4', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR5C', 'CM5C1UR', 'S20100',1,'CAMILLA URGENCIAS 5', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR6C', 'CM6C1UR', 'S20100',1,'CAMILLA URGENCIAS 6', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR7C', 'CM7C1UR', 'S20100',1,'CAMILLA URGENCIAS 7', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR8C', 'CM8C1UR', 'S20100',1,'CAMILLA URGENCIAS 8', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR9C', 'CM9C1UR', 'S20100',1,'CAMILLA URGENCIAS 9', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR10C', 'CM10C1UR', 'S20100',1,'CAMILLA URGENCIAS 10', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR11C', 'CM11C1UR', 'S20100',1,'CAMILLA URGENCIAS 11', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR12C', 'CM12C1UR', 'S20100',1,'CAMILLA URGENCIAS 12', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR13C', 'CM13C1UR', 'S20100',1,'CAMILLA URGENCIAS 13', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR14C', 'CM14C1UR', 'S20100',1,'CAMILLA URGENCIAS 14', 'CAMILLA URGENCIAS', 1, 68, 2, NOW(), 2);
+--Insertar a los usuarios para UCI PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('URG', '2803','10');
+
+--------------------------------------------------------
+URGENCIAS PEDIATRIA
+--------------------------------------------------------
+--DEPARTAMENTO URGENCIAS PEDIATRIA
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'URGPE', 'URGENCIAS PEDIATRIA', '1', '4', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION URGENCIAS PEDIATRIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('URPE', 'URGENCIAS PEDIATRIA', 'URGPE', 'UrgenciasConsulta', 'Estacion_Enfermeria_Urgencias', 'UrgenciasConsulta', 'URGENCIAS', 1, '1', '0', '1', '0', 'QX_Cirujano', '', '', '', '', 'Estacion_Enfermeria_Urgencias', '0', '0', 2, '2016-03-29 21:52:51.171449', '0', '0', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi URGENCIAS PEDIATRIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('UR1P','URPE','CAMILLA URG PEDIAT 1',1,'CAMILLA URG PEDIAT 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR2P','URPE','CAMILLA URG PEDIAT 2',1,'CAMILLA URG PEDIAT 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR3P','URPE','CAMILLA URG PEDIAT 3',1,'CAMILLA URG PEDIAT 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR4P','URPE','CAMILLA URG PEDIAT 4',1,'CAMILLA URG PEDIAT 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('UR5P','URPE','CAMILLA URG PEDIAT 5',1,'CAMILLA URG PEDIAT 5',NULL,2,NOW());
+--cups de la habitacion S20100
+--camas para URGENCIAS PEDIATRIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('UR1P', 'CM1URPE', 'S20100',1,'URGENCIA PEDIATRIA 1', 'CAMILLA URGENCIAS PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR2P', 'CM2URPE', 'S20100',1,'URGENCIA PEDIATRIA 2', 'CAMILLA URGENCIAS PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR3P', 'CM3URPE', 'S20100',1,'URGENCIA PEDIATRIA 3', 'CAMILLA URGENCIAS PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR4P', 'CM4URPE', 'S20100',1,'URGENCIA PEDIATRIA 4', 'CAMILLA URGENCIAS PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('UR5P', 'CM5URPE', 'S20100',1,'URGENCIA PEDIATRIA 5', 'CAMILLA URGENCIAS PEDIATRIA', 1, 68, 2, NOW(), 2);
+--Insertar a los usuarios para URGENCIA PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('URPE', '2803','10');
+
+--------------------------------------------------------
+SALA ERA PEDIATRIA
+--------------------------------------------------------
+--DEPARTAMENTO SALA ERA PEDIATRIA
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'ERAPE', 'SALA ERA PEDIATRIA', '1', '4', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION SALA ERA PEDIATRIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('ERPE', 'SALA ERA PEDIATRIA', 'ERAPE', 'UrgenciasConsulta', 'Estacion_Enfermeria_Urgencias', 'UrgenciasConsulta', 'URGENCIAS', 1, '1', '0', '1', '0', 'QX_Cirujano', '', '', '', '', 'Estacion_Enfermeria_Urgencias', '0', '0', 2, '2016-03-29 21:52:51.171449', '0', '0', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi SALA ERA PEDIATRIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('ER1P','ERPE','SILLA ERA PEDIAT 1',1,'SILLA ERA PEDIAT 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('ER2P','ERPE','SILLA ERA PEDIAT 2',1,'SILLA ERA PEDIAT 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('ER3P','ERPE','SILLA ERA PEDIAT 3',1,'SILLA ERA PEDIAT 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('ER4P','ERPE','SILLA ERA PEDIAT 4',1,'SILLA ERA PEDIAT 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('ER5P','ERPE','SILLA ERA PEDIAT 5',1,'SILLA ERA PEDIAT 5',NULL,2,NOW());
+--cups de la habitacion S20100
+--camas para SALA ERA PEDIATRIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('ER1P', 'SI1ERPE', 'S20100',1,'SILLA ERA 1', 'SALA ERA PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('ER2P', 'SI2ERPE', 'S20100',1,'SILLA ERA 2', 'SALA ERA PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('ER3P', 'SI3ERPE', 'S20100',1,'SILLA ERA 3', 'SALA ERA PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('ER4P', 'SI4ERPE', 'S20100',1,'SILLA ERA 4', 'SALA ERA PEDIATRIA', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('ER5P', 'SI5ERPE', 'S20100',1,'SILLA ERA 5', 'SALA ERA PEDIATRIA', 1, 68, 2, NOW(), 2);
+--Insertar a los usuarios para SALA ERA PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('ERPE', '2803','10');
+
+--------------------------------------------------------
+SALA EDA PEDIATRIA
+--------------------------------------------------------
+--DEPARTAMENTO SALA EDA PEDIATRIA
+INSERT INTO departamentos VALUES ('01', '01', '0001', 'EDAPE', 'SALA EDA PEDIATRIA', '1', '4', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '0', NULL, NULL);
+--ESTACION SALA EDA PEDIATRIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO estaciones_enfermeria VALUES ('EDPE', 'SALA EDA PEDIATRIA', 'EDAPE', 'UrgenciasConsulta', 'Estacion_Enfermeria_Urgencias', 'UrgenciasConsulta', 'URGENCIAS', 1, '1', '0', '1', '0', 'QX_Cirujano', '', '', '', '', 'Estacion_Enfermeria_Urgencias', '0', '0', 2, '2016-03-29 21:52:51.171449', '0', '0', '1', '1', '0', 0, NULL, '1', '1', '0', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi SALA ERA PEDIATRIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('ED1P','EDPE','SILLA EDA PEDIAT 1',1,'SILLA EDA PEDIAT 1',NULL,2,NOW());
+--cups de la habitacion S20100
+--camas para SALA ERA PEDIATRIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('ED1P', 'SI1EDPE', 'S20100',1,'SILLA EDA 1', 'SALA EDA PEDIATRIA', 1, 68, 2, NOW(), 2);
+--Insertar a los usuarios para SALA EDA PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('EDPE', '2803','10');
+
+--------------------------------------------------------
+CIRUGIA
+--------------------------------------------------------
+--DEPARTAMENTO CIRUGIA
+INSERT INTO public.departamentos VALUES ('01', '01', '0001', 'CIRUUR', 'Cirugia', '1', '6', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '1', NULL, NULL);
+--ESTACION CIRUGIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO public.estaciones_enfermeria VALUES ('QXUR', 'Cirugia Urgencias', 'CIRUUR', 'QX_Cirujano', 'Estacion_Enfermeria_Urgencias', 'QX_Cirujano', 'CIRUGIA', 4, '0', '0', '0', '1', 'QX_Cirujano', 'QX_Anestesiologo', 'QX_Cirujano', 'EnfermeriaQx', 'QX_Instrumentador', 'EnfermeriaQx', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi CIRUGIA
+--quirofano	descripcion	estado	departamento	abreviatura	tipo_sala_id	sw_programacion	usuario_id	fecha_registro
+INSERT INTO public.qx_quirofanos VALUES ('QXU1', 'QUIROFANO 1', '1', 'CIRUUR', 'QX1', '01', '1', 2, NOW());
+INSERT INTO public.qx_quirofanos VALUES ('QXU2', 'QUIROFANO 2', '1', 'CIRUUR', 'QX2', '01', '1', 2, NOW());
+INSERT INTO public.qx_quirofanos VALUES ('QXU3', 'QUIROFANO 3', '1', 'CIRUUR', 'QX3', '01', '1', 2, NOW());
+--Insertar a los usuarios para CIRUGIA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('QXUR', '2803','10');
+
+--------------------------------------------------------
+CIRUGIA Obstetricia
+--------------------------------------------------------
+--DEPARTAMENTO CIRUGIA Obstetricia
+INSERT INTO public.departamentos VALUES ('01', '01', '0001', 'CIRUOB', 'Cirugia Obstetricia', '1', '6', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '1', NULL, NULL);
+--ESTACION CIRUGIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO public.estaciones_enfermeria VALUES ('QXOB', 'Cirugia Obstetricia', 'CIRUOB', 'QX_Cirujano', 'Estacion_Enfermeria_Urgencias', 'QX_Cirujano', 'CIRUGIA', 4, '0', '0', '0', '1', 'QX_Cirujano', 'QX_Anestesiologo', 'QX_Cirujano', 'EnfermeriaQx', 'QX_Instrumentador', 'EnfermeriaQx', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para hospi CIRUGIA Obstetricia
+--quirofano	descripcion	estado	departamento	abreviatura	tipo_sala_id	sw_programacion	usuario_id	fecha_registro
+INSERT INTO public.qx_quirofanos VALUES ('QXO1', 'QUIROFANO 1', '1', 'CIRUOB', 'QXO1', '01', '1', 2, NOW());
+--Insertar a los usuarios para CIRUGIA Obstetricia
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('QXOB', '2803','10');
+
+--------------------------------------------------------
+RECUPERACION CIRUGIA
+--------------------------------------------------------
+--DEPARTAMENTO RECUPERACION CIRUGIA
+INSERT INTO public.departamentos VALUES ('01', '01', '0001', 'RECIRU', 'Recuperacion Cirugia', '1', '6', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '1', NULL, NULL);
+--ESTACION RECUPERACION CIRUGIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO public.estaciones_enfermeria VALUES ('REQX', 'Recuperacion Cirugia', 'RECIRU', 'QX_Cirujano', 'Estacion_Enfermeria_Urgencias', 'QX_Cirujano', 'CIRUGIA', 4, '0', '0', '0', '1', 'QX_Cirujano', 'QX_Anestesiologo', 'QX_Cirujano', 'EnfermeriaQx', 'QX_Instrumentador', 'EnfermeriaQx', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para   RECUPERACION CIRUGIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('RQX1','REQX','HAB RECUPERACION QX1',1,'HAB RECUPERACION QX1',NULL,2,NOW());
+INSERT INTO piezas VALUES('RQX2','REQX','HAB RECUPERACION QX2',1,'HAB RECUPERACION QX2',NULL,2,NOW());
+INSERT INTO piezas VALUES('RQX3','REQX','HAB RECUPERACION QX3',1,'HAB RECUPERACION QX3',NULL,2,NOW());
+INSERT INTO piezas VALUES('RQX4','REQX','HAB RECUPERACION QX4',1,'HAB RECUPERACION QX4',NULL,2,NOW());
+INSERT INTO piezas VALUES('RQX5','REQX','HAB RECUPERACION QX5',1,'HAB RECUPERACION QX5',NULL,2,NOW());
+INSERT INTO piezas VALUES('RQX6','REQX','HAB RECUPERACION QX6',1,'HAB RECUPERACION QX6',NULL,2,NOW());
+--cups de la habitacion S20100
+--camas para RECUPERACION CIRUGIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ('RQX1', 'CRQX1', 'S20100',1,'CAMA REC QX 1', 'CAMA REC QX 1', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('RQX2', 'CRQX2', 'S20100',1,'CAMA REC QX 2', 'CAMA REC QX 2', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('RQX3', 'CRQX3', 'S20100',1,'CAMA REC QX 3', 'CAMA REC QX 3', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('RQX4', 'CRQX4', 'S20100',1,'CAMA REC QX 4', 'CAMA REC QX 4', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('RQX5', 'CRQX5', 'S20100',1,'CAMA REC QX 5', 'CAMA REC QX 5', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ('RQX6', 'CRQX6', 'S20100',1,'CAMA REC QX 6', 'CAMA REC QX 6', 1, 68, 2, NOW(), 2);
+--Insertar a los usuarios para SALA ERA PEDIATRICA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('REQX', '2803','10');
+
+--------------------------------------------------------
+ADMISION PACIENTE CIRUGIA
+--------------------------------------------------------
+--DEPARTAMENTO ADMISION PACIENTE CIRUGIA
+INSERT INTO public.departamentos VALUES ('01', '01', '0001', 'ADQX', 'Adm Paciente Cirugia', '1', '6', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '1', NULL, NULL);
+--ESTACION ADMISION PACIENTE CIRUGIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO public.estaciones_enfermeria VALUES ('ADQX', 'Adm Paciente Cirugia', 'ADQX', 'QX_Cirujano', 'Estacion_Enfermeria_Urgencias', 'QX_Cirujano', 'CIRUGIA', 4, '0', '0', '0', '1', 'QX_Cirujano', 'QX_Anestesiologo', 'QX_Cirujano', 'EnfermeriaQx', 'QX_Instrumentador', 'EnfermeriaQx', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para   ADMISION PACIENTE CIRUGIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('AQX1','ADQX','ADM PACIENTES QX 1',1,'ADM PACIENTES QX 1',NULL,2,NOW());
+INSERT INTO piezas VALUES('AQX2','ADQX','ADM PACIENTES QX 2',1,'ADM PACIENTES QX 2',NULL,2,NOW());
+INSERT INTO piezas VALUES('AQX3','ADQX','ADM PACIENTES QX 3',1,'ADM PACIENTES QX 3',NULL,2,NOW());
+INSERT INTO piezas VALUES('AQX4','ADQX','ADM PACIENTES QX 4',1,'ADM PACIENTES QX 4',NULL,2,NOW());
+INSERT INTO piezas VALUES('AQX5','ADQX','ADM PACIENTES QX 5',1,'ADM PACIENTES QX 5',NULL,2,NOW());
+INSERT INTO piezas VALUES('AQX6','ADQX','ADM PACIENTES QX 6',1,'ADM PACIENTES QX 6',NULL,2,NOW());
+--cups de la habitacion S20100
+--camas para ADMISION PACIENTE CIRUGIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ( 'AQX1', 'CQX1', 'S20100',1,'CM ADM PACIENTES QX1', 'CAMA ADM PACIENTES QX 1', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'AQX2', 'CQX2', 'S20100',1,'CM ADM PACIENTES QX2', 'CAMA ADM PACIENTES QX 2', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'AQX3', 'CQX3', 'S20100',1,'CM ADM PACIENTES QX3', 'CAMA ADM PACIENTES QX 3', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'AQX4', 'CQX4', 'S20100',1,'CM ADM PACIENTES QX4', 'CAMA ADM PACIENTES QX 4', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'AQX5', 'CQX5', 'S20100',1,'CM ADM PACIENTES QX5', 'CAMA ADM PACIENTES QX 5', 1, 68, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'AQX6', 'CQX6', 'S20100',1,'CM ADM PACIENTES QX6', 'CAMA ADM PACIENTES QX 6', 1, 68, 2, NOW(), 2);
+--Insertar a los usuarios para ADMISION PACIENTE CIRUGIA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('ADQX', '2803','10');
+
+-- Insertar los puntos de atencion de admisiones
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'HPGN', 'Hospitalizacion Ginecologia' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'HPAD', 'Hospitalizacion Adultos' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'HPPD', 'Hospitalizacion Pediatria' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'HPHE', 'Hospitalizacion Hemodinamia' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'SAPR', 'Sala Procedimientos' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'UCAD', 'Unidad Cuidados Intensivos Adultos' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'UCNE', 'Unidad Cuidados Intensivos Neonatales' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'UCPE', 'Unidad Cuidados Intensivos Pediatricos' );
+INSERT INTO puntos_admisiones_estaciones VALUES (2,'TRPA', 'Trabajo De Parto' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'URG', 'Urgencias' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'URPE', 'Urgencias Pediatria' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'ERPE', 'Sala ERA Pediatrica' );
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'EDPE', 'Sala EDA Pediatrica' );
+INSERT INTO puntos_admisiones_estaciones VALUES (2,'QXUR', 'Cirugia Urgencias' );
+INSERT INTO puntos_admisiones_estaciones VALUES (2,'REQX', 'Recuperacion Cirugia' );
+
+
+UPDATE soat_eventos SET evento = 154598 WHERE evento = 999999;
+UPDATE soat_eventos SET evento = 134702 WHERE evento = 154598;
+UPDATE soat_eventos SET evento = 999999 WHERE evento = 134702;
+
+-- ver el perfil, usuario y nombre de colaborador.
+SELECT 
+usu.usuario,
+usu.nombre,
+usu.descripcion,
+sp.descripcion
+FROM 
+system_usuarios usu
+JOIN system_usuarios_perfiles sup ON usu.usuario_id = sup.usuario_id
+JOIN system_perfiles sp ON sup.perfil_id = sp.perfil_id
+WHERE sp.descripcion ILIKE ('%ADMISION%')
+AND usu.activo = '1'
+
+--pasar pacientes de urg a urgc
+UPDATE
+pacientes_urgencias
+SET 
+estacion_id = 'URGC'
+WHERE
+estacion_id = 'URG'
+
+--quitar permisos de enfermeria
+DELETE FROM estaciones_enfermeria_usuarios WHERE estacion_id='URG'
+
+-- cambiar solicitud cargos
+UPDATE
+solicitud_autorizacion_cargos
+SET
+ubicacion = 'URGENC'
+FROM
+ubicacion = 'URG'
+
+UPDATE
+solicitud_autorizacion_cargos
+SET
+ubicacion = 'UP3'
+WHERE
+ubicacion = 'UCI005'
+
+-- cambiar depto en solicitudes medicamentos
+UPDATE
+hc_solicitudes_medicamentos
+SET
+estacion_id = 'URGC'
+WHERE
+estacion_id = 'URG'
+
+-- actualizar precio regulado en inventarios_productos
+UPDATE 
+inventarios_productos
+SET
+sw_precio_regulado='";;"',
+precio_regulado=";;",
+resolucion='";;"',
+fecha_resolucion='";;"'
+WHERE
+codigo_producto='";;"'
+
+-- refrescar tabla
+UPDATE
+soat_eventos
+SET
+evento = evento
+
+UPDATE
+cuentas_detalle
+SET
+numerodecuenta = numerodecuenta
+
+-- insertar cp a todas las 
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'VUCN', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'VUC7', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'VUC6', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'VUC5', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'VUC4', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'URPE', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'URGC', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'URG8', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'UP3', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'UCPE', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'UCP4', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'UCNE', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'UCAD', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'QXOB', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'OBSE', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'OBS1', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HPV8', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HPPD', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HPHE', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HPAD', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HP7', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HP6', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HP5', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'HP4', '0');
+INSERT INTO bodegas_estaciones VALUES ('02', '01', 'CP', 'CX01', '0');
+
+
+
+--permisos en pefil estacion enfermeria
+UPDATE 
+estaciones_enfermeria_usuarios
+SET 
+estacion_perfil_id = '10'
+WHERE
+usuario_id = 1239
+
+--permisos en pefil estacion enfermeria
+UPDATE 
+estaciones_enfermeria_usuarios
+SET 
+estacion_perfil_id = '10'
+WHERE
+usuario_id = 1622
+
+--permisos en pefil estacion enfermeria
+UPDATE 
+estaciones_enfermeria_usuarios
+SET 
+estacion_perfil_id = '02'
+WHERE
+usuario_id = 2803
+
+--camas 
+
+INSERT INTO piezas VALUES('OBU1','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU2','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU3','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU4','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU5','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU6','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU7','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU8','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU9','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+INSERT INTO piezas VALUES('OBU10','OBS1','CAMILLA OBSERVACION',1,'PISO 8',NULL,2,NOW());
+
+INSERT INTO camas VALUES ( 'OBU1', 'OBU1', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU2', 'OBU2', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU3', 'OBU3', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU4', 'OBU4', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU5', 'OBU5', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU6', 'OBU6', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU7', 'OBU7', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU8', 'OBU8', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU9', 'OBU9', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+INSERT INTO camas VALUES ( 'OBU10', 'OBU10', '5DSA01',1,'OBS URG PISO 1', 'SALA OBSERVACION URGENCIAS P 1', 1, 128, 2, NOW(), 2);
+
+
+-- medicamentos de uso controlado
+UPDATE
+medicamentos
+SET
+sw_uso_controlado = '1'
+WHERE
+codigo_medicamento IN(
+'0101020168',
+'0101020234',
+'0101020233',
+'0101020137',
+'0101020216',
+'0101020210',
+'0101020180',
+'0101010020',
+'0101010024',
+'0101010025',
+'0101020013',
+'0101020014',
+'0101020037',
+'0101020136',
+'0101020171',
+'0101020209',
+'0102010050',
+'0102010114',
+'0102010077',
+'0102010113',
+'0102010115',
+'0102010116',
+'0102010123',
+'0102010126',
+'0102010136',
+'0102010186',
+'0102010188',
+'0102010229',
+'0102010260',
+'0102010261',
+'0102070004',
+'0102010254',
+'0102010247',
+'0102100001'
+)
+
+
+SELECT  i.ingreso,
+  c.numerodecuenta,
+  b.tipo_id_paciente,
+  b.paciente_id,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(b.primer_nombre, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS primer_nombre,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(b.segundo_nombre, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS segundo_nombre,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(b.primer_apellido, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS primer_apellido,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(b.segundo_apellido, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS segundo_apellido,
+  b.residencia_telefono AS telefono,
+  b.residencia_direccion,
+  i.fecha_ingreso,
+  i.fecha_cierre,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(p.plan_descripcion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS plan_descripcion,
+  u.nombre as usuario_registro_ingreso,
+  ab.tipo_diagnostico_id as dx_ingreso,
+  ab.diagnostico_nombre as dx_ingreso_nombre,
+  eb.tipo_diagnostico_id as dx_egreso,
+  eb.diagnostico_nombre as dx_egreso_nombre,
+  d.descripcion as departamento_ingreso,
+  e.descripcion as departamento_actual,
+  EXTRACT(YEAR FROM age(b.fecha_nacimiento)) AS edad,
+  t.nivel_triage_id,
+  pr.centro_remision,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cr.descripcion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS descripcion,
+  pr.fecha_remision,
+  se.evento,
+  sp.poliza,
+  ter.nombre_tercero,
+  sp.placa_vehiculo,
+  sp.marca_vehiculo,
+  sp.tipo_vehiculo,
+  sa.fecha_accidente,
+  sa.sitio_accidente,
+  TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(sa.informe_accidente, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS informe_accidente,
+  sp.vigencia_desde,
+  sp.vigencia_hasta
+
+           
+FROM   ingresos i
+INNER JOIN pacientes b ON (i.tipo_id_paciente = b.tipo_id_paciente AND i.paciente_id = b.paciente_id)
+INNER JOIN (select	min(numerodecuenta) as cuenta,ingreso from cuentas where estado!='5' group by 2) ct ON (ct.ingreso=i.ingreso)
+INNER JOIN cuentas c ON (ct.cuenta=c.numerodecuenta AND i.ingreso = c.ingreso)
+INNER JOIN departamentos d ON (i.departamento = d.departamento)
+INNER JOIN departamentos e ON (i.departamento_actual = e.departamento)
+INNER JOIN planes p ON (c.plan_id = p.plan_id)
+INNER JOIN system_usuarios u ON (i.usuario_id = u.usuario_id)
+LEFT JOIN (select dx.tipo_diagnostico_id, d.diagnostico_nombre, he.ingreso, dx.evolucion_id 
+  from hc_diagnosticos_ingreso dx, hc_evoluciones he, diagnosticos d
+  where he.evolucion_id=dx.evolucion_id and dx.tipo_diagnostico_id=d.diagnostico_id 
+  and dx.sw_principal='1') as ab ON (ab.ingreso=i.ingreso)
+LEFT JOIN (select dx.tipo_diagnostico_id, d.diagnostico_nombre, he.ingreso, dx.evolucion_id 
+  from hc_diagnosticos_egreso dx, hc_evoluciones he, diagnosticos d
+  where he.evolucion_id=dx.evolucion_id and dx.tipo_diagnostico_id=d.diagnostico_id 
+  and dx.sw_principal='1') as eb ON (eb.ingreso=i.ingreso)
+LEFT JOIN ingresos_soat io ON (i.ingreso=io.ingreso)
+LEFT JOIN soat_eventos se ON (io.evento=se.evento)
+LEFT JOIN soat_accidente sa ON (se.accidente_id=sa.accidente_id)
+LEFT JOIN triages t ON (i.ingreso=t.ingreso)
+LEFT JOIN pacientes_remitidos pr ON (i.ingreso=pr.ingreso)
+LEFT JOIN centros_remision cr ON (pr.centro_remision=cr.centro_remision)
+LEFT JOIN soat_polizas sp ON (se.poliza = sp.poliza)
+LEFT JOIN terceros ter ON (sp.tercero_id = ter.tercero_id AND sp.tipo_id_tercero = ter.tipo_id_tercero)
+WHERE    i.estado<>'5'
+  --AND    i.fecha_ingreso::date BETWEEN _1 AND _2
+  ORDER BY 1;
+
+
+-- pos no pos
+
+SELECT
+codigo_producto,
+grupo_id,
+clase_id,
+sub_clase_id,
+producto_id,
+descripcion,
+descripcion_abreviada,
+codigo_invima,
+pos_npos,
+sw_pos
+inventarios_productos
+
+
+--- hospi5
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 01' , ubicacion='PISO5 HOSPB 01' WHERE pieza='HP5B01';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 02' , ubicacion='PISO5 HOSPB 02' WHERE pieza='HP5B02';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 03' , ubicacion='PISO5 HOSPB 03' WHERE pieza='HP5B03';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 04' , ubicacion='PISO5 HOSPB 04' WHERE pieza='HP5B04';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 05' , ubicacion='PISO5 HOSPB 05' WHERE pieza='HP5B05';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 06' , ubicacion='PISO5 HOSPB 06' WHERE pieza='HP5B06';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 07' , ubicacion='PISO5 HOSPB 07' WHERE pieza='HP5B07';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 08' , ubicacion='PISO5 HOSPB 08' WHERE pieza='HP5B08';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 09' , ubicacion='PISO5 HOSPB 09' WHERE pieza='HP5B09';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 10' , ubicacion='PISO5 HOSPB 10' WHERE pieza='HP5B10';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 11' , ubicacion='PISO5 HOSPB 11' WHERE pieza='HP5B11';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 12' , ubicacion='PISO5 HOSPB 12' WHERE pieza='HP5B12';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 13' , ubicacion='PISO5 HOSPB 13' WHERE pieza='HP5B13';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 14' , ubicacion='PISO5 HOSPB 14' WHERE pieza='HP5B14';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 15' , ubicacion='PISO5 HOSPB 15' WHERE pieza='HP5B15';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 16' , ubicacion='PISO5 HOSPB 16' WHERE pieza='HP5B16';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 17' , ubicacion='PISO5 HOSPB 17' WHERE pieza='HP5B17';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 18' , ubicacion='PISO5 HOSPB 18' WHERE pieza='HP5B18';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 19' , ubicacion='PISO5 HOSPB 19' WHERE pieza='HP5B19';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 20' , ubicacion='PISO5 HOSPB 20' WHERE pieza='HP5B20';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 21' , ubicacion='PISO5 HOSPB 21' WHERE pieza='HP5B21';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 22' , ubicacion='PISO5 HOSPB 22' WHERE pieza='HP5B22';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 23' , ubicacion='PISO5 HOSPB 23' WHERE pieza='HP5B23';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 24' , ubicacion='PISO5 HOSPB 24' WHERE pieza='HP5B24';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 25' , ubicacion='PISO5 HOSPB 25' WHERE pieza='HP5B25';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 26' , ubicacion='PISO5 HOSPB 26' WHERE pieza='HP5B26';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 27' , ubicacion='PISO5 HOSPB 27' WHERE pieza='HP5B27';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 28' , ubicacion='PISO5 HOSPB 28' WHERE pieza='HP5B28';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 29' , ubicacion='PISO5 HOSPB 29' WHERE pieza='HP5B29';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 30' , ubicacion='PISO5 HOSPB 30' WHERE pieza='HP5B30';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 31' , ubicacion='PISO5 HOSPB 31' WHERE pieza='HP5B31';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 32' , ubicacion='PISO5 HOSPB 32' WHERE pieza='HP5B32';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 33' , ubicacion='PISO5 HOSPB 33' WHERE pieza='HP5B33';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 34' , ubicacion='PISO5 HOSPB 34' WHERE pieza='HP5B34';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 35' , ubicacion='PISO5 HOSPB 35' WHERE pieza='HP5B35';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 36' , ubicacion='PISO5 HOSPB 36' WHERE pieza='HP5B36';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 37' , ubicacion='PISO5 HOSPB 37' WHERE pieza='HP5B37';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 38' , ubicacion='PISO5 HOSPB 38' WHERE pieza='HP5B38';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 39' , ubicacion='PISO5 HOSPB 39' WHERE pieza='HP5B39';
+UPDATE piezas SET descripcion='HABITACION UNIPERSONAL PISO 5 HOSPITALIZACION ADULTOS 40' , ubicacion='PISO5 HOSPB 40' WHERE pieza='HP5B40';
+
+INSERT INTO piezas VALUES('HP5B01','HP5B','HAB 01 HOSPI 5 B',1,'HAB 01 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B02','HP5B','HAB 02 HOSPI 5 B',1,'HAB 02 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B03','HP5B','HAB 03 HOSPI 5 B',1,'HAB 03 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B04','HP5B','HAB 04 HOSPI 5 B',1,'HAB 04 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B05','HP5B','HAB 05 HOSPI 5 B',1,'HAB 05 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B06','HP5B','HAB 06 HOSPI 5 B',1,'HAB 06 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B07','HP5B','HAB 07 HOSPI 5 B',1,'HAB 07 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B08','HP5B','HAB 08 HOSPI 5 B',1,'HAB 08 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B09','HP5B','HAB 09 HOSPI 5 B',1,'HAB 09 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B10','HP5B','HAB 10 HOSPI 5 B',1,'HAB 10 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B11','HP5B','HAB 11 HOSPI 5 B',1,'HAB 11 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B12','HP5B','HAB 12 HOSPI 5 B',1,'HAB 12 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B13','HP5B','HAB 13 HOSPI 5 B',1,'HAB 13 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B14','HP5B','HAB 14 HOSPI 5 B',1,'HAB 14 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B15','HP5B','HAB 15 HOSPI 5 B',1,'HAB 15 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B16','HP5B','HAB 16 HOSPI 5 B',1,'HAB 16 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B17','HP5B','HAB 17 HOSPI 5 B',1,'HAB 17 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B18','HP5B','HAB 18 HOSPI 5 B',1,'HAB 18 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B19','HP5B','HAB 19 HOSPI 5 B',1,'HAB 19 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B20','HP5B','HAB 20 HOSPI 5 B',1,'HAB 20 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B21','HP5B','HAB 21 HOSPI 5 B',1,'HAB 21 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B22','HP5B','HAB 22 HOSPI 5 B',1,'HAB 22 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B23','HP5B','HAB 23 HOSPI 5 B',1,'HAB 23 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B24','HP5B','HAB 24 HOSPI 5 B',1,'HAB 24 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B25','HP5B','HAB 25 HOSPI 5 B',1,'HAB 25 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B26','HP5B','HAB 26 HOSPI 5 B',1,'HAB 26 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B27','HP5B','HAB 27 HOSPI 5 B',1,'HAB 27 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B28','HP5B','HAB 28 HOSPI 5 B',1,'HAB 28 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B29','HP5B','HAB 29 HOSPI 5 B',1,'HAB 29 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B30','HP5B','HAB 30 HOSPI 5 B',1,'HAB 30 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B31','HP5B','HAB 31 HOSPI 5 B',1,'HAB 31 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B32','HP5B','HAB 32 HOSPI 5 B',1,'HAB 32 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B33','HP5B','HAB 33 HOSPI 5 B',1,'HAB 33 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B34','HP5B','HAB 34 HOSPI 5 B',1,'HAB 34 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B35','HP5B','HAB 35 HOSPI 5 B',1,'HAB 35 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B36','HP5B','HAB 36 HOSPI 5 B',1,'HAB 36 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B37','HP5B','HAB 37 HOSPI 5 B',1,'HAB 37 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B38','HP5B','HAB 38 HOSPI 5 B',1,'HAB 38 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B39','HP5B','HAB 39 HOSPI 5 B',1,'HAB 39 HP 5B',NULL,2,NOW());
+INSERT INTO piezas VALUES('HP5B40','HP5B','HAB 40 HOSPI 5 B',1,'HAB 40 HP 5B',NULL,2,NOW());
+--cups de la habitacion S11201
+--camas para adultos
+INSERT INTO camas VALUES ('HP5B01', 'HP5B01', '10A001',1,'CAMA 01 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B02', 'HP5B02', '10A001',1,'CAMA 02 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B03', 'HP5B03', '10A001',1,'CAMA 03 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B04', 'HP5B04', '10A001',1,'CAMA 04 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B05', 'HP5B05', '10A001',1,'CAMA 05 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B06', 'HP5B06', '10A001',1,'CAMA 06 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B07', 'HP5B07', '10A001',1,'CAMA 07 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B08', 'HP5B08', '10A001',1,'CAMA 08 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B09', 'HP5B09', '10A001',1,'CAMA 09 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B10', 'HP5B10', '10A001',1,'CAMA 10 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B11', 'HP5B11', '10A001',1,'CAMA 11 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B12', 'HP5B12', '10A001',1,'CAMA 12 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B13', 'HP5B13', '10A001',1,'CAMA 13 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B14', 'HP5B14', '10A001',1,'CAMA 14 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B15', 'HP5B15', '10A001',1,'CAMA 15 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B16', 'HP5B16', '10A001',1,'CAMA 16 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B17', 'HP5B17', '10A001',1,'CAMA 17 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B18', 'HP5B18', '10A001',1,'CAMA 18 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B19', 'HP5B19', '10A001',1,'CAMA 19 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B20', 'HP5B20', '10A001',1,'CAMA 20 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B21', 'HP5B21', '10A001',1,'CAMA 21 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B22', 'HP5B22', '10A001',1,'CAMA 22 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B23', 'HP5B23', '10A001',1,'CAMA 23 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B24', 'HP5B24', '10A001',1,'CAMA 24 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B25', 'HP5B25', '10A001',1,'CAMA 25 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B26', 'HP5B26', '10A001',1,'CAMA 26 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B27', 'HP5B27', '10A001',1,'CAMA 27 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B28', 'HP5B28', '10A001',1,'CAMA 28 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B29', 'HP5B29', '10A001',1,'CAMA 29 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B30', 'HP5B30', '10A001',1,'CAMA 30 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B31', 'HP5B31', '10A001',1,'CAMA 31 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B32', 'HP5B32', '10A001',1,'CAMA 32 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B33', 'HP5B33', '10A001',1,'CAMA 33 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B34', 'HP5B34', '10A001',1,'CAMA 34 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B35', 'HP5B35', '10A001',1,'CAMA 35 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B36', 'HP5B36', '10A001',1,'CAMA 36 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B37', 'HP5B37', '10A001',1,'CAMA 37 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B38', 'HP5B38', '10A001',1,'CAMA 38 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B39', 'HP5B39', '10A001',1,'CAMA 39 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+INSERT INTO camas VALUES ('HP5B40', 'HP5B40', '10A001',1,'CAMA 40 HOSP 5 B', 'CAMA PERSONAL HOSPITALIZACION', 1, 109, 2, NOW(), 2);
+
+
+UPDATE departamentos_cargos SET interface_externo='1' WHERE departamento='RAYOSX'
+
+	''RAYOSX',	RAYOS X
+  ''RESONA',	RESONANCIA MAGNETICA / ESCANOGRAFIA
+	''IMAGEN',	IMAGENOLOGIA
+	''ECOGRA',	ECOGRAFIA / ULTRASONIDO
+
+
+UPDATE departamentos_cargos SET departamento='IMAGEN' WHERE cargo IN (
+'883101',
+'883102',
+'883103',
+'883104',
+'883105',
+'883106',
+'883107',
+'883108',
+'883109',
+'883110',
+'883111',
+'883112',
+'883210',
+'883211',
+'881112',
+'881118',
+'881130',
+'881131',
+'881132',
+'881141',
+'881151',
+'881201',
+'881202',
+'881203',
+'881204',
+'881205',
+'881206',
+'881207',
+'881208',
+'881209',
+'881210',
+'881211',
+'881212',
+'881214',
+'881213',
+'881215',
+'881301',
+'881302',
+'881305',
+'881306',
+'881312',
+'881313',
+'881314',
+'881317',
+'881318',
+'881319',
+'881320',
+'881321',
+'881332',
+'881333',
+'881360',
+'881362',
+'881390',
+'881401',
+'881402',
+'881403',
+'881410',
+'881411',
+'881431',
+'881432',
+'881434',
+'881435',
+'881436',
+'881437',
+'881438',
+'881439',
+'881501',
+'881502',
+'881510',
+'881511',
+'881521',
+'881601',
+'881602',
+'881603',
+'881610',
+'881611',
+'881612',
+'881613',
+'881620',
+'881621',
+'881622',
+'881630',
+'881640',
+'881702',
+'881704',
+'881705',
+'881706',
+'882103',
+'882105',
+'882106',
+'882112',
+'882132',
+'882203',
+'882212',
+'882222',
+'882232',
+'882242',
+'882252',
+'882262',
+'882270',
+'882272',
+'882282',
+'882292',
+'882294',
+'882296',
+'882298',
+'882301',
+'882302',
+'882303',
+'882304',
+'882305',
+'882306',
+'882307',
+'882308',
+'882309',
+'882316',
+'882317',
+'882318',
+'882320',
+'882321',
+'882325',
+'882326',
+'882340',
+'882350',
+'882370',
+'882390',
+'882602',
+'882603',
+'882801',
+'882840',
+'883905',
+'886011',
+'886012',
+'886013',
+'886014',
+'886101',
+'887001',
+'887002',
+'887101',
+'887102',
+'887201',
+'883220',
+'883221',
+'883230',
+'883231',
+'883232',
+'883233',
+'883234',
+'883235',
+'883236',
+'883301',
+'883321',
+'883322',
+'883324',
+'883325',
+'883341',
+'883351',
+'883390',
+'883401',
+'883430',
+'883434',
+'883435',
+'883436',
+'883440',
+'883441',
+'883442',
+'883443',
+'883511',
+'883512',
+'883521',
+'883522',
+'883545',
+'883560',
+'883590',
+'883701',
+'883901',
+'883902',
+'883903',
+'883904',
+'883908',
+'883909',
+'883910',
+'883911',
+'883912',
+'883913',
+'873501',
+'877112',
+'877171',
+'998702',
+'870001',
+'870003',
+'870004',
+'870005',
+'870006',
+'870007',
+'870101',
+'870102',
+'870103',
+'870104',
+'870105',
+'870107',
+'870108',
+'870112',
+'870113',
+'870131',
+'870440',
+'870450',
+'870451',
+'870452',
+'870453',
+'870454',
+'870455',
+'870456',
+'870460',
+'870601',
+'870602',
+'870603',
+'871010',
+'871019',
+'871020',
+'871030',
+'871040',
+'871050',
+'871060',
+'871061',
+'871062',
+'871070',
+'871091',
+'871111',
+'871112',
+'871121',
+'871129',
+'871208',
+'871320',
+'872002',
+'872011',
+'872101',
+'872102',
+'872103',
+'872104',
+'872105',
+'872121',
+'872122',
+'872123',
+'873001',
+'873002',
+'873003',
+'873004',
+'873111',
+'873112',
+'873121',
+'873122',
+'873123',
+'873202',
+'873204',
+'873205',
+'873206',
+'873210',
+'873302',
+'873303',
+'873304',
+'873305',
+'873306',
+'873308',
+'873311',
+'873312',
+'873313',
+'873314',
+'873333',
+'873335',
+'873340',
+'873411',
+'873412',
+'873420',
+'873422',
+'873423',
+'873431',
+'873443',
+'873444',
+'876260'
+)
+
+INSERT INTO hc_sub_procedimientos_realizados_cups_dpto VALUES cargo_cups departamento tipo_profesional
