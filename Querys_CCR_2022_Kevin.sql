@@ -1130,7 +1130,11 @@ INSERT INTO usuarios_asigna_reportes VALUES('122', 3135, 2803, NOW());          
 INSERT INTO usuarios_asigna_reportes VALUES('124', 3135, 2803, NOW());                                  --Medicamentos Controlados 124
 INSERT INTO usuarios_asigna_reportes VALUES('241', 3135, 2803, NOW());                                  --Consolidado Existencias Farmacia Central 241
 
-
+2972 nadgutbe	NADUAR SOFIA GUTIERREZ BENITEZ
+Bodegas
+  Farmacia cirugia
+  Control lote
+  Home care
 
 
 
@@ -2636,9 +2640,9 @@ INSERT INTO userpermisos_estacion_enfermeria_qx(departamento, usuario_id) VALUES
 
 -- insert con subconsulta (atencion pacientes)
 INSERT INTO estaciones_enfermeria_usuarios (estacion_id, usuario_id, estacion_perfil_id) 
-SELECT estacion_id,2954,--usuario al que necesitamos que se le inserten los permisos.
+SELECT estacion_id,3775,--usuario al que necesitamos que se le inserten los permisos.
 estacion_perfil_id AS ep FROM estaciones_enfermeria_usuarios 
-WHERE usuario_id=523 ;--usuario que necesitamos copiar.
+WHERE usuario_id=1216 ;--usuario que necesitamos copiar.
 
 --insert con consulta permiso de medicos
 INSERT INTO estaciones_enfermeria_usuarios_componentes(estacion_id, usuario_id, estacion_componente_id, sw_permiso)
@@ -5961,284 +5965,294 @@ UPDATE departamentos_cargos SET interface_externo='1' WHERE departamento='RAYOSX
 UPDATE departamentos_cargos SET departamento='IMAGEN' WHERE cargo IN (
 '883101',
 '883102',
-'883103',
-'883104',
-'883105',
-'883106',
-'883107',
-'883108',
-'883109',
-'883110',
-'883111',
-'883112',
-'883210',
-'883211',
-'881112',
-'881118',
-'881130',
-'881131',
-'881132',
-'881141',
-'881151',
-'881201',
-'881202',
-'881203',
-'881204',
-'881205',
-'881206',
-'881207',
-'881208',
-'881209',
-'881210',
-'881211',
-'881212',
-'881214',
-'881213',
-'881215',
-'881301',
-'881302',
-'881305',
-'881306',
-'881312',
-'881313',
-'881314',
-'881317',
-'881318',
-'881319',
-'881320',
-'881321',
-'881332',
-'881333',
-'881360',
-'881362',
-'881390',
-'881401',
-'881402',
-'881403',
-'881410',
-'881411',
-'881431',
-'881432',
-'881434',
-'881435',
-'881436',
-'881437',
-'881438',
-'881439',
-'881501',
-'881502',
-'881510',
-'881511',
-'881521',
-'881601',
-'881602',
-'881603',
-'881610',
-'881611',
-'881612',
-'881613',
-'881620',
-'881621',
-'881622',
-'881630',
-'881640',
-'881702',
-'881704',
-'881705',
-'881706',
-'882103',
-'882105',
-'882106',
-'882112',
-'882132',
-'882203',
-'882212',
-'882222',
-'882232',
-'882242',
-'882252',
-'882262',
-'882270',
-'882272',
-'882282',
-'882292',
-'882294',
-'882296',
-'882298',
-'882301',
-'882302',
-'882303',
-'882304',
-'882305',
-'882306',
-'882307',
-'882308',
-'882309',
-'882316',
-'882317',
-'882318',
-'882320',
-'882321',
-'882325',
-'882326',
-'882340',
-'882350',
-'882370',
-'882390',
-'882602',
-'882603',
-'882801',
-'882840',
-'883905',
-'886011',
-'886012',
-'886013',
-'886014',
-'886101',
-'887001',
-'887002',
-'887101',
-'887102',
-'887201',
-'883220',
-'883221',
-'883230',
-'883231',
-'883232',
-'883233',
-'883234',
-'883235',
-'883236',
-'883301',
-'883321',
-'883322',
-'883324',
-'883325',
-'883341',
-'883351',
-'883390',
-'883401',
-'883430',
-'883434',
-'883435',
-'883436',
-'883440',
-'883441',
-'883442',
-'883443',
-'883511',
-'883512',
-'883521',
-'883522',
-'883545',
-'883560',
-'883590',
-'883701',
-'883901',
-'883902',
-'883903',
-'883904',
-'883908',
-'883909',
-'883910',
-'883911',
-'883912',
-'883913',
-'873501',
-'877112',
-'877171',
-'998702',
-'870001',
-'870003',
-'870004',
-'870005',
-'870006',
-'870007',
-'870101',
-'870102',
-'870103',
-'870104',
-'870105',
-'870107',
-'870108',
-'870112',
-'870113',
-'870131',
-'870440',
-'870450',
-'870451',
-'870452',
-'870453',
-'870454',
-'870455',
-'870456',
-'870460',
-'870601',
-'870602',
-'870603',
-'871010',
-'871019',
-'871020',
-'871030',
-'871040',
-'871050',
-'871060',
-'871061',
-'871062',
-'871070',
-'871091',
-'871111',
-'871112',
-'871121',
-'871129',
-'871208',
-'871320',
-'872002',
-'872011',
-'872101',
-'872102',
-'872103',
-'872104',
-'872105',
-'872121',
-'872122',
-'872123',
-'873001',
-'873002',
-'873003',
-'873004',
-'873111',
-'873112',
-'873121',
-'873122',
-'873123',
-'873202',
-'873204',
-'873205',
-'873206',
-'873210',
-'873302',
-'873303',
-'873304',
-'873305',
-'873306',
-'873308',
-'873311',
-'873312',
-'873313',
-'873314',
-'873333',
-'873335',
-'873340',
-'873411',
-'873412',
-'873420',
-'873422',
-'873423',
-'873431',
-'873443',
-'873444',
-'876260'
 )
 
 INSERT INTO hc_sub_procedimientos_realizados_cups_dpto VALUES cargo_cups departamento tipo_profesional
+
+
+
+
+-- codigo de contratacion
+SELECT
+inv.codigo_producto,
+invp.descripcion,
+inv.grupo_contratacion_id,
+invg.descripcion
+FROM
+inventarios inv
+JOIN inventarios_productos invp ON inv.codigo_producto = invp.codigo_producto
+JOIN inv_grupos_contrataciones invg ON inv.grupo_contratacion_id = invg.grupo_contratacion_id
+WHERE
+inv.grupo_contratacion_id = '0'
+ORDER BY inv.codigo_producto
+
+
+-- cambiar grupo de contratacion
+CONCATENAR("UPDATE
+inventarios
+SET
+grupo_contratacion_id = ";'C2';"
+WHERE
+codigo_producto = ";'A2';";")
+
+
+-- 
+SELECT a.empresa_id,
+    a.bodega,
+    a.centro_utilidad,
+    a.codigo_producto,
+    sum(a.cantidad) AS cantidad,
+    a.fecha_vencimiento,
+    a.lote,
+    qr
+   FROM ( SELECT hm.empresa_id,
+            hm.bodega,
+            hm.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 1' AS qr
+           FROM hc_solicitudes_medicamentos hm,
+            bodegas_documento_despacho_med bd,
+            bodegas_documento_despacho_med_d dd,
+            hc_solicitudes_medicamentos_d hi
+          WHERE hm.sw_estado = '1'::bpchar AND hm.solicitud_id = hi.solicitud_id AND hm.documento_despacho = bd.documento_despacho_id AND bd.documento_despacho_id = dd.documento_despacho_id AND dd.consecutivo_solicitud = hi.consecutivo_d
+          GROUP BY hm.empresa_id, hm.bodega, hm.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT hm.empresa_id,
+            hm.bodega,
+            hm.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 2' AS qr
+           FROM hc_solicitudes_medicamentos hm,
+            bodegas_documento_despacho_med bd,
+            bodegas_documento_despacho_ins_d dd,
+            hc_solicitudes_insumos_d hi
+          WHERE hm.sw_estado = '1'::bpchar AND hm.solicitud_id = hi.solicitud_id AND hm.documento_despacho = bd.documento_despacho_id AND bd.documento_despacho_id = dd.documento_despacho_id AND dd.consecutivo_solicitud = hi.consecutivo_d
+          GROUP BY hm.empresa_id, hm.bodega, hm.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT hs.empresa_id,
+            hs.bodega,
+            hs.centro_utilidad,
+            sc.codigo_producto_d AS codigo_producto,
+            sum(sc.cantidad) AS cantidad,
+            sc.fecha_vencimiento,
+            sc.lote,
+            'QUERY 3' AS qr
+           FROM hc_solicitudes_suministros_estacion hs,
+            hc_solicitudes_suministros_estacion_detalle hd,
+            hc_solicitudes_suministros_est_x_confirmar sc
+          WHERE hs.solicitud_id = hd.solicitud_id AND (hd.sw_estado = ANY (ARRAY['1'::bpchar, '2'::bpchar])) AND hd.consecutivo = sc.consecutivo AND sc.estado = '1'::bpchar AND sc.bodegas_doc_id IS NULL AND sc.numeracion IS NULL
+          GROUP BY hs.empresa_id, hs.bodega, hs.centro_utilidad, sc.codigo_producto_d, sc.fecha_vencimiento, sc.lote, qr
+        UNION ALL
+         SELECT bn.empresa_id,
+            bn.bodega,
+            bn.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 4' AS qr
+           FROM tmp_bodegas_documentos_d dd,
+            bodegas_doc_numeraciones bn
+          WHERE dd.bodegas_doc_id = bn.bodegas_doc_id
+          GROUP BY bn.empresa_id, bn.bodega, bn.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT hc_dispensacion_medicamentos_tmp.empresa_id,
+            hc_dispensacion_medicamentos_tmp.bodega,
+            hc_dispensacion_medicamentos_tmp.centro_utilidad,
+            hc_dispensacion_medicamentos_tmp.codigo_producto,
+            sum(hc_dispensacion_medicamentos_tmp.cantidad_despachada) AS cantidad,
+            hc_dispensacion_medicamentos_tmp.fecha_vencimiento,
+            hc_dispensacion_medicamentos_tmp.lote,
+            'QUERY 5' AS qr
+           FROM hc_dispensacion_medicamentos_tmp
+          GROUP BY hc_dispensacion_medicamentos_tmp.empresa_id, hc_dispensacion_medicamentos_tmp.bodega, hc_dispensacion_medicamentos_tmp.centro_utilidad, hc_dispensacion_medicamentos_tmp.codigo_producto, hc_dispensacion_medicamentos_tmp.fecha_vencimiento, hc_dispensacion_medicamentos_tmp.lote, qr
+        UNION ALL
+         SELECT ds_dispensacion_medicamentos_tmp.empresa_id,
+            ds_dispensacion_medicamentos_tmp.bodega,
+            ds_dispensacion_medicamentos_tmp.centro_utilidad,
+            ds_dispensacion_medicamentos_tmp.codigo_producto,
+            sum(ds_dispensacion_medicamentos_tmp.cantidad_despachada) AS cantidad,
+            ds_dispensacion_medicamentos_tmp.fecha_vencimiento,
+            ds_dispensacion_medicamentos_tmp.lote,
+            'QUERY 6' AS qr
+           FROM ds_dispensacion_medicamentos_tmp
+          GROUP BY ds_dispensacion_medicamentos_tmp.empresa_id, ds_dispensacion_medicamentos_tmp.bodega, ds_dispensacion_medicamentos_tmp.centro_utilidad, ds_dispensacion_medicamentos_tmp.codigo_producto, ds_dispensacion_medicamentos_tmp.fecha_vencimiento, ds_dispensacion_medicamentos_tmp.lote, qr
+        UNION ALL
+         SELECT tm_despachos_productos.empresa_id,
+            tm_despachos_productos.bodega,
+            tm_despachos_productos.centro_utilidad,
+            tm_despachos_productos.codigo_producto,
+            sum(tm_despachos_productos.cantidad_despachada) AS cantidad,
+            tm_despachos_productos.fecha_vencimiento,
+            tm_despachos_productos.lote,
+            'QUERY 7' AS qr
+           FROM tm_despachos_productos
+          GROUP BY tm_despachos_productos.empresa_id, tm_despachos_productos.bodega, tm_despachos_productos.centro_utilidad, tm_despachos_productos.codigo_producto, tm_despachos_productos.fecha_vencimiento, tm_despachos_productos.lote, qr
+        UNION ALL
+         SELECT tm.empresa_id,
+            tm.bodega,
+            tm.centro_utilidad,
+            tm.codigo_producto,
+            sum(tm.cantidad) AS cantidad,
+            tm.fecha_vencimiento,
+            tm.lote,
+            'QUERY 8' AS qr
+           FROM inv_bodegas_movimiento_tmp_d tm
+          GROUP BY tm.empresa_id, tm.bodega, tm.centro_utilidad, tm.codigo_producto, tm.fecha_vencimiento, tm.lote, qr
+        UNION ALL
+         SELECT tm.empresa_id,
+            tm.bodega,
+            tm.centro_utilidad,
+            tm.codigo_producto,
+            sum(tm.cantidad) AS cantidad,
+            tm.fecha_vencimiento,
+            tm.lote,
+            'QUERY 9' AS qr
+           FROM ( SELECT tm_1.empresa_id,
+                    tm_1.bodega,
+                    tm_1.centro_utilidad,
+                    tm_1.codigo_producto,
+                    sum(tm_1.cantidad - COALESCE(td.cantidad, 0::numeric)) AS cantidad,
+                    tm_1.fecha_vencimiento,
+                    tm_1.lote,
+                    'QUERY 9' AS qr
+                   FROM estacion_enfermeria_qx_iym tm_1
+                     LEFT JOIN ( SELECT sum(estacion_enfermeria_qx_iym_devoluciones.cantidad) AS cantidad,
+                            estacion_enfermeria_qx_iym_devoluciones.codigo_producto,
+                            estacion_enfermeria_qx_iym_devoluciones.programacion_id,
+                            estacion_enfermeria_qx_iym_devoluciones.fecha_vencimiento,
+                            estacion_enfermeria_qx_iym_devoluciones.lote
+                           FROM estacion_enfermeria_qx_iym_devoluciones
+                          WHERE estacion_enfermeria_qx_iym_devoluciones.estado = '0'::bpchar
+                          GROUP BY estacion_enfermeria_qx_iym_devoluciones.codigo_producto, 
+                          estacion_enfermeria_qx_iym_devoluciones.programacion_id, 
+                          estacion_enfermeria_qx_iym_devoluciones.fecha_vencimiento, 
+                          estacion_enfermeria_qx_iym_devoluciones.lote) td 
+                          ON tm_1.programacion_id = td.programacion_id 
+                          AND tm_1.codigo_producto::text = td.codigo_producto::text 
+                          AND tm_1.fecha_vencimiento = td.fecha_vencimiento 
+                          AND tm_1.lote::text = td.lote::text
+                  WHERE tm_1.estado = '0'::bpchar
+                  GROUP BY tm_1.empresa_id, tm_1.bodega, tm_1.centro_utilidad, tm_1.codigo_producto, tm_1.fecha_vencimiento, tm_1.lote, qr) tm
+          WHERE tm.cantidad > 0::numeric
+          GROUP BY tm.empresa_id, tm.bodega, tm.centro_utilidad, tm.codigo_producto, tm.fecha_vencimiento, tm.lote, qr
+        UNION ALL
+         SELECT tm.empresa_id,
+            tm.bodega,
+            tm.centro_utilidad,
+            tm.codigo_producto,
+            sum(tm.cantidad) AS cantidad,
+            tm.fecha_vencimiento,
+            tm.lote,
+            'QUERY 10' AS qr
+           FROM tmp_cuenta_insumos tm
+          GROUP BY tm.empresa_id, tm.bodega, tm.centro_utilidad, tm.codigo_producto, tm.fecha_vencimiento, tm.lote, qr
+        UNION ALL
+         SELECT dd.empresa_id,
+            dd.bodega,
+            dd.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad_despachada) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 11' AS qr
+           FROM tm_despachos_medicamentos_cm dd
+          GROUP BY dd.empresa_id, dd.bodega, dd.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT dd.empresa_id,
+            dd.bodega,
+            dd.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad_despachada) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 12' AS qr
+           FROM tm_despachos_insumos_cm dd
+          GROUP BY dd.empresa_id, dd.bodega, dd.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT cs.empresa_id,
+            cs.bodega,
+            cs.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) - sum(dd.cantidad_dev) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 13' AS qr
+           FROM bodegas_doc_despacho_medicamentos_cm dd,
+            bodegas_documento_despacho_cm cm,
+            central_mezclas_solicitudes cs
+          WHERE dd.documento_desp_cm_id = cm.documento_desp_cm_id AND cm.cm_solicitud_id = cs.cm_solicitud_id AND (cm.sw_estado = ANY (ARRAY['1'::bpchar, '3'::bpchar]))
+          GROUP BY cs.empresa_id, cs.bodega, cs.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT cs.empresa_id,
+            cs.bodega,
+            cs.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) - sum(dd.cantidad_dev) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 14' AS qr
+           FROM bodegas_doc_despacho_insumos_cm dd,
+            bodegas_documento_despacho_cm cm,
+            central_mezclas_solicitudes cs
+          WHERE dd.documento_desp_cm_id = cm.documento_desp_cm_id AND cm.cm_solicitud_id = cs.cm_solicitud_id AND (cm.sw_estado = ANY (ARRAY['1'::bpchar, '3'::bpchar]))
+          GROUP BY cs.empresa_id, cs.bodega, cs.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT dd.empresa_id,
+            dd.bodega,
+            dd.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad_despachada) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 15' AS qr
+           FROM tmp_despachos_pre_medicamentos dd
+          GROUP BY dd.empresa_id, dd.bodega, dd.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT dd.empresa_id,
+            dd.bodega,
+            dd.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad_despachada) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 16' AS qr
+           FROM tmp_despachos_pre_insumos dd
+          GROUP BY dd.empresa_id, dd.bodega, dd.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT q.empresa_id,
+            q.bodega,
+            q.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 17' AS qr
+           FROM despacho_premedicados_medicamentos dd,
+            despacho_premedicados d,
+            qx_medicamentos q
+          WHERE d.dep_premedicados_id = dd.dep_premedicados_id AND dd.qx_medicamento_id = q.qx_medicamento_id AND d.sw_estado = '1'::bpchar
+          GROUP BY q.empresa_id, q.bodega, q.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr
+        UNION ALL
+         SELECT q.empresa_id,
+            q.bodega,
+            q.centro_utilidad,
+            dd.codigo_producto,
+            sum(dd.cantidad) AS cantidad,
+            dd.fecha_vencimiento,
+            dd.lote,
+            'QUERY 18' AS qr
+           FROM despacho_premedicados_insumos dd,
+            despacho_premedicados d,
+            qx_insumos_programacion q
+          WHERE d.dep_premedicados_id = dd.dep_premedicados_id AND dd.qx_insumos_id = q.qx_insumos_id AND d.sw_estado = '1'::bpchar
+          GROUP BY q.empresa_id, q.bodega, q.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr) a
+  GROUP BY a.empresa_id, a.bodega, a.centro_utilidad, a.codigo_producto, a.fecha_vencimiento, a.lote, a.qr;
+
+  -- estaciones para ginecologia
