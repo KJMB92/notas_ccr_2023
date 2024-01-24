@@ -6254,5 +6254,14 @@ SELECT a.empresa_id,
           WHERE d.dep_premedicados_id = dd.dep_premedicados_id AND dd.qx_insumos_id = q.qx_insumos_id AND d.sw_estado = '1'::bpchar
           GROUP BY q.empresa_id, q.bodega, q.centro_utilidad, dd.codigo_producto, dd.fecha_vencimiento, dd.lote, qr) a
   GROUP BY a.empresa_id, a.bodega, a.centro_utilidad, a.codigo_producto, a.fecha_vencimiento, a.lote, a.qr;
+--
 
-  -- estaciones para ginecologia
+--  actualizar oden de tarifarios
+UPDATE
+tarifarios_equivalencias
+SET
+indice_orden= 
+WHERE
+tarifario= ''
+AND cargo= ''
+AND cargo_base= '';
