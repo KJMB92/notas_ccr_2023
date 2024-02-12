@@ -2665,9 +2665,9 @@ WHERE usuario_id=3072;--usuario que necesitamos copiar.
 
 -- insert subconsulta para reportes CSV
 INSERT INTO usuarios_asigna_reportes (reporte_empresa_id, usuario_id, usuario_registra, fecha_registro)
-SELECT reporte_empresa_id, 3189, 2803, NOW()
+SELECT reporte_empresa_id, 2033, 2803, NOW()
 FROM usuarios_asigna_reportes
-WHERE usuario_id= 2845--usuario que necesitamos copiar.
+WHERE usuario_id= 3--usuario que necesitamos copiar.
 
 
 -- insert copia usuario subconsulta para trasnsacciones de bodega KARDEX
@@ -5614,9 +5614,9 @@ codigo_producto='";;"'
 
 -- refrescar tabla
 UPDATE
-soat_eventos
+fac_facturas
 SET
-evento = evento
+factura_fiscal = factura_fiscal AND prefijo = prefijo
 
 UPDATE
 cuentas_detalle
@@ -6257,11 +6257,9 @@ SELECT a.empresa_id,
 --
 
 --  actualizar oden de tarifarios
-UPDATE
-tarifarios_equivalencias
-SET
-indice_orden= 
-WHERE
-tarifario= ''
-AND cargo= ''
-AND cargo_base= '';
+UPDATE tarifarios_equivalencias SET indice_orden=  WHERE tarifario= '' AND cargo= '' AND cargo_base= '';
+UPDATE tarifarios_equivalencias SET indice_orden=1  WHERE tarifario_id= '0003' AND cargo= '1250' AND cargo_base= '010101';
+=CONCATENAR("UPDATE tarifarios_equivalencias SET indice_orden=";G2;"  WHERE tarifario_id= '";A2;"' AND cargo= '";C2;"' AND cargo_base= '";E2;"';")
+
+--eliminar departamentos cargos
+DELETE FROM departamentos_cargos WHERE departamento='' AND cargo='';
