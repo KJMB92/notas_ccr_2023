@@ -2704,11 +2704,11 @@ FROM bodegas_usuarios_devoluciones_cuentas
 WHERE usuario_id= 3;--usuario que necesitamos copiar.
 
 
--- insert con subconsulta en inv_bodegas_userpermisos 
+-- insert transacciones de bodega con subconsulta en inv_bodegas_userpermisos 
 INSERT INTO inv_bodegas_userpermisos (documento_id, empresa_id, centro_utilidad, bodega, usuario_id, permiso_doc)
-SELECT documento_id, empresa_id, centro_utilidad, bodega, 523, permiso_doc --usuario que vamos a insertar los permisos
+SELECT documento_id, empresa_id, centro_utilidad, bodega, 2033, permiso_doc --usuario que vamos a insertar los permisos
 FROM inv_bodegas_userpermisos
-WHERE usuario_id= 544;--usuario que necesitamos copiar.
+WHERE usuario_id= 3;--usuario que necesitamos copiar.
 
 
 -- update fecha ingreso caja en fecha registro
