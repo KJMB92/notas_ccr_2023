@@ -6263,3 +6263,55 @@ UPDATE tarifarios_equivalencias SET indice_orden=1  WHERE tarifario_id= '0003' A
 
 --eliminar departamentos cargos
 DELETE FROM departamentos_cargos WHERE departamento='' AND cargo='';
+
+-- reporte de medicamentos para manolo
+SELECT
+med.codigo_medicamento,
+inv.descripcion,
+inv.descripcion_abreviada,
+med.sw_liquidos_electrolitos,
+med.cod_anatomofarmacologico,
+invana.descripcion,
+med.cod_principio_activo,
+cpa.descripcion,
+med.cod_forma_farmacologica,
+invffc.descripcion,
+invffc.unidad_dosificacion,
+med.cod_concentracion,
+med.sw_uso_controlado,
+med.sw_antibiotico,
+med.sw_pos,
+med.sw_fotosensible,
+med.sw_refrigerado,
+med.unidad_medida_medicamento_id,
+invumm.descripcion,
+med.factor_conversion,
+med.factor_equivalente_mg,
+med.concentracion_forma_farmacologica,
+med.sw_alimento_parenteral,
+med.sw_alimento_enteral,
+med.cod_ihosp,
+med.dias_previos_vencimiento,
+med.codigo_cum,
+med.cant_presentacion,
+med.nivel_autorizador_id,
+med.sw_manejo_luz,
+med.sw_farmacovigilancia,
+med.descripcion_alerta,
+med.sw_alto_riesgo,
+med.sw_central_mezclas,
+med.estabilidad_medicamento,
+med.recomendaciones,
+med.concentracion_medicamento_mezcla,
+med.sw_control_especial,
+med.codigo_ium,
+med.sw_alimento,
+med.rips_tipo_medicamento_id
+FROM
+medicamentos med
+JOIN inventarios_productos inv ON med.codigo_medicamento = inv.codigo_producto
+JOIN inv_med_cod_anatofarmacologico invana ON med.cod_anatomofarmacologico = invana.cod_anatomofarmacologico
+JOIN inv_med_cod_principios_activos cpa ON med.cod_principio_activo = cpa.cod_principio_activo
+JOIN inv_med_cod_forma_farmacologica invffc ON med.cod_forma_farmacologica = invffc.cod_forma_farmacologica
+JOIN inv_unidades_medida_medicamentos invumm ON med.unidad_medida_medicamento_id = invumm.unidad_medida_medicamento_id
+ORDER BY 1
