@@ -6315,3 +6315,86 @@ JOIN inv_med_cod_principios_activos cpa ON med.cod_principio_activo = cpa.cod_pr
 JOIN inv_med_cod_forma_farmacologica invffc ON med.cod_forma_farmacologica = invffc.cod_forma_farmacologica
 JOIN inv_unidades_medida_medicamentos invumm ON med.unidad_medida_medicamento_id = invumm.unidad_medida_medicamento_id
 ORDER BY 1
+
+------
+Query para Luz Helayne para ver las glosas de las facturas y de cada una ver sus observaciones.
+
+SELECT DISTINCT
+ter.tipo_id_tercero,
+ter.nombre_tercero,
+gl.glosa_id,
+gl.prefijo ||' '|| gl.factura_fiscal AS factura,
+gl.fecha_glosa,
+gl.fecha_registro,
+gl.valor_glosa,
+gl.valor_aceptado,
+gl.valor_no_aceptado,
+gl.valor_pendiente,
+gl.prefijo_glosa ||' '|| gl.numero AS numero_glosa,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gl.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa,
+glr.glosa_respuesta_id AS glosa_respuesta_id_IPS,
+glr.respuesta_numero AS respuesta_numero_IPS,
+gce.descripcion_concepto_especifico AS descripcion_concepto_especifico_IPS,
+gcg.codigo_concepto_general AS codigo_concepto_general_IPS,
+glr.fecha_registro AS fecha_registro_IPS,
+glr.fecha_confirmacion AS fecha_confirmacion_IPS,
+glr.valor_aceptado AS valor_aceptado_IPS,
+glr.valor_no_aceptado AS valor_no_aceptado_IPS,
+glr.valor_pendiente AS valor_pendiente_IPS,
+glr.valor_aceptado_eps AS valor_aceptado_eps_IPS,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(glr.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_IPS,
+gle.glosa_respuesta_eps_id AS glosa_respuesta_eps_id_EPS,
+gle.respuesta_numero AS respuesta_numero_EPS,
+gle.fecha_registro AS fecha_registro_EPS,
+gle.fecha_ratificacion AS fecha_ratificacion_EPS,
+gle.valor_aceptado AS valor_aceptado_EPS,
+gle.valor_no_aceptado AS valor_no_aceptado_EPS,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gle.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_EPS,
+grc.glosa_respuesta_cargo_id,
+cd.cargo,
+gcggdc.descripcion_concepto_general,
+gcegdc.descripcion_concepto_especifico,
+gcggrc.descripcion_concepto_general,
+gcegrc.descripcion_concepto_especifico,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(grc.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_CARGOS,
+gdi.glosa_respuesta_inventario_id,
+gdi.codigo_producto,
+gcggdi.descripcion_concepto_general,
+gcegdi.descripcion_concepto_especifico,
+gcggri.descripcion_concepto_general,
+gcegri.descripcion_concepto_especifico,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gri.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_INVENTARIOS
+FROM glosas gl
+LEFT JOIN glosas_respuestas glr ON gl.empresa_id = glr.empresa_id AND gl.glosa_id = glr.glosa_id
+LEFT JOIN glosas_respuestas_eps gle ON gl.empresa_id = gle.empresa_id AND gl.glosa_id = gle.glosa_id
+LEFT JOIN glosas_concepto_especifico gce ON glr.codigo_concepto_especifico = gce.codigo_concepto_especifico
+LEFT JOIN glosas_concepto_general gcg ON glr.codigo_concepto_general = gcg.codigo_concepto_general
+JOIN fac_facturas ff ON gl.empresa_id = ff.empresa_id AND gl.prefijo = ff.prefijo AND gl.factura_fiscal = ff.factura_fiscal
+JOIN terceros ter ON ff.tipo_id_tercero = ter.tipo_id_tercero AND ff.tercero_id = ter.tercero_id
+
+JOIN glosas_detalle_cargos gdc ON gl.glosa_id = gdc.glosa_id
+LEFT JOIN glosas_concepto_general gcggdc ON gdc.codigo_concepto_general = gcggdc.codigo_concepto_general
+LEFT JOIN glosas_concepto_especifico gcegdc ON gdc.codigo_concepto_especifico = gcegdc.codigo_concepto_especifico
+
+JOIN glosas_respuestas_cargos grc ON glr.glosa_respuesta_id = grc.glosa_respuesta_id
+LEFT JOIN glosas_concepto_especifico gcegrc ON grc.codigo_concepto_especifico = gcegrc.codigo_concepto_especifico
+LEFT JOIN glosas_concepto_general gcggrc ON grc.codigo_concepto_general = gcggrc.codigo_concepto_general
+LEFT JOIN glosas_detalle_cargos gdcgrc ON grc.glosa_detalle_cargo_id = gdcgrc.glosa_detalle_cargo_id
+LEFT JOIN cuentas_detalle cd ON gdcgrc.transaccion = cd.transaccion
+
+JOIN glosas_detalle_inventarios gdi ON gl.glosa_id = gdi.glosa_id
+LEFT JOIN glosas_concepto_general gcggdi ON gdi.codigo_concepto_general = gcggdi.codigo_concepto_general
+LEFT JOIN glosas_concepto_especifico gcegdi ON gdi.codigo_concepto_especifico = gcegdi.codigo_concepto_especifico
+
+
+JOIN glosas_respuestas_inventarios gri ON glr.glosa_respuesta_id = gri.glosa_respuesta_id
+LEFT JOIN glosas_concepto_especifico gcegri ON gri.codigo_concepto_especifico = gcegri.codigo_concepto_especifico
+LEFT JOIN glosas_concepto_general gcggri ON gri.codigo_concepto_general = gcggri.codigo_concepto_general
+LEFT JOIN glosas_detalle_inventarios gdigri ON gri.glosa_detalle_cargo_id = gdigri.glosa_detalle_cargo_id
+
+
+
+--WHERE glr.fecha_registro::DATE BETWEEN '2021-01-01' AND '2021-12-31'
+WHERE gl.prefijo = 'FC'
+AND gl.factura_fiscal = 224
+--ORDER BY 2, 3
