@@ -6318,6 +6318,159 @@ ORDER BY 1
 
 ------
 Query para Luz Helayne para ver las glosas de las facturas y de cada una ver sus observaciones.
+SELECT
+    ter.tipo_id_tercero,
+    ter.nombre_tercero,
+    gl.glosa_id,
+    gl.prefijo ||' '|| gl.factura_fiscal AS factura,
+    gl.fecha_glosa,
+    gl.fecha_registro,
+    gl.valor_glosa,
+    gl.valor_aceptado,
+    gl.valor_no_aceptado,
+    gl.valor_pendiente,
+    gl.prefijo_glosa ||' '|| gl.numero AS numero_glosa,
+    TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gl.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS observacion_glosa,
+    glr.glosa_respuesta_id AS glosa_respuesta_id_IPS,
+    glr.respuesta_numero AS respuesta_numero_IPS,
+    gce.descripcion_concepto_especifico AS descripcion_concepto_especifico_IPS,
+    gcg.codigo_concepto_general AS codigo_concepto_general_IPS,
+    glr.fecha_registro AS fecha_registro_IPS,
+    glr.fecha_confirmacion AS fecha_confirmacion_IPS,
+    glr.valor_aceptado AS valor_aceptado_IPS,
+    glr.valor_no_aceptado AS valor_no_aceptado_IPS,
+    glr.valor_pendiente AS valor_pendiente_IPS,
+    glr.valor_aceptado_eps AS valor_aceptado_eps_IPS,
+    TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(glr.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS observacion_glosa_respuesta_IPS,
+    gle.glosa_respuesta_eps_id AS glosa_respuesta_eps_id_EPS,
+    gle.respuesta_numero AS respuesta_numero_EPS,
+    gle.fecha_registro AS fecha_registro_EPS,
+    gle.fecha_ratificacion AS fecha_ratificacion_EPS,
+    gle.valor_aceptado AS valor_aceptado_EPS,
+    gle.valor_no_aceptado AS valor_no_aceptado_EPS,
+    TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gle.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS observacion_glosa_respuesta_EPS,
+    gdi.glosa_detalle_inventario_id,
+    gdi.codigo_producto,
+    gcggdi.descripcion_concepto_general,
+    gcegdi.descripcion_concepto_especifico,
+    gcggri.descripcion_concepto_general,
+    gcegri.descripcion_concepto_especifico,
+    TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gri.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' '))) AS observacion_glosa_respuesta_INVENTARIOS
+FROM
+    glosas gl
+    LEFT JOIN glosas_respuestas glr ON gl.empresa_id = glr.empresa_id AND gl.glosa_id = glr.glosa_id
+    LEFT JOIN glosas_respuestas_eps gle ON gl.empresa_id = gle.empresa_id AND gl.glosa_id = gle.glosa_id
+    LEFT JOIN glosas_concepto_especifico gce ON glr.codigo_concepto_especifico = gce.codigo_concepto_especifico
+    LEFT JOIN glosas_concepto_general gcg ON glr.codigo_concepto_general = gcg.codigo_concepto_general
+    JOIN fac_facturas ff ON gl.empresa_id = ff.empresa_id AND gl.prefijo = ff.prefijo AND gl.factura_fiscal = ff.factura_fiscal
+    JOIN terceros ter ON ff.tipo_id_tercero = ter.tipo_id_tercero AND ff.tercero_id = ter.tercero_id
+    JOIN glosas_detalle_inventarios gdi ON gl.glosa_id = gdi.glosa_id
+    LEFT JOIN glosas_concepto_general gcggdi ON gdi.codigo_concepto_general = gcggdi.codigo_concepto_general
+    LEFT JOIN glosas_concepto_especifico gcegdi ON gdi.codigo_concepto_especifico = gcegdi.codigo_concepto_especifico
+    JOIN glosas_respuestas_inventarios gri ON glr.glosa_respuesta_id = gri.glosa_respuesta_id
+    LEFT JOIN glosas_concepto_especifico gcegri ON gri.codigo_concepto_especifico = gcegri.codigo_concepto_especifico
+    LEFT JOIN glosas_concepto_general gcggri ON gri.codigo_concepto_general = gcggri.codigo_concepto_general
+WHERE
+    gl.prefijo = 'FC'
+    AND gl.factura_fiscal = 224
+GROUP BY
+    ter.tipo_id_tercero,
+    ter.nombre_tercero,
+    gl.glosa_id,
+    gl.prefijo ||' '|| gl.factura_fiscal,
+    gl.fecha_glosa,
+    gl.fecha_registro,
+    gl.valor_glosa,
+    gl.valor_aceptado,
+    gl.valor_no_aceptado,
+    gl.valor_pendiente,
+    gl.prefijo_glosa ||' '|| gl.numero,
+    glr.glosa_respuesta_id,
+    glr.respuesta_numero,
+    gce.descripcion_concepto_especifico,
+    gcg.codigo_concepto_general,
+    glr.fecha_registro,
+    glr.fecha_confirmacion,
+    glr.valor_aceptado,
+    glr.valor_no_aceptado,
+    glr.valor_pendiente,
+    glr.valor_aceptado_eps,
+    gle.glosa_respuesta_eps_id,
+    gle.respuesta_numero,
+    gle.fecha_registro,
+    gle.fecha_ratificacion,
+    gle.valor_aceptado,
+    gle.valor_no_aceptado,
+    gdi.glosa_detalle_inventario_id,
+    gdi.codigo_producto,
+    gcggdi.descripcion_concepto_general,
+    gcegdi.descripcion_concepto_especifico,
+    gcggri.descripcion_concepto_general,
+    gcegri.descripcion_concepto_especifico,
+    gri.observacion
+
+---------------------------------------------------------------------------------------------------------------------------
+
+SELECT DISTINCT
+ter.tipo_id_tercero,
+ter.nombre_tercero,
+gl.glosa_id,
+gl.prefijo ||' '|| gl.factura_fiscal AS factura,
+gl.fecha_glosa,
+gl.fecha_registro,
+gl.valor_glosa,
+gl.valor_aceptado,
+gl.valor_no_aceptado,
+gl.valor_pendiente,
+gl.prefijo_glosa ||' '|| gl.numero AS numero_glosa,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gl.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa,
+glr.glosa_respuesta_id AS glosa_respuesta_id_IPS,
+glr.respuesta_numero AS respuesta_numero_IPS,
+gce.descripcion_concepto_especifico AS descripcion_concepto_especifico_IPS,
+gcg.codigo_concepto_general AS codigo_concepto_general_IPS,
+glr.fecha_registro AS fecha_registro_IPS,
+glr.fecha_confirmacion AS fecha_confirmacion_IPS,
+glr.valor_aceptado AS valor_aceptado_IPS,
+glr.valor_no_aceptado AS valor_no_aceptado_IPS,
+glr.valor_pendiente AS valor_pendiente_IPS,
+glr.valor_aceptado_eps AS valor_aceptado_eps_IPS,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(glr.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_IPS,
+gle.glosa_respuesta_eps_id AS glosa_respuesta_eps_id_EPS,
+gle.respuesta_numero AS respuesta_numero_EPS,
+gle.fecha_registro AS fecha_registro_EPS,
+gle.fecha_ratificacion AS fecha_ratificacion_EPS,
+gle.valor_aceptado AS valor_aceptado_EPS,
+gle.valor_no_aceptado AS valor_no_aceptado_EPS,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gle.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_EPS,
+gdi.glosa_detalle_inventario_id,
+gdi.codigo_producto,
+gcggdi.descripcion_concepto_general,
+gcegdi.descripcion_concepto_especifico,
+gcggri.descripcion_concepto_general,
+gcegri.descripcion_concepto_especifico,
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gri.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_INVENTARIOS
+FROM glosas gl
+LEFT JOIN glosas_respuestas glr ON gl.empresa_id = glr.empresa_id AND gl.glosa_id = glr.glosa_id
+LEFT JOIN glosas_respuestas_eps gle ON gl.empresa_id = gle.empresa_id AND gl.glosa_id = gle.glosa_id
+LEFT JOIN glosas_concepto_especifico gce ON glr.codigo_concepto_especifico = gce.codigo_concepto_especifico
+LEFT JOIN glosas_concepto_general gcg ON glr.codigo_concepto_general = gcg.codigo_concepto_general
+JOIN fac_facturas ff ON gl.empresa_id = ff.empresa_id AND gl.prefijo = ff.prefijo AND gl.factura_fiscal = ff.factura_fiscal
+JOIN terceros ter ON ff.tipo_id_tercero = ter.tipo_id_tercero AND ff.tercero_id = ter.tercero_id
+
+JOIN glosas_detalle_inventarios gdi ON gl.glosa_id = gdi.glosa_id
+LEFT JOIN glosas_concepto_general gcggdi ON gdi.codigo_concepto_general = gcggdi.codigo_concepto_general
+LEFT JOIN glosas_concepto_especifico gcegdi ON gdi.codigo_concepto_especifico = gcegdi.codigo_concepto_especifico
+
+JOIN glosas_respuestas_inventarios gri ON glr.glosa_respuesta_id = gri.glosa_respuesta_id
+LEFT JOIN glosas_concepto_especifico gcegri ON gri.codigo_concepto_especifico = gcegri.codigo_concepto_especifico
+LEFT JOIN glosas_concepto_general gcggri ON gri.codigo_concepto_general = gcggri.codigo_concepto_general
+
+--WHERE glr.fecha_registro::DATE BETWEEN _1 AND _2
+WHERE gl.prefijo = 'FC'
+AND gl.factura_fiscal = 224
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
 
 SELECT DISTINCT
 ter.tipo_id_tercero,
@@ -6356,14 +6509,7 @@ gcggdc.descripcion_concepto_general,
 gcegdc.descripcion_concepto_especifico,
 gcggrc.descripcion_concepto_general,
 gcegrc.descripcion_concepto_especifico,
-TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(grc.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_CARGOS,
-gdi.glosa_respuesta_inventario_id,
-gdi.codigo_producto,
-gcggdi.descripcion_concepto_general,
-gcegdi.descripcion_concepto_especifico,
-gcggri.descripcion_concepto_general,
-gcegri.descripcion_concepto_especifico,
-TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(gri.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_INVENTARIOS
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(grc.observacion, '"', ' '), ',', ' '), CHR(13), ' '), CHR(10), ' '),' ', ' '),'  ', ' ')))observacion_glosa_respuesta_CARGOS
 FROM glosas gl
 LEFT JOIN glosas_respuestas glr ON gl.empresa_id = glr.empresa_id AND gl.glosa_id = glr.glosa_id
 LEFT JOIN glosas_respuestas_eps gle ON gl.empresa_id = gle.empresa_id AND gl.glosa_id = gle.glosa_id
@@ -6382,19 +6528,43 @@ LEFT JOIN glosas_concepto_general gcggrc ON grc.codigo_concepto_general = gcggrc
 LEFT JOIN glosas_detalle_cargos gdcgrc ON grc.glosa_detalle_cargo_id = gdcgrc.glosa_detalle_cargo_id
 LEFT JOIN cuentas_detalle cd ON gdcgrc.transaccion = cd.transaccion
 
-JOIN glosas_detalle_inventarios gdi ON gl.glosa_id = gdi.glosa_id
-LEFT JOIN glosas_concepto_general gcggdi ON gdi.codigo_concepto_general = gcggdi.codigo_concepto_general
-LEFT JOIN glosas_concepto_especifico gcegdi ON gdi.codigo_concepto_especifico = gcegdi.codigo_concepto_especifico
-
-
-JOIN glosas_respuestas_inventarios gri ON glr.glosa_respuesta_id = gri.glosa_respuesta_id
-LEFT JOIN glosas_concepto_especifico gcegri ON gri.codigo_concepto_especifico = gcegri.codigo_concepto_especifico
-LEFT JOIN glosas_concepto_general gcggri ON gri.codigo_concepto_general = gcggri.codigo_concepto_general
-LEFT JOIN glosas_detalle_inventarios gdigri ON gri.glosa_detalle_cargo_id = gdigri.glosa_detalle_cargo_id
-
-
+--WHERE gl.prefijo = 'FC'
+--AND gl.factura_fiscal = 224
+WHERE glr.fecha_registro::DATE BETWEEN _1 AND _2
 
 --WHERE glr.fecha_registro::DATE BETWEEN '2021-01-01' AND '2021-12-31'
 WHERE gl.prefijo = 'FC'
 AND gl.factura_fiscal = 224
 --ORDER BY 2, 3
+
+--
+ver tiempo en cirugia
+
+SELECT 
+  NOW() - fecha_registro
+FROM
+  estados_pacientes_qx
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--____________________________________________________________________________________________________________________________________________________________________________________________________________________
+--------------------------------------------------------
+ADMISION PACIENTE CIRUGIA
+--------------------------------------------------------
+--DEPARTAMENTO ADMISION PACIENTE CIRUGIA
+INSERT INTO public.departamentos VALUES ('01', '01', '0001', 'ADQX', 'Adm Paciente Cirugia', '1', '6', NULL, 'Avenida 3 Norte # 32AN-40, Cali, Valle del Cauca', '', '', '', '3', '1', '0', '1', '0', '1', '0', '1', NULL, '0', NULL, 1, '0', '1', '0', '1', NULL, NULL);
+--ESTACION ADMISION PACIENTE CIRUGIA
+--estacion_id	descripcion	departamento	hc_modulo_medico	hc_modulo_enfermera	hc_modulo_consulta_urgencias	titulo_atencion_pacientes	tipo_atencion_estacion_id	sw_solicita_dietas	sw_observacion_urgencia	sw_consulta_urgencia	sw_estacion_cirugia	hc_modulo_cirujano	hc_modulo_anestesiologo	hc_modulo_ayudante	hc_modulo_circulante	hc_modulo_instrumentador	hc_modulo_enfermeria	copiar_evolucion	sw_atiende_especialista	usuario_id	fecha_registro	sw_ordenes_urgentes	seleccion_medico_avalista	sw_productos_pendientes	sw_productos_confirmar	sw_eliminar_glucometria	tiempo_nota	hora_corte	permitir_solicitudes	suministro_rapido	sw_estado	sw_estacion_hemodiaisis	correo_ingreso	correo_egreso	plantilla_correo_ingreso	plantilla_correo_egreso	rips_servicio_id
+INSERT INTO public.estaciones_enfermeria VALUES ('ADQX', 'Adm Paciente Cirugia', 'ADQX', 'QX_Cirujano', 'Estacion_Enfermeria_Urgencias', 'QX_Cirujano', 'CIRUGIA', 4, '0', '0', '0', '1', 'QX_Cirujano', 'QX_Anestesiologo', 'QX_Cirujano', 'EnfermeriaQx', 'QX_Instrumentador', 'EnfermeriaQx', '0', '0', 2, NOW(), '0', '0', '1', '1', '0', 0, NULL, '1', '1', '1', NULL, '0', '0', NULL, NULL, NULL);
+--piezas o habitaciones para   ADMISION PACIENTE CIRUGIA
+--pieza	estacion_id	descripcion	cantidad_camas	ubicacion	sw_virtual	usuario_id	fecha_registro
+INSERT INTO piezas VALUES('AQX1','ADQX','ADM PACIENTES QX 1',1,'ADM PACIENTES QX 1',NULL,2,NOW());
+
+--cups de la habitacion S20100
+--camas para ADMISION PACIENTE CIRUGIA
+--pieza	cama	cargo	estado	ubicacion	descripcion	sw_virtual	tipo_cama_id	usuario_id	fecha_registro	virtual_real
+INSERT INTO camas VALUES ( 'AQX1', 'CQX1', 'S20100',1,'CM ADM PACIENTES QX1', 'CAMA ADM PACIENTES QX 1', 1, 68, 2, NOW(), 2);
+
+--Insertar a los usuarios para ADMISION PACIENTE CIRUGIA
+INSERT INTO estaciones_enfermeria_usuarios (estacion_id , usuario_id, estacion_perfil_id) VALUES ('ADQX', '2803','10');
+
+-- Insertar los puntos de atencion de admisiones
+INSERT INTO puntos_admisiones_estaciones VALUES (1,'HPGN', 'Hospitalizacion Ginecologia' );
