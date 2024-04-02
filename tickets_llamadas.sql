@@ -54,3 +54,26 @@ ext 1019
 ---------------------------------------
 no les deja aprobar devoluciones
 192.168.4.6
+
+----------------------------------------
+necesita bajar un eestidio de encefalograma 
+22 de marzo que esta malo 
+y subir uno bueno
+TI 1143991163
+ext 1118
+Jhon 
+
+----------------------------------------
+
+no puede ingresar correctamente a programaciones, 
+recepcion de pacientes qx
+ext 1131
+Lina Calvo
+
+----------------------------------------
+
+facturacion uci
+el computador se queda pegado
+todas las app
+ext 1108 - 1008
+Jhon
