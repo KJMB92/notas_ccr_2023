@@ -13,143 +13,21 @@ y subir uno bueno
 TI 1143991163
 ext 1118
 Jhon 
----------------------------------------------------------------------------------------------------------------------
-no puede ingresar correctamente a programaciones, 
-recepcion de pacientes qx
-ext 1131
-Lina Calvo
+
 ---------------------------------------------------------------------------------------------------------------------
 cuando consulta la agenda de la doctora DUNIA no le aparece como cancelada, le debe aparecer cancelada
 192.168.7.59
 ext 1238
----------------------------------------------------------------------------------------------------------------------
-1144
-roque
-1992899
-0102011385 traucet
-
----------------------------------------------------------------------------------------------------------------------
-cristina FARMACi
-ticket 
-jose.manrique
-trazadores, numeros decimales, en el reporte formulacion2
-ext 1128
----------------------------------------------------------------------------------------------------------------------
-1109675071
-sala ERA
-al intentar sacarlo le dice que tiene glucometrias sin comentar
-ext 1241
-gestionado, finalizado
----------------------------------------------------------------------------------------------------------------------
-cuenta 2037429
-ext 1361
-la cuenta le sale plan malo en la terapia con la cuenta de coosalud mala
-UPDATE
-agenda_citas_asignadas
-SET
-plan_id='4357'
-WHERE
-paciente_id='1110055943'
-AND tipo_id_paciente='TI'
-AND plan_id='2102'
-os_ordenes_servicios
-hc_os_solicitudes
 realizado
----------------------------------------------------------------------------------------------------------------------
-cuenta 2038958
-ext 1361
-la cuenta le sale plan malo en la terapia con la cuenta de coosalud mala
-UPDATE
-agenda_citas_asignadas
-SET
-plan_id='2102'
-WHERE
-paciente_id='1111690753'
-AND tipo_id_paciente='TI'
-AND plan_id='4315'
-os_ordenes_servicios
-hc_os_solicitudes
-realizado
----------------------------------------------------------------------------------------------------------------------
-1060364669
-roque
-bodega del paciente aparece como nuevo
-sulfato de zinc 1
-acetamino 
-calciferol
-ext 1144
-roque
-ing 1992899
-0102011385 traucet
-llame pero no contestaron
----------------------------------------------------------------------------------------------------------------------
-problema al ingresar los examenes de liam andres muriel moreno, no toma la cuenta correctamente, esto sucede todos los dias
-examenes de hemogramas, trazamenazas, amilina y boom
-infusion hematooncologia
-OA 490275
-Rubi Rosero 
-Ext 1153
-os_maestro
-hc_os_solicitudes
-os_ordenes_servicios
-arreglado, finalizado, corregido, el error estaba en el departamento
----------------------------------------------------------------------------------------------------------------------
-192.168.4.211
-paciente jacobo
-no le deja adicional la nota de enfermeria
-sala de infusiones
-colaborador eva munoz munoz
-contraseña de siis 4613
-ext 1061
-se cambia el perfil en la estacion a 13 y funciona corerctamente
----------------------------------------------------------------------------------------------------------------------
-ticket 23428
-192.168.7.38
-ext 1190 kevin
-el cargo que aparece en siis es diferente al que aparece en la impresion de la orden
-hc_os_solicitudes_cargos_equivalentes
-hc_os_solicitudes_subprocedimientos
-ya quedo, finalizado, comprobe con el usuario
 ---------------------------------------------------------------------------------------------------------------------
 tk 23589
 ext 1106
 stafania
 suministro y almacen
 ---------------------------------------------------------------------------------------------------------------------
-RC 1061216482
-uci
-cuenta no creada, hemograma y tiempos
-3460319
-Rubi Rosero 
-Ext 1153
-quedo, finalizaddo
----------------------------------------------------------------------------------------------------------------------
-katerine ceron
-dra pedraza
-DANTE ARANDA URBANO
-el paciente no registra historia
-tiene cita correctamente nefrologia
-1111703156
-192.168.80.84
-ext 1300 1001 1012 centro pediatrico
-se revisa y se encuentra que la historia anterior esta guardada con el mismo numero de documento pero con un punto al final 1111703156.
-realizado
----------------------------------------------------------------------------------------------------------------------
 glucometrias
 hc_control_diabetes
 hc_control_diabetes_ingreso
----------------------------------------------------------------------------------------------------------------------
-1061217036
-1109688077
-1109578352
-1114012590
----------------------------------------------------------------------------------------------------------------------
-
-192.168.4.58
-ext 1229
-alejandro
-EMILY DANIELA CALVACHE ZULUAGA
-corregido - finalizado
 ---------------------------------------------------------------------------------------------------------------------
 ingreso 1982591
 acetaminofen con decimales
@@ -232,3 +110,226 @@ vancomicina que esta titilando
 coralito
 ext 1020
 milder caicedo
+debe comunicarse con farmacia central para que acepten la devolucion
+finalizado correctamente
+---------------------------------------------------------------------------------------------------------------------
+obs urg 2
+5921522
+ext 1096
+glucometria no permite dar salida
+corregido, finalizado
+---------------------------------------------------------------------------------------------------------------------
+no le permite ver la pagina de salud total
+se evidencia que el error es de salud total, se le indique que debe de comunicarse con salud total para mostrarles el error
+solucionado
+---------------------------------------------------------------------------------------------------------------------
+192.168.80.221
+KARESCA
+karina de computacion
+indica que al descargar un comprimido le dice que puede dañar el computador.
+solucionado
+---------------------------------------------------------------------------------------------------------------------
+sala ERA
+glucometria duplicadas
+1127962929
+la ultima glucometria es la del 04-04-2024
+ext 1241
+Jorge
+realizado
+---------------------------------------------------------------------------------------------------------------------
+sala ERA
+glucometrias duplicadas
+DOMINIC
+RC 1149942748 
+stefani
+realizado
+---------------------------------------------------------------------------------------------------------------------
+sala Luis H
+IAN JOSE BELALCAZAR - RC 1085554936 
+nesecitan devolver la cefazolina pero no les deja. 0101010261
+ext 1164
+Candy Sanchez
+realizado
+---------------------------------------------------------------------------------------------------------------------
+IKER SANTIAGO VIDAL SOLIS
+nesecitan devolver la cefazolina pero no les deja. 0101010261
+ext 1164
+Candy Sanchez
+realizado
+---------------------------------------------------------------------------------------------------------------------
+tk 23683
+ext 1352
+valor en negativo
+---------------------------------------------------------------------------------------------------------------------
+vbno paciente
+observacion urgencias 2
+1108260482
+glucometria
+ext 1096
+sharon
+realizado
+---------------------------------------------------------------------------------------------------------------------
+anyeli simbaqueva
+ext 1300
+modulode atencion de pacientes, agenda medica
+karol
+realizado
+---------------------------------------------------------------------------------------------------------------------
+cama 32 miches steven cruz
+glucometria
+realizado
+---------------------------------------------------------------------------------------------------------------------
+tk 23687
+permisos para aprobar permisos en siis
+ext 1036
+---------------------------------------------------------------------------------------------------------------------
+emanuel de la cama 21
+estacion era 2
+ext 1241
+maria alejandra
+glocometria
+---------------------------------------------------------------------------------------------------------------------
+yamier enrique rivera
+1059843564
+coralitos
+central de mezclas alumbrando
+vancomicina
+ext 1020
+yerli
+---------------------------------------------------------------------------------------------------------------------
+1111690753
+cuenta 2038958
+ext 2224
+cumpllimieno de coosalu, tiene la N en el nombre del plan
+camila
+realizado
+---------------------------------------------------------------------------------------------------------------------
+estacion uci
+1115243049
+cetriazona
+no se le deja devolver el medicamento, pertenece a un paquete
+ext 1220
+Juan jose
+realizado
+---------------------------------------------------------------------------------------------------------------------
+estacion uci
+1114012590
+cetriazona
+no se le deja devolver el medicamento, pertenece a un paquete
+ext 1220
+Juan jose
+realizado
+---------------------------------------------------------------------------------------------------------------------
+se fueron 500 y se quedaron 500, de vancomicina, el producto esta titilando, por eso no lo pueden sacar
+paciente janier
+1059843564
+coralitos
+ext 1020
+mildred
+realizado
+---------------------------------------------------------------------------------------------------------------------
+cancelar la agenda de viviana solis mañana 6 de abril.
+no les deja cancelarla por que le dice que tiene una evolucion abierta
+ext 1238
+realizado
+---------------------------------------------------------------------------------------------------------------------
+paciente selene armero botina
+uci
+ext 1061
+Maria camila puertas
+paciente duplicado en la estacion de UCI
+me comunico con la jefe maria fernanada y me da la orden que cambie de estado las cuentas, para que solo quede la 
+cuenta terminada en 27 en estado activa, las cuentas que terminan en 29 y 55 en estado anulado
+realizado
+---------------------------------------------------------------------------------------------------------------------
+claudia de auditiriua
+error con censo
+17 horas de estancia
+observacion 
+samuel moreno 17 horas, en la historia es de las 6:55
+---------------------------------------------------------------------------------------------------------------------
+oscar facturacion
+arreglar nota operatoria
+tk 23520
+ext 1202
+realizado
+---------------------------------------------------------------------------------------------------------------------
+ramiro facturacion
+tk 23603
+realizado
+---------------------------------------------------------------------------------------------------------------------
+carolina navia
+agregar modulo de pedidos internos en siis
+lesly.betancourt LIDERES DE CALL CENTER 129
+yesica.munoz LIDERES DE CALL CENTER 129
+cnavia LIDERES DE CALL CENTER 129
+ext 1238
+realizado
+---------------------------------------------------------------------------------------------------------------------
+historia clinica sin egreso
+rc 1191227211
+realizado
+---------------------------------------------------------------------------------------------------------------------
+yefri alexander castillo jefrey.castillo
+no aparece en cirugia
+intrumentador 033
+ext 1989
+minic sanchez muñoz
+'1007626680','1193550258', '65761813'
+jefrey.castillo  1007626680  3190
+ajaramillo  65761813  1428
+laura.lucumi  1193550258  3186
+realizado
+---------------------------------------------------------------------------------------------------------------------
+era 2
+1059848244
+glucometrias
+ext 1241
+alejandra
+realizado
+---------------------------------------------------------------------------------------------------------------------
+tk 23721
+urgente
+sonia.portillo
+reuqiere permisos para hacer interface de siesa
+original 6472b1cc146d9f4a9eaa91e655e38f45
+siis 1ad7601a928742ffcba312ae33d7812b
+realizado
+---------------------------------------------------------------------------------------------------------------------
+no permite confirmar devoluciones ni solicitudes
+farmacia
+ext 1128
+cristina
+realizado
+---------------------------------------------------------------------------------------------------------------------
+Luna Daniela Anacona
+1061707831
+sacaron a la paciente y no le entregaron documento_despacho_idnecesitan entregarle la formulacion medica y las citas de control y la incapacidad
+---------------------------------------------------------------------------------------------------------------------
+intenta cargar un soporte de sedacion a un paciente del 3 de abril
+RC 1111573112
+no se gestiona
+---------------------------------------------------------------------------------------------------------------------
+ext 1216
+camila
+TI 1112054942
+192.168.2.182
+al imprimir pdf de la orden el sistema le cambia el codigo de cargo
+realizado
+---------------------------------------------------------------------------------------------------------------------
+no le aparece el modulo de causacion de honorarios
+osmar andres pantoja pantoja
+ext 1220
+---------------------------------------------------------------------------------------------------------------------
+coralitos no tiene nada pendiente
+dice que tiene insumos pendientes por cobrar
+janier enrique rivera lulico
+no les deja darle visto bueno
+VANCOMICINA (VANCOSALA) 500 mg POLVO/INY
+ext 1061
+1968837
+---------------------------------------------------------------------------------------------------------------------
+imagenes
+estefani
+1061216482
+ext 1107

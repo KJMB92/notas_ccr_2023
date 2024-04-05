@@ -152,3 +152,114 @@ AND a.plan_id=f.plan_id;
 INSERT INTO cg_conf.doc_inv_cv01_01_parametros  (empresa_id, grupo_id, clase_id, subclase_id, centro_utilidad, bodega, cuenta)
 SELECT '01', grupo_id, clase_id, subclase_id, centro_utilidad, 'ON', cuenta AS ep FROM cg_conf.doc_inv_cv01_01_parametros 
 WHERE bodega='FA';
+------------------------------------------------------------------------------------------------------------------------------
+-- tablas para corregir el plan malo en las citas medicas
+------------------------------------------------------------------------------------------------------------------------------
+os_ordenes_servicios
+hc_os_solicitudes
+
+Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
+Error DB : ERROR: EL REGISTRO DE LA DEVOLUCION QUE ESTA CANCELANDO NO SE ENCUENTRA EN LA TABLA [bodega_paciente] CONTEXT: funciÃ³n PL/pgSQL bodega_paciente_control_bodegas() en la lÃ­nea 699 en RAISE
+------------------------------------------------------------------------------------------------------------------------------
+-- valores negativos en cuenta, no deja cuadrar
+------------------------------------------------------------------------------------------------------------------------------
+SELECT 
+cd.transaccion ,  
+bd.codigo_producto , 
+cd.numerodecuenta , 
+cd.cargo , 
+cd.departamento ,  
+cd.cantidad ,  
+cd.precio , 
+Cd.facturado,
+cd.paquete_codigo_id,
+cd.sw_paquete_facturado
+FROM cuentas_detalle cd  
+INNER JOIN bodegas_documentos_d bd ON cd.consecutivo=bd.consecutivo  
+WHERE cd.numerodecuenta=2041480
+AND bd.codigo_producto IN('0206082304','0206082305')
+ORDER BY cd.paquete_codigo_id
+
+------------------------------------------------------------------------------------------------------------------------------
+-- INSERT SELECT - permisos en interface de siesa
+------------------------------------------------------------------------------------------------------------------------------
+userpermisos_tipos_doc_generales
+INSERT INTO userpermisos_tipos_doc_generales (usuario_id, tipo_doc_general_id)
+SELECT 3192, tipo_doc_general_id
+FROM userpermisos_tipos_doc_generales
+WHERE usuario_id = 2670;
+------------------------------------------------------------------------------------------------------------------------------
+-- Errores de siesa
+------------------------------------------------------------------------------------------------------------------------------
+Luz helena, jefe de contabilidad, errores de siesa
+------------------------------------------------------------------------------------------------------------------------------
+-- INSERT SELECT para insertar permisos de aprobacion de permisos para gestion humana
+------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO nomina.procesos_areas_usuarios (proceso_id, area_id, usuario_id, sw_estado)
+SELECT proceso_id, area_id, 93, sw_estado
+FROM nomina.procesos_areas_usuarios
+WHERE usuario_id = 1973
+------------------------------------------------------------------------------------------------------------------------------
+-- solicitan cancelar una solicitud de medicamentos
+------------------------------------------------------------------------------------------------------------------------------
+cancelar solicutdes de medicamentos
+hc_solicitudes_medicamentos
+------------------------------------------------------------------------------------------------------------------------------
+-- cambiar cups en nota operatoria
+------------------------------------------------------------------------------------------------------------------------------
+hc_notas_operatorias_cirugias
+hc_notas_operatorias_procedimientos
+------------------------------------------------------------------------------------------------------------------------------
+-- historia clinica sin fecha de egreso
+------------------------------------------------------------------------------------------------------------------------------
+validar en cual de estas no tiene registro
+ingresos_salidas
+hc_vistosok_salida_detalle
+hc_ordenes_medicas
+si es hospitalaria, va en ingresos_salidas
+si es ambulatoria va en hc_ordenes_medicas
+si no esta, insertar con la oredn de la tabla hc_ordenes_medicas, tomando la fecha de ahi, pero el departamento de la evolucion.
+------------------------------------------------------------------------------------------------------------------------------
+-- error en devolucion de medicamentos, que no se va el medicamento o el insumo
+------------------------------------------------------------------------------------------------------------------------------
+para que se vea el boton para poder entrar a hacer la devolucion, tomamos el paquete de vancomicina o el paquete que esta malo
+este debe estar con los productos en 0 en la bodega_pacientes y en bodega_paciente_preparaciones debe estar con unidades el paquete
+enotnces, cuando ingresemos al boton que titila, podemos ver dentro, el boton verde de devolucion, si el caso es que se devuelva
+todo, se le da click al boton verde, sin mas, 
+si el caso es que se devuelva solo el medicamento, poner en 0 las unidades en la tabla bodega_paciente_preparaciones y luego hacer
+clik en el boton verde de devolucion
+si el caso es que se devuelva solo los insumos, poner en 0 los medicamentos en la tabla bodega_paciente_preparaciones y luego hacer
+clik en el boton verde de devolucion
+------------------------------------------------------------------------------------------------------------------------------
+-- para verificar el instrumentador en las notas operatorias de cirugia
+------------------------------------------------------------------------------------------------------------------------------
+SELECT  x.tercero_id,
+c.nombre_tercero as nombre,
+x.tipo_id_tercero
+FROM    
+profesionales x,
+profesionales_departamentos y,
+especialidades z,
+profesionales_especialidades l,
+terceros c,
+system_usuarios su
+WHERE   x.tipo_id_tercero=y.tipo_id_tercero 
+AND     x.tercero_id=y.tercero_id 
+AND     y.departamento='010109'
+AND     z.especialidad=l.especialidad 
+AND     z.sw_instrumentista='1' 
+AND     x.tercero_id=l.tercero_id 
+AND     x.tipo_id_tercero=l.tipo_id_tercero  
+AND     x.tercero_id=c.tercero_id 
+AND     x.tipo_id_tercero=c.tipo_id_tercero 
+AND     profesional_activo(c.tipo_id_tercero,c.tercero_id,'010109')='1' 
+AND	   su.usuario_id = x.usuario_id
+AND     su.activo = '1'
+ORDER BY c.nombre_tercero
+------------------------------------------------------------------------------------------------------------------------------
+-- error de las impresiones con el codigo diferente en la impresion de pdf
+------------------------------------------------------------------------------------------------------------------------------
+cuando cambie una orden medica 
+hay que cambiarla en hc_os_solicitudes_cargos_equivalentes
+por que las impresiones deben de cambiar tambien
+
