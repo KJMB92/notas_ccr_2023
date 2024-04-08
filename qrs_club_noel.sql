@@ -262,4 +262,61 @@ ORDER BY c.nombre_tercero
 cuando cambie una orden medica 
 hay que cambiarla en hc_os_solicitudes_cargos_equivalentes
 por que las impresiones deben de cambiar tambien
+------------------------------------------------------------------------------------------------------------------------------
+-- Duplicacion de recibos
+------------------------------------------------------------------------------------------------------------------------------
+rc_detalle_hosp, el recibo cuplicado se elimina de esta tabla
+recibo_caja, el recibo cuplicado se elimina de esta tabla
+otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al recibo malo, actualizarlo al recibo correcto. por lo general son 2
+------------------------------------------------------------------------------------------------------------------------------
+-- Error en cuentas con centro de costos para departamento cirugia 61201001
+------------------------------------------------------------------------------------------------------------------------------
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='837604';
 
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+SELECT '01', tarifario_id, '837604', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+FROM
+tarifarios_detalle
+WHERE
+cargo='837604'
+------------------------------------------------------------------------------------------------------------------------------
+-- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
+------------------------------------------------------------------------------------------------------------------------------
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='865207';
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+SELECT
+'01',
+tarifario_id,
+'865207',
+610504,
+412001,
+'C',
+610504,
+417520,
+61050401,
+'001',
+null,
+null,
+null
+FROM
+tarifarios_detalle
+WHERE
+cargo='865207'
+------------------------------------------------------------------------------------------------------------------------------
+-- paciente no aparece en censo para registrar el acompañante
+------------------------------------------------------------------------------------------------------------------------------
+ingresos_porteria
+se ingresa el paciente en esta tabla y listo, se revisa en ingresos porteria y se debe evidenciar que el paciente este ahi
+------------------------------------------------------------------------------------------------------------------------------
+-- cambiar la X de procedimiento principal en la nota operatoria
+------------------------------------------------------------------------------------------------------------------------------
+hc_evoluciones
+hc_notas_operatorias_cirugias
+hc_notas_operatorias_procedimientos
+
+
+recibos_caja_auditoria_impresion
+rc_detalle_hosp
+otros_tipos_abonos_recibos
