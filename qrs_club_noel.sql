@@ -87,8 +87,8 @@ bodegas_documentos c,
 bodegas_doc_numeraciones d,
 system_usuarios e
 WHERE a.consecutivo=b.consecutivo 
-AND a.numerodecuenta=1974204  
-AND b.codigo_producto='0102110653' 
+AND a.numerodecuenta=2046797  
+AND b.codigo_producto='0206081721' 
 AND b.numeracion=c.numeracion 
 AND b.bodegas_doc_id=c.bodegas_doc_id 
 AND c.bodegas_doc_id=d.bodegas_doc_id  
@@ -156,6 +156,8 @@ WHERE bodega='FA';
 -- tablas para corregir el plan malo en las citas medicas
 ------------------------------------------------------------------------------------------------------------------------------
 os_ordenes_servicios
+cuentas
+os_maestro
 hc_os_solicitudes
 
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
@@ -205,10 +207,15 @@ WHERE usuario_id = 1973
 cancelar solicutdes de medicamentos
 hc_solicitudes_medicamentos
 ------------------------------------------------------------------------------------------------------------------------------
--- cambiar cups en nota operatoria
+-- cambiar cups en nota operatoria qx quirofano cirugia turno quirurgico
 ------------------------------------------------------------------------------------------------------------------------------
 hc_notas_operatorias_cirugias
 hc_notas_operatorias_procedimientos
+------------------------------------------------------------------------------------------------------------------------------
+-- cambiar cups en turno quirurgico
+------------------------------------------------------------------------------------------------------------------------------
+hc_os_solicitudes
+hc_os_solicitudes_subprocedimientos
 ------------------------------------------------------------------------------------------------------------------------------
 -- historia clinica sin fecha de egreso
 ------------------------------------------------------------------------------------------------------------------------------
@@ -222,9 +229,12 @@ si no esta, insertar con la oredn de la tabla hc_ordenes_medicas, tomando la fec
 ------------------------------------------------------------------------------------------------------------------------------
 -- error en devolucion de medicamentos, que no se va el medicamento o el insumo
 ------------------------------------------------------------------------------------------------------------------------------
-para que se vea el boton para poder entrar a hacer la devolucion, tomamos el paquete de vancomicina o el paquete que esta malo
-este debe estar con los productos en 0 en la bodega_pacientes y en bodega_paciente_preparaciones debe estar con unidades el paquete
-enotnces, cuando ingresemos al boton que titila, podemos ver dentro, el boton verde de devolucion, si el caso es que se devuelva
+para que se vea el boton para poder entrar a hacer la devolucion, 
+tomamos el paquete de vancomicina o el paquete que esta malo
+este debe estar con los productos en 0 en la bodega_pacientes 
+y en bodega_paciente_preparaciones debe estar con unidades el paquete
+enotnces, cuando ingresemos al boton que titila, 
+podemos ver dentro, el boton verde de devolucion, si el caso es que se devuelva
 todo, se le da click al boton verde, sin mas, 
 si el caso es que se devuelva solo el medicamento, poner en 0 las unidades en la tabla bodega_paciente_preparaciones y luego hacer
 clik en el boton verde de devolucion
@@ -271,39 +281,44 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='837604';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='540102';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '837604', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '540102', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='837604'
+cargo='540102'
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='865207';
+cargo 865201
+tarifario 1003 
+centro de costo 610504
+
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='865201';
+
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
-'01',
-tarifario_id,
-'865207',
-610504,
-412001,
-'C',
-610504,
-417520,
-61050401,
-'001',
-null,
-null,
-null
+/*empresa*/                     '01',
+/*tarifario_id*/                tarifario_id,
+/*cargo*/                       '865201',
+/*centro de costo*/             610504,
+/*cuenta*/                      410501,
+/*cuenta naturaleza*/           'C',
+/*centro de costo destino*/     610504,
+/*cuenta glosa*/                417520,
+/*cuenta honorario*/            61051001,
+/*centro de operacion*/         '001',
+/*centro de operacion*/         null,
+/*id user configura cc*/        null,
+/* descripcion configura cc*/   null
 FROM
 tarifarios_detalle
 WHERE
-cargo='865207'
+cargo='865201'
 ------------------------------------------------------------------------------------------------------------------------------
 -- paciente no aparece en censo para registrar el acompañante
 ------------------------------------------------------------------------------------------------------------------------------
@@ -320,3 +335,233 @@ hc_notas_operatorias_procedimientos
 recibos_caja_auditoria_impresion
 rc_detalle_hosp
 otros_tipos_abonos_recibos
+------------------------------------------------------------------------------------------------------------------------------
+-- asignar permisos para aprobar pedidos
+------------------------------------------------------------------------------------------------------------------------------
+Solo debe de asignarse a una persona por departamento.
+lideres_proceso
+------------------------------------------------------------------------------------------------------------------------------
+-- Error de producots por cargo en cuentas
+------------------------------------------------------------------------------------------------------------------------------
+doc_fv01_inv_grupos_productos_por_cc
+cuando un producto aparesca en un error de cuentas, el error de los cargos
+buscamos con el query que busca la parametrizacion de ese producto
+
+con el siguiente codigo encontramos la parametrizacion de esos productos
+
+deberiamos encontrar los productos que salen en el error, tomamos esa parametrizacion y la agregamos en la tabla  doc_fv01_inv_grupos_productos_por_cc y listo
+
+SELECT
+    A.cuenta_contable,
+    plan.descripcion as nombre_cuenta,
+    A.centro_de_costo,
+    cc.descripcion as nombre_centro_costo,
+    A.servicio,
+    A.item,
+    A.nombre_item,
+    A.tarifario_id,
+    A.centro_de_costo_id,
+    A.tipo_item
+FROM
+    (
+        SELECT
+            CASE
+                WHEN cxcc.cuenta IS NOT NULL THEN cxcc.cuenta
+                WHEN crg.cuenta IS NOT NULL THEN crg.cuenta
+                WHEN gcxcc.cuenta IS NOT NULL THEN gcxcc.cuenta
+                WHEN grc.cuenta IS NOT NULL THEN grc.cuenta
+                ELSE '-1'
+            END AS cuenta_contable,
+            CASE
+                WHEN cxcc.centro_costo_destino IS NOT NULL THEN cxcc.centro_costo_destino
+                WHEN crg.centro_costo_destino IS NOT NULL THEN crg.centro_costo_destino
+                WHEN gcxcc.centro_costo_destino IS NOT NULL THEN gcxcc.centro_costo_destino
+                WHEN grc.centro_costo_destino IS NOT NULL THEN grc.centro_costo_destino
+                ELSE '-1'
+            END AS centro_de_costo,
+            cargos.descripcion as servicio,
+            cargos.cargo as item,
+            cargos.nombre_cargo as nombre_item,
+            cargos.tarifario_id,
+            cargos.centro_de_costo_id,
+            'CGS' as tipo_item
+        FROM
+            (
+                SELECT
+                    b.empresa_id,
+                    CASE
+                        WHEN CU.cargo IS NULL THEN TD.grupo_tarifario_id
+                        ELSE CU.grupo_tarifario_id
+                    END as grupo_tarifario_id,
+                    CASE
+                        WHEN CU.cargo IS NULL THEN TD.subgrupo_tarifario_id
+                        ELSE CU.subgrupo_tarifario_id
+                    END as subgrupo_tarifario_id,
+                    CD.cargo,
+                    CD.tarifario_id,
+                    DE.departamento,
+                    DE.descripcion,
+                    CASE
+                        WHEN CCD.centro_de_costo_id IS NOT NULL THEN CCD.centro_de_costo_id
+                        ELSE '-1'
+                    END AS centro_de_costo_id,
+                    TD.descripcion as nombre_cargo,
+                    CD.cargo_cups
+                FROM
+                    cuentas b
+                    INNER JOIN cuentas_detalle CD ON (b.numerodecuenta = CD.numerodecuenta)
+                    INNER JOIN cups CU ON (CD.cargo_cups = CU.cargo)
+                    INNER JOIN tarifarios_detalle TD ON (
+                        TD.tarifario_id = CD.tarifario_id
+                        AND TD.cargo = CD.cargo
+                    )
+                    INNER JOIN departamentos DE ON (CD.departamento = DE.departamento)
+                    INNER JOIN planes as pl ON (b.plan_id = pl.plan_id)
+                    INNER JOIN terceros te ON (
+                        pl.tipo_tercero_id = te.tipo_id_tercero
+                        AND pl.tercero_id = te.tercero_id
+                    )
+                    LEFT JOIN cg_conf.centros_de_costo_departamentos CCD ON (CCD.departamento = DE.departamento)
+                WHERE
+                    b.numerodecuenta = 2046797
+                    AND CD.cargo NOT IN ('IMD', 'DIMD', 'APROVREDON', 'APROVCUOTA')
+            ) AS cargos
+            LEFT JOIN cg_conf.doc_fv01_cargos_por_cc cxcc ON (
+                cargos.empresa_id = cxcc.empresa_id
+                AND cargos.tarifario_id = cxcc.tarifario_id
+                AND cargos.cargo = cxcc.cargo
+                AND cargos.centro_de_costo_id = cxcc.centro_de_costo_id
+            )
+            LEFT JOIN cg_conf.doc_fv01_cargos crg ON (
+                cargos.empresa_id = crg.empresa_id
+                AND cargos.tarifario_id = crg.tarifario_id
+                AND cargos.cargo = crg.cargo
+            )
+            LEFT JOIN cg_conf.doc_fv01_grupos_cargos_por_cc gcxcc ON (
+                cargos.empresa_id = gcxcc.empresa_id
+                AND cargos.grupo_tarifario_id = gcxcc.grupo_tarifario_id
+                AND cargos.subgrupo_tarifario_id = gcxcc.subgrupo_tarifario_id
+                AND cargos.centro_de_costo_id = gcxcc.centro_de_costo_id
+            )
+            LEFT JOIN cg_conf.doc_fv01_grupos_cargos grc ON (
+                cargos.empresa_id = grc.empresa_id
+                AND cargos.grupo_tarifario_id = grc.grupo_tarifario_id
+                AND cargos.subgrupo_tarifario_id = grc.subgrupo_tarifario_id
+            )
+        UNION ALL
+        SELECT
+            CASE
+                WHEN grp.cuenta IS NOT NULL THEN grp.cuenta
+                WHEN gpxcc.cuenta IS NOT NULL THEN gpxcc.cuenta
+                WHEN prod.cuenta IS NOT NULL THEN prod.cuenta
+                WHEN pxcc.cuenta IS NOT NULL THEN pxcc.cuenta
+                ELSE '-1'
+            END AS cuenta_contable,
+            CASE
+                WHEN grp.cuenta IS NOT NULL THEN productos.centro_de_costo_id
+                WHEN gpxcc.centro_costo_destino IS NOT NULL THEN gpxcc.centro_costo_destino
+                WHEN prod.cuenta IS NOT NULL THEN productos.centro_de_costo_id
+                WHEN pxcc.centro_costo_destino IS NOT NULL THEN pxcc.centro_costo_destino
+                ELSE '-1'
+            END AS centro_de_costo,
+            productos.descripcion as servicio,
+            productos.codigo_producto as item,
+            productos.nombre_producto as nombre_item,
+            productos.tarifario_id,
+            productos.centro_de_costo_id,
+            'MDS_INS' as tipo_item
+        FROM
+            (
+                SELECT
+                    b.empresa_id,
+                    IP.grupo_id,
+                    IP.clase_id,
+                    IP.subclase_id,
+                    BDD.codigo_producto,
+                    DE.departamento,
+                    DE.descripcion,
+                    CASE
+                        WHEN CCD.centro_de_costo_id IS NOT NULL THEN CCD.centro_de_costo_id
+                        ELSE '-1'
+                    END AS centro_de_costo_id,
+                    IP.descripcion AS nombre_producto,
+                    CD.tarifario_id
+                FROM
+                    cuentas b
+                    INNER JOIN cuentas_detalle CD ON (CD.numerodecuenta = b.numerodecuenta)
+                    INNER JOIN bodegas_documentos_d BDD ON (BDD.consecutivo = CD.consecutivo)
+                    INNER JOIN inventarios_productos IP ON (IP.codigo_producto = BDD.codigo_producto)
+                    INNER JOIN departamentos DE ON (DE.departamento = CD.departamento)
+                    INNER JOIN planes as pl ON (b.plan_id = pl.plan_id)
+                    INNER JOIN terceros te ON (
+                        pl.tipo_tercero_id = te.tipo_id_tercero
+                        AND pl.tercero_id = te.tercero_id
+                    )
+                    LEFT JOIN cg_conf.centros_de_costo_departamentos CCD ON (CCD.departamento = DE.departamento)
+                WHERE
+                    b.numerodecuenta = 2046797
+                    AND CD.cargo IN ('IMD', 'DIMD')
+            ) AS productos
+            LEFT JOIN cg_conf.doc_fv01_inv_productos_por_cc pxcc ON (
+                productos.empresa_id = pxcc.empresa_id
+                AND productos.centro_de_costo_id = pxcc.centro_de_costo_id
+                AND productos.codigo_producto = pxcc.codigo_producto
+            )
+            LEFT JOIN cg_conf.doc_fv01_inv_productos prod ON (
+                productos.empresa_id = prod.empresa_id
+                AND productos.codigo_producto = prod.codigo_producto
+            )
+            LEFT JOIN cg_conf.doc_fv01_inv_grupos_productos_por_cc gpxcc ON (
+                productos.empresa_id = gpxcc.empresa_id
+                AND productos.grupo_id = gpxcc.grupo_id
+                AND productos.clase_id = gpxcc.clase_id
+                AND productos.subclase_id = gpxcc.subclase_id
+                AND productos.centro_de_costo_id = gpxcc.centro_de_costo_id
+            )
+            LEFT JOIN cg_conf.doc_fv01_inv_grupos_productos grp ON (
+                productos.empresa_id = grp.empresa_id
+                AND productos.grupo_id = grp.grupo_id
+                AND productos.clase_id = grp.clase_id
+                AND productos.subclase_id = grp.subclase_id
+            )
+    ) as A
+    LEFT JOIN cg_conf.cg_plan_de_cuentas plan ON (plan.cuenta = A.cuenta_contable)
+    LEFT JOIN cg_conf.centros_de_costo cc ON (cc.centro_de_costo_id = A.centro_de_costo)
+WHERE
+    A.centro_de_costo = '-1'
+GROUP BY
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+ORDER BY
+    1,
+    3
+
+------------------------------------------------------------------------------------------------------------------------------
+-- No aparece medico en la creacion de agenda medica
+------------------------------------------------------------------------------------------------------------------------------
+se debe validar que tenga la especialidad y los departamentos correspondientes a su especialidad y consultas externas
+------------------------------------------------------------------------------------------------------------------------------
+-- Error en la ordenes medicas en la interface de imagenes con ajoveco
+------------------------------------------------------------------------------------------------------------------------------
+error en las ordenes de imagenes, en la interface
+revisar con el numero de acceso==numero_orden_id
+en la tabla os_maestro_cargos
+estudios_integracion
+------------------------------------------------------------------------------------------------------------------------------
+-- Error al guardar evolucion / nota 
+-- Error de sintaxis "cuentas_detalle" al guardar definitivo
+------------------------------------------------------------------------------------------------------------------------------
+
+
+traer el plan del paciente a la tabla plan_tarifario
+tomar el tarifario y buscar en tarifario_equivalencia 
+ver si existe en ese tarifario algun plan con 2 en la columna sw_tipo_consulta
+si no existe buscar el de otro plan, 1003, y parametrizarlo con el 2 en sw
