@@ -178,8 +178,8 @@ cd.paquete_codigo_id,
 cd.sw_paquete_facturado
 FROM cuentas_detalle cd  
 INNER JOIN bodegas_documentos_d bd ON cd.consecutivo=bd.consecutivo  
-WHERE cd.numerodecuenta=2041480
-AND bd.codigo_producto IN('0206082304','0206082305')
+WHERE cd.numerodecuenta=2046073
+AND bd.codigo_producto = '0201010167'
 ORDER BY cd.paquete_codigo_id
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ WHERE usuario_id = 1973
 cancelar solicutdes de medicamentos
 hc_solicitudes_medicamentos
 ------------------------------------------------------------------------------------------------------------------------------
--- cambiar cups en nota operatoria qx quirofano cirugia turno quirurgico
+-- cambiar cups en nota operatoria
 ------------------------------------------------------------------------------------------------------------------------------
 hc_notas_operatorias_cirugias
 hc_notas_operatorias_procedimientos
@@ -281,15 +281,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='540102';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='625101';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '540102', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '625101', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='540102'
+cargo='625101'
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
 ------------------------------------------------------------------------------------------------------------------------------
@@ -297,18 +297,18 @@ cargo 865201
 tarifario 1003 
 centro de costo 610504
 
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='865201';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='997107';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
 /*empresa*/                     '01',
 /*tarifario_id*/                tarifario_id,
-/*cargo*/                       '865201',
-/*centro de costo*/             610504,
+/*cargo*/                       '997107',
+/*centro de costo*/             610502,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
-/*centro de costo destino*/     610504,
+/*centro de costo destino*/     610502,
 /*cuenta glosa*/                417520,
 /*cuenta honorario*/            61051001,
 /*centro de operacion*/         '001',
@@ -318,7 +318,22 @@ SELECT
 FROM
 tarifarios_detalle
 WHERE
-cargo='865201'
+cargo='997107'
+------------------------------------------------------------------------------------------------------------------------------
+-- Error en cuentas con centro de costos para productos que no son gases medicinales (solo cambiar producto)
+------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO
+cg_conf.doc_fv01_inv_productos_por_cc
+VALUES (
+'01',
+'613007',
+'0102011255',
+'413501',
+'C',
+'613007',
+'613007',
+'001'
+)
 ------------------------------------------------------------------------------------------------------------------------------
 -- paciente no aparece en censo para registrar el acompañante
 ------------------------------------------------------------------------------------------------------------------------------
@@ -565,3 +580,4 @@ traer el plan del paciente a la tabla plan_tarifario
 tomar el tarifario y buscar en tarifario_equivalencia 
 ver si existe en ese tarifario algun plan con 2 en la columna sw_tipo_consulta
 si no existe buscar el de otro plan, 1003, y parametrizarlo con el 2 en sw
+
