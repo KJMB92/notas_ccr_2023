@@ -163,7 +163,7 @@ hc_os_solicitudes
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
 Error DB : ERROR: EL REGISTRO DE LA DEVOLUCION QUE ESTA CANCELANDO NO SE ENCUENTRA EN LA TABLA [bodega_paciente] CONTEXT: funciÃ³n PL/pgSQL bodega_paciente_control_bodegas() en la lÃ­nea 699 en RAISE
 ------------------------------------------------------------------------------------------------------------------------------
--- valores negativos en cuenta, no deja cuadrar
+-- valores negativos en cuenta, no deja cuadrar, para ver la transaccion de un producto.
 ------------------------------------------------------------------------------------------------------------------------------
 SELECT 
 cd.transaccion ,  
@@ -276,20 +276,20 @@ por que las impresiones deben de cambiar tambien
 -- Duplicacion de recibos
 ------------------------------------------------------------------------------------------------------------------------------
 rc_detalle_hosp, el recibo cuplicado se elimina de esta tabla
-recibo_caja, el recibo cuplicado se elimina de esta tabla
+recibos_caja, el recibo cuplicado se elimina de esta tabla
 otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al recibo malo, actualizarlo al recibo correcto. por lo general son 2
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='625101';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='399902';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '625101', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '399902', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='625101'
+cargo='399902'
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
 ------------------------------------------------------------------------------------------------------------------------------
@@ -581,3 +581,26 @@ tomar el tarifario y buscar en tarifario_equivalencia
 ver si existe en ese tarifario algun plan con 2 en la columna sw_tipo_consulta
 si no existe buscar el de otro plan, 1003, y parametrizarlo con el 2 en sw
 
+------------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM tarifarios_detalle WHERE tarifario_id='0094'
+
+SELECT u.*
+FROM tarifarios_detalle u
+LEFT JOIN pedidos p ON u.id_usuario = p.id_usuario
+WHERE p.id_usuario IS NULL;
+
+SELECT *
+FROM datos
+ORDER BY id
+LIMIT 1;
+
+=CONCATENAR("SELECT * FROM tarifarios_detalle WHERE tarifario_id='0094' AND cargo='";A2;"' UNION ALL")
+
+INSERT INTO tarifarios_detalle VALUES (tarifario_id, grupo_tarifario_id, subgrupo_tarifario_id, cargo, descripcion, precio, tipo_cargo, grupo_tipo_cargo, gravamen, sw_cantidad, nivel, sw_honorarios, concepto_rips, sw_uvrs, grupos_mapipos, tipo_unidad_id, porcentaje_default, sw_paquete) 
+SELECT '0094', grupo_tarifario_id, subgrupo_tarifario_id, '";A1;"', descripcion, precio, tipo_cargo, grupo_tipo_cargo, gravamen, sw_cantidad, nivel, sw_honorarios, concepto_rips, sw_uvrs, grupos_mapipos, tipo_unidad_id, porcentaje_default, sw_paquete FROM tarifarios_detalle WHERE tarifario_id = '1004'
+
+analisis
+
+INSERT INTO tarifarios_detalle SELECT '0094',grupo_tarifario_id,subgrupo_tarifario_id,'";A1;"', descripcion,'0',tipo_cargo,grupo_tipo_cargo,'0','0','1','0','04','1','0', '02','0' FROM cups WHERE='"";A1;""';
+
+INSERT INTO tarifarios_detalle SELECT '0094', grupo_tarifario_id, subgrupo_tarifario_id, '";A1;"',  descripcion, '0', tipo_cargo, grupo_tipo_cargo, '0', '0', '1', '0', '04', '1', '0', '02', '0' FROM cups WHERE cargo= '";A1;"';
