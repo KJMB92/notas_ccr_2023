@@ -178,8 +178,8 @@ cd.paquete_codigo_id,
 cd.sw_paquete_facturado
 FROM cuentas_detalle cd  
 INNER JOIN bodegas_documentos_d bd ON cd.consecutivo=bd.consecutivo  
-WHERE cd.numerodecuenta=2046073
-AND bd.codigo_producto = '0201010167'
+WHERE cd.numerodecuenta=2026530
+AND bd.codigo_producto = '0206082513'
 ORDER BY cd.paquete_codigo_id
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -269,6 +269,7 @@ ORDER BY c.nombre_tercero
 ------------------------------------------------------------------------------------------------------------------------------
 -- error de las impresiones con el codigo diferente en la impresion de pdf
 ------------------------------------------------------------------------------------------------------------------------------
+hc_os_solicitudes, la orden se valida aca, con el numero de ingreso, evolucion o cuenta
 cuando cambie una orden medica 
 hay que cambiarla en hc_os_solicitudes_cargos_equivalentes
 por que las impresiones deben de cambiar tambien
@@ -281,15 +282,34 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='399902';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='790302';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '399902', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '790302', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='399902'
+cargo='790302'
+
+
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+VALUES (
+/*empresa*/                     '01',
+/*tarifario_id*/                '0079',
+/*cargo*/                       '858701',
+/*centro de costo*/             612001,
+/*cuenta*/                      412001,
+/*cuenta naturaleza*/           'C',
+/*centro de costo destino*/     612001,
+/*cuenta glosa*/                417520,
+/*cuenta honorario*/            61201001,
+/*centro de operacion*/         '001',
+/*centro de operacion*/         null,
+/*id user configura cc*/        null,
+/* descripcion configura cc*/   null
+)
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
 ------------------------------------------------------------------------------------------------------------------------------
@@ -297,18 +317,18 @@ cargo 865201
 tarifario 1003 
 centro de costo 610504
 
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='997107';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='790302';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
 /*empresa*/                     '01',
-/*tarifario_id*/                tarifario_id,
-/*cargo*/                       '997107',
-/*centro de costo*/             610502,
+/*tarifario_id*/                '0062',
+/*cargo*/                       '790302',
+/*centro de costo*/             610504,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
-/*centro de costo destino*/     610502,
+/*centro de costo destino*/     610504,
 /*cuenta glosa*/                417520,
 /*cuenta honorario*/            61051001,
 /*centro de operacion*/         '001',
@@ -318,7 +338,26 @@ SELECT
 FROM
 tarifarios_detalle
 WHERE
-cargo='997107'
+cargo='790302'
+
+
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+VALUES (
+/*empresa*/                     '01',
+/*tarifario_id*/                '0079',
+/*cargo*/                       '790302',
+/*centro de costo*/             610504,
+/*cuenta*/                      412001,
+/*cuenta naturaleza*/           'C',
+/*centro de costo destino*/     610504,
+/*cuenta glosa*/                417520,
+/*cuenta honorario*/            61201001,
+/*centro de operacion*/         '001',
+/*centro de operacion*/         null,
+/*id user configura cc*/        null,
+/* descripcion configura cc*/   null
+)
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para productos que no son gases medicinales (solo cambiar producto)
 ------------------------------------------------------------------------------------------------------------------------------
@@ -604,3 +643,23 @@ analisis
 INSERT INTO tarifarios_detalle SELECT '0094',grupo_tarifario_id,subgrupo_tarifario_id,'";A1;"', descripcion,'0',tipo_cargo,grupo_tipo_cargo,'0','0','1','0','04','1','0', '02','0' FROM cups WHERE='"";A1;""';
 
 INSERT INTO tarifarios_detalle SELECT '0094', grupo_tarifario_id, subgrupo_tarifario_id, '";A1;"',  descripcion, '0', tipo_cargo, grupo_tipo_cargo, '0', '0', '1', '0', '04', '1', '0', '02', '0' FROM cups WHERE cargo= '";A1;"';
+
+UPDATE tarifarios_detalle SET tipo_unidad_id= '01', sw_uvrs=0 WHERE tarifario_id='0094'
+------------------------------------------------------------------------------------------------------------------------------
+-- SACAR paceitne de panel de sala de infusion
+------------------------------------------------------------------------------------------------------------------------------
+estacion_enfermeria_qx_pacientes_ingresados
+
+------------------------------------------------------------------------------------------------------------------------------
+-- cuendo no aparece un paciente para darle salida, para imprimir la boleta de salida
+------------------------------------------------------------------------------------------------------------------------------
+la tabla historias_clinicas  debe estar el registro de ese paciente. si no esta, insertarlo.
+------------------------------------------------------------------------------------------------------------------------------
+-- cuando se va a cargar una interconsulta y aparece el mensaje, NO TIENE EQUIVALENCIA, se debe agregar en la tabla 
+-- hay que ver el plan_tarifario y comparar cual de estos
+------------------------------------------------------------------------------------------------------------------------------
+especialidades_cargos_tarifarios
+------------------------------------------------------------------------------------------------------------------------------
+-- BOTON SOLICITAR EN PLAN TERAPEUTICO
+------------------------------------------------------------------------------------------------------------------------------
+para que aparesca el boton de SOLICITAR en MP-PLAN TERAPEUTICO se debe de revisar que no tenga registro con ese ingreso  en la tabla hc_vistosok_salida_detalle
