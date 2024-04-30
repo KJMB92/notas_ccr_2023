@@ -459,3 +459,9 @@ especialidades_cargos_tarifarios
 -- BOTON SOLICITAR EN PLAN TERAPEUTICO
 ------------------------------------------------------------------------------------------------------------------------------
 para que aparesca el boton de SOLICITAR en MP-PLAN TERAPEUTICO se debe de revisar que no tenga registro con ese ingreso  en la tabla hc_vistosok_salida_detalle
+------------------------------------------------------------------------------------------------------------------------------
+-- TIPO CORTE pos a noppos no-pos0
+------------------------------------------------------------------------------------------------------------------------------
+Buenos días, por este medio solicito el cambio de tipo de corte de NO pos a POS de la cuenta n°2053773, la cual se encuentra en estado cuadrado.+
+en la tabla cuentas, al final en la columna tipo_corte, ahi queda realcionado.
+tipo_corte
