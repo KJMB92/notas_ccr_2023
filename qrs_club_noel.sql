@@ -17,7 +17,7 @@ cuentas_detalle cd
 JOIN bodegas_documentos_d dbd ON cd.consecutivo = dbd.consecutivo
 JOIN inventarios_productos ip ON dbd.codigo_producto = ip.codigo_producto
 WHERE
-cd.numerodecuenta = 1974204
+cd.numerodecuenta = 2055126
 --------------------------------------------------------------------------------------
 -- Reporte de carolina macias para ver la trazabilidad del servicio
 --------------------------------------------------------------------------------------
@@ -282,15 +282,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='790302';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='787300';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '790302', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '787300', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='790302'
+cargo='787300'
 
 
 INSERT INTO
@@ -317,14 +317,14 @@ cargo 865201
 tarifario 1003 
 centro de costo 610504
 
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='790302';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='130M02';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
 /*empresa*/                     '01',
-/*tarifario_id*/                '0062',
-/*cargo*/                       '790302',
+/*tarifario_id*/                tarifario_id,
+/*cargo*/                       '130M02',
 /*centro de costo*/             610504,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
@@ -338,7 +338,7 @@ SELECT
 FROM
 tarifarios_detalle
 WHERE
-cargo='790302'
+cargo='130M02'
 
 
 INSERT INTO
@@ -465,3 +465,36 @@ para que aparesca el boton de SOLICITAR en MP-PLAN TERAPEUTICO se debe de revisa
 Buenos días, por este medio solicito el cambio de tipo de corte de NO pos a POS de la cuenta n°2053773, la cual se encuentra en estado cuadrado.+
 en la tabla cuentas, al final en la columna tipo_corte, ahi queda realcionado.
 tipo_corte
+
+------------------------------------------------------------------------------------------------------------------------------
+-- no deja cumplir una interconsulta de odontologia.
+------------------------------------------------------------------------------------------------------------------------------
+hc_sub_diagnosticos_odontologicos_diagnosticos
+------------------------------------------------------------------------------------------------------------------------------
+-- evoluciones
+------------------------------------------------------------------------------------------------------------------------------
+hc_evolucion_descripcion
+hc_evoluciones_submodulos
+hc_evoluciones
+
+69500
+19906574
+
+1145
+marilin
+
+1125
+
+
+cn 240859
+
+2002467
+------------------------------------------------------------------------------------------------------------------------------
+-- error en la contabilizacion de documentos contables.
+-- permiso para ver documentos en cg_mov para la interface en siesa
+------------------------------------------------------------------------------------------------------------------------------
+documentos
+cg_mov_contable_01
+userpermisos_tipos_doc_generales?: 
+tipos_doc_generales
+cg_mov_contable_01_202404
