@@ -190,6 +190,70 @@ INSERT INTO userpermisos_tipos_doc_generales (usuario_id, tipo_doc_general_id)
 SELECT 3192, tipo_doc_general_id
 FROM userpermisos_tipos_doc_generales
 WHERE usuario_id = 2670;
+
+------------------------------------------------------------------------------------------------------------------------------
+-- Si el medico no le deja formular, revisar su departametno e insertar
+------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO profesionales_estado (tipo_id_tercero, tercero_id, departamento, estado, empresa_id)
+SELECT 'CC', '1144085748', departamento, '1', '01'
+FROM profesionales_departamentos
+WHERE tipo_id_tercero= 'CC'
+AND tercero_id= '1144085748'
+
+
+SELECT
+    a.tipo_tercero_id,
+    a.tercero_id,
+    c.departamento,
+    d.especialidad,
+    d.universidad,
+    f.nombre,
+    f.primer_nombre,
+    f.segundo_nombre,
+    f.primer_apellido,
+    f.segundo_apellido,
+    f.tipo_profesional,
+    f.tarjeta_profesional,
+    f.sexo_id,
+    f.observacion,
+    f.registro_salud_departamental,
+    f.tipo_equipo_id,
+    g.tipo_pais_id,
+    g.tipo_dpto_id,
+    g.tipo_mpio_id,
+    g.direccion,
+    g.telefono,
+    g.fax,
+    g.email,
+    g.celular,
+    g.nombre_tercero
+FROM
+    profesionales_usuarios a,
+    profesionales_estado b,
+    profesionales_departamentos c,
+    profesionales_especialidades d,
+    profesionales_empresas e,
+    profesionales f,
+    terceros g
+WHERE
+    a.usuario_id = '3416'
+    AND a.tipo_tercero_id = b.tipo_id_tercero
+    AND a.tercero_id = b.tercero_id
+    AND b.estado = '1'
+    AND b.departamento = c.departamento
+    AND b.tipo_id_tercero = c.tipo_id_tercero
+    AND b.tercero_id = c.tercero_id
+    AND a.tipo_tercero_id = d.tipo_id_tercero
+    AND a.tercero_id = d.tercero_id
+    AND a.tipo_tercero_id = e.tipo_id_tercero
+    AND a.tercero_id = e.tercero_id
+    AND b.empresa_id = e.empresa_id
+    AND a.tipo_tercero_id = f.tipo_id_tercero
+    AND a.tercero_id = f.tercero_id
+    AND f.estado = '1'
+    AND g.tipo_id_tercero = a.tipo_tercero_id
+    AND g.tercero_id = a.tercero_id
+
 ------------------------------------------------------------------------------------------------------------------------------
 -- Errores de siesa
 ------------------------------------------------------------------------------------------------------------------------------
@@ -282,15 +346,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='787300';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='034208';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '787300', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '034208', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='787300'
+cargo='034208'
 
 
 INSERT INTO
@@ -498,3 +562,47 @@ cg_mov_contable_01
 userpermisos_tipos_doc_generales?: 
 tipos_doc_generales
 cg_mov_contable_01_202404
+
+
+
+UPDATE
+cuentas_detalle
+SET
+tarifario_id='1003'
+WHERE
+numerodecuenta=2060979
+AND tarifario_id='0089'
+
+------------------------------------------------------------------------------------------------------------------------------
+-- para cuando soliciten cambiar a cantidad de medicamento por dia, dentro de 1 dia de tratamiento
+------------------------------------------------------------------------------------------------------------------------------
+hc_formulacion_medicamentos
+hc_formulacion_medicamentos_eventos
+hc_auditoria_formulacion_medicamentos_eventos_tratamiento
+------------------------------------------------------------------------------------------------------------------------------
+-- Error de fecha en la interface SIESA facturacion
+------------------------------------------------------------------------------------------------------------------------------
+Se recuerda que a partir del 1 de Mayo la DIAN exige que la factura sea de la misma fecha del envio.
+Para solucionar esto, se creo una solucion que por el momento solo la posee Miller, la jefe Julieth y la jefe Carolina.
+Por favor reportarle a ellos esta falla para que la corrijan desde su SIIS.
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- query para validar si hay facturas con diferencias.
+------------------------------------------------------------------------------------------------------------------------------
+SELECT
+a.prefijo, a.factura_fiscal,a.total_factura,b.total_debitos,b.total_creditos, a.estado,
+SUM(b.total_debitos-b.total_creditos)
+FROM fac_facturas a
+LEFT  JOIN cg_mov_01.cg_mov_contable_01 b ON ( a.empresa_id=b.empresa_id 
+AND a.prefijo=b.prefijo AND a.factura_fiscal=b.numero)
+WHERE a.fecha_registro BETWEEN '2024-04-30' AND '2024-05-03'
+AND a.prefijo='CN'
+GROUP BY 1,2,3,4,5,6
+ORDER BY  SUM(b.total_debitos-b.total_creditos) ASC
+
+------------------------------------------------------------------------------------------------------------------------------
+-- query para validar si hay facturas con diferencias.
+------------------------------------------------------------------------------------------------------------------------------
+revisar si en fac_facturas_cuentas hay mas de 1 factura relacionada a la cuenta
+si es asi, canbiar el estado de las otras facturas en fac_facturas a 3 y re-interfazar.
