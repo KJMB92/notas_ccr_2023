@@ -523,6 +523,16 @@ especialidades_cargos_tarifarios
 -- BOTON SOLICITAR EN PLAN TERAPEUTICO
 ------------------------------------------------------------------------------------------------------------------------------
 para que aparesca el boton de SOLICITAR en MP-PLAN TERAPEUTICO se debe de revisar que no tenga registro con ese ingreso  en la tabla hc_vistosok_salida_detalle
+<<<<<<< HEAD
+------------------------------------------------------------------------------------------------------------------------------
+UPDATE 
+cuentas_detalle
+SET 
+tarifario_id='0094'
+WHERE
+numerodecuenta=2052081 AND
+tarifario_id='0078'
+=======
 ------------------------------------------------------------------------------------------------------------------------------
 -- TIPO CORTE pos a noppos no-pos0
 ------------------------------------------------------------------------------------------------------------------------------
