@@ -346,15 +346,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='034208';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='865202';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '034208', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '865202', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='034208'
+cargo='865202'
 
 
 INSERT INTO
@@ -389,10 +389,10 @@ SELECT
 /*empresa*/                     '01',
 /*tarifario_id*/                tarifario_id,
 /*cargo*/                       '130M02',
-/*centro de costo*/             610504,
+/*centro de costo*/             611504,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
-/*centro de costo destino*/     610504,
+/*centro de costo destino*/     611504,
 /*cuenta glosa*/                417520,
 /*cuenta honorario*/            61051001,
 /*centro de operacion*/         '001',
@@ -616,3 +616,20 @@ ORDER BY  SUM(b.total_debitos-b.total_creditos) ASC
 ------------------------------------------------------------------------------------------------------------------------------
 revisar si en fac_facturas_cuentas hay mas de 1 factura relacionada a la cuenta
 si es asi, canbiar el estado de las otras facturas en fac_facturas a 3 y re-interfazar.
+
+------------------------------------------------------------------------------------------------------------------------------
+-- cargos paragrafados
+------------------------------------------------------------------------------------------------------------------------------
+planes_paragrafados_cargos
+
+--insertar paragrafado a partir de otro plan, insert select
+INSERT INTO
+planes_paragrafados_cargos
+(plan_id, tarifario_id, cargo, servicio)
+SELECT
+'4441',
+tarifario_id,
+cargo,
+servicio
+FROM planes_paragrafados_cargos
+WHERE plan_id= '3843'
