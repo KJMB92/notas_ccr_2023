@@ -619,6 +619,14 @@ ORDER BY  SUM(b.total_debitos-b.total_creditos) ASC
 ------------------------------------------------------------------------------------------------------------------------------
 revisar si en fac_facturas_cuentas hay mas de 1 factura relacionada a la cuenta
 si es asi, canbiar el estado de las otras facturas en fac_facturas a 3 y re-interfazar.
+<<<<<<< HEAD
+
+------------------------------------------------------------------------------------------------------------------------------
+-- precios en lista de precios
+------------------------------------------------------------------------------------------------------------------------------
+listas_precios_detalle
+listas_precios
+=======
 
 ------------------------------------------------------------------------------------------------------------------------------
 -- cargos paragrafados
@@ -681,3 +689,5 @@ SELECT
         )
         ELSE 'No existe'
     END AS resultado UNION ALL
+
+>>>>>>> b712fd9a84041f53f08ebcbe57ad36463f7abede
