@@ -18,6 +18,33 @@ JOIN bodegas_documentos_d dbd ON cd.consecutivo = dbd.consecutivo
 JOIN inventarios_productos ip ON dbd.codigo_producto = ip.codigo_producto
 WHERE
 cd.numerodecuenta = 2055126
+
+
+SELECT 
+a.transaccion,
+a.consecutivo,
+a.cargo,
+a.valor_cubierto,
+a.cantidad,
+d.prefijo,
+b.numeracion,
+c.fecha_registro,
+e.nombre,
+e.descripcion
+FROM 
+cuentas_detalle a, 
+bodegas_documentos_d b,
+bodegas_documentos c, 
+bodegas_doc_numeraciones d,
+system_usuarios e
+WHERE a.consecutivo=b.consecutivo 
+AND a.numerodecuenta=2060188  
+AND b.codigo_producto='0206082580' 
+AND b.numeracion=c.numeracion 
+AND b.bodegas_doc_id=c.bodegas_doc_id 
+AND c.bodegas_doc_id=d.bodegas_doc_id  
+AND c.usuario_id=e.usuario_id 
+ORDER BY a.cargo DESC
 --------------------------------------------------------------------------------------
 -- Reporte de carolina macias para ver la trazabilidad del servicio
 --------------------------------------------------------------------------------------
@@ -69,31 +96,7 @@ UPDATE cums_vigentes SET nombre_producto= 'ACIDO FOLICO TABLETAS 1 MG.', laborat
 UPDATE cums_vigentes SET nombre_producto= 'ALBENDAZOL SUSPENSION 100 MG. / 5 ML', laboratorio= 'GENFAR S.A.', registro_sanitario= '2022M-010770-R3', estado_registro_sanitario='V', presentacion_comercial='FRASCO DE POLIETILENO DE ALTA DENSIDAD POR 20 ML', estado='A', fecha_registro='2022-02-12', fecha_vencim_reg_sanitrio='2035-12-29' WHERE code_cums='33439-2';
 UPDATE cums_vigentes SET nombre_producto= 'AMIKACINA 100 MG / 2 ML', laboratorio= 'VITALIS S.A.C.I.', registro_sanitario= '2022M-014889-R3', estado_registro_sanitario='V', presentacion_comercial='CAJA PLEGADIZA CON 10 AMPOLLAS POR 2 ML EN VIDRIO TIPO I INCOLORO', estado='A', fecha_registro='2022-02-12', fecha_vencim_reg_sanitrio='2035-12-29' WHERE code_cums='19908237-19';
 ------------------------------------------------------------------------------------------------------------------------------
-SELECT 
-a.transaccion,
-a.consecutivo,
-a.cargo,
-a.valor_cubierto,
-a.cantidad,
-d.prefijo,
-b.numeracion,
-c.fecha_registro,
-e.nombre,
-e.descripcion
-FROM 
-cuentas_detalle a, 
-bodegas_documentos_d b,
-bodegas_documentos c, 
-bodegas_doc_numeraciones d,
-system_usuarios e
-WHERE a.consecutivo=b.consecutivo 
-AND a.numerodecuenta=2046797  
-AND b.codigo_producto='0206081721' 
-AND b.numeracion=c.numeracion 
-AND b.bodegas_doc_id=c.bodegas_doc_id 
-AND c.bodegas_doc_id=d.bodegas_doc_id  
-AND c.usuario_id=e.usuario_id 
-ORDER BY a.cargo DESC
+
 ------------------------------------------------------------------------------------------------------------------------------
 SELECT a.paciente_id,a.tipo_id_paciente,a.agenda_cita_ASignada_id,c.fecha_turno, b.hora
 FROM agenda_citAS_ASignadAS a, agenda_citAS b,agenda_turnos c
@@ -346,7 +349,7 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='865202';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='890502';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
@@ -381,18 +384,18 @@ cargo 865201
 tarifario 1003 
 centro de costo 610504
 
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='130M02';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='30207';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
 /*empresa*/                     '01',
 /*tarifario_id*/                tarifario_id,
-/*cargo*/                       '130M02',
-/*centro de costo*/             611504,
+/*cargo*/                       '30207',
+/*centro de costo*/             613007,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
-/*centro de costo destino*/     611504,
+/*centro de costo destino*/     613007,
 /*cuenta glosa*/                417520,
 /*cuenta honorario*/            61051001,
 /*centro de operacion*/         '001',
@@ -402,7 +405,7 @@ SELECT
 FROM
 tarifarios_detalle
 WHERE
-cargo='130M02'
+cargo='30207'
 
 
 INSERT INTO
@@ -633,3 +636,48 @@ cargo,
 servicio
 FROM planes_paragrafados_cargos
 WHERE plan_id= '3843'
+------------------------------------------------------------------------------------------------------------------------------
+-- query para revisar el caso recurrente de sayli, para ver las diferencias de la facturacion.
+------------------------------------------------------------------------------------------------------------------------------
+
+SELECT
+a.prefijo, a.factura_fiscal,a.total_factura,b.total_debitos,b.total_creditos, a.estado,
+SUM(b.total_debitos-b.total_creditos)
+FROM
+fac_facturas a
+LEFT  JOIN cg_mov_01.cg_mov_contable_01 b ON ( a.empresa_id=b.empresa_id 
+AND a.prefijo=b.prefijo AND a.factura_fiscal=b.numero)
+
+WHERE
+a.fecha_registro BETWEEN '2024-05-01' AND NOW()
+AND a.prefijo='CN'
+GROUP BY 1,2,3,4,5,6
+ORDER BY  SUM(b.total_debitos-b.total_creditos) ASC
+
+------------------------------------------------------------------------------------------------------------------------------
+-- ingresos porteria.
+------------------------------------------------------------------------------------------------------------------------------
+ingresos_porteria
+cruce_ingresos_porteria
+------------------------------------------------------------------------------------------------------------------------------
+-- agregar permiso para que jefe de enfermeria pueda realizar desecho de suministro
+------------------------------------------------------------------------------------------------------------------------------
+userpermisos_suministro_diferente
+------------------------------------------------------------------------------------------------------------------------------
+-- SELECT para ver cuales cargos no existen para el tarifario
+------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT *
+            FROM tarifarios_detalle
+            WHERE tarifario_id = '1010' AND cargo = '998702'
+        ) THEN (
+            SELECT cargo
+            FROM tarifarios_detalle
+            WHERE tarifario_id = '1010' AND cargo = '998702'
+        )
+        ELSE 'No existe'
+    END AS resultado UNION ALL
