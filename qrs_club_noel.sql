@@ -349,15 +349,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='890502';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='824611';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '865202', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '824611', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='865202'
+cargo='824611'
 
 
 INSERT INTO
@@ -384,18 +384,18 @@ cargo 865201
 tarifario 1003 
 centro de costo 610504
 
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='30207';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='890309';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
 /*empresa*/                     '01',
 /*tarifario_id*/                tarifario_id,
-/*cargo*/                       '30207',
-/*centro de costo*/             613007,
+/*cargo*/                       '890309',
+/*centro de costo*/             611233,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
-/*centro de costo destino*/     613007,
+/*centro de costo destino*/     611233,
 /*cuenta glosa*/                417520,
 /*cuenta honorario*/            61051001,
 /*centro de operacion*/         '001',
@@ -405,7 +405,7 @@ SELECT
 FROM
 tarifarios_detalle
 WHERE
-cargo='30207'
+cargo='890309'
 
 
 INSERT INTO
@@ -425,6 +425,24 @@ VALUES (
 /*id user configura cc*/        null,
 /* descripcion configura cc*/   null
 )
+
+=CONCATENATE("INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+VALUES (
+/*empresa*/                     '01',
+/*tarifario_id*/                '00";A139;"',
+/*cargo*/                       '";C139;"',
+/*centro de costo*/             ";E139;",
+/*cuenta*/                      ";F139;",
+/*cuenta naturaleza*/           '";G139;"',
+/*centro de costo destino*/     ";H139;",
+/*cuenta glosa*/                ";I139;",
+/*cuenta honorario*/            null,
+/*centro de operacion*/         '001',
+/*centro de operacion*/         null,
+/*id user configura cc*/        null,
+/* descripcion configura cc*/   null
+)")
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para productos que no son gases medicinales (solo cambiar producto)
 ------------------------------------------------------------------------------------------------------------------------------
@@ -690,4 +708,12 @@ SELECT
         ELSE 'No existe'
     END AS resultado UNION ALL
 
->>>>>>> b712fd9a84041f53f08ebcbe57ad36463f7abede
+------------------------------------------------------------------------------------------------------------------------------
+-- IMAGENOLOGIA n puede cambiar el profesional de una orden
+------------------------------------------------------------------------------------------------------------------------------
+cuando no le permita cambiar el profesional de una orden, primero hay que revisar si ya esta facturado, si es asi, no le va a permitir.
+
+------------------------------------------------------------------------------------------------------------------------------
+-- PArametrizacion de cuentas contables
+------------------------------------------------------------------------------------------------------------------------------
+cuenta_debito  parametros	cuenta_credito   costos_parametros
