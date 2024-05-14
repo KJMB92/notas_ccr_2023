@@ -30,6 +30,35 @@ d.prefijo,
 b.numeracion,
 c.fecha_registro,
 e.nombre,
+e.descripcion,
+f.cuenta_liquidacion_qx_id AS acto_qx
+FROM 
+cuentas_detalle a, 
+bodegas_documentos_d b,
+bodegas_documentos c, 
+bodegas_doc_numeraciones d,
+system_usuarios e,
+cuentas_codigos_agrupamiento f
+WHERE a.consecutivo=b.consecutivo 
+AND a.numerodecuenta=2023170  
+AND b.codigo_producto='0206080988' 
+AND b.numeracion=c.numeracion 
+AND b.bodegas_doc_id=c.bodegas_doc_id 
+AND c.bodegas_doc_id=d.bodegas_doc_id  
+AND c.usuario_id=e.usuario_id 
+AND a.codigo_agrupamiento_id=f.codigo_agrupamiento_id
+ORDER BY f.cuenta_liquidacion_qx_id, a.cargo DESC
+
+SELECT 
+a.transaccion,
+a.consecutivo,
+a.cargo,
+a.valor_cubierto,
+a.cantidad,
+d.prefijo,
+b.numeracion,
+c.fecha_registro,
+e.nombre,
 e.descripcion
 FROM 
 cuentas_detalle a, 
@@ -38,8 +67,7 @@ bodegas_documentos c,
 bodegas_doc_numeraciones d,
 system_usuarios e
 WHERE a.consecutivo=b.consecutivo 
-AND a.numerodecuenta=2060188  
-AND b.codigo_producto='0206082580' 
+AND b.codigo_producto='0101021546' 
 AND b.numeracion=c.numeracion 
 AND b.bodegas_doc_id=c.bodegas_doc_id 
 AND c.bodegas_doc_id=d.bodegas_doc_id  
@@ -162,6 +190,9 @@ os_ordenes_servicios
 cuentas
 os_maestro
 hc_os_solicitudes
+
+4359
+3443244
 
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
 Error DB : ERROR: EL REGISTRO DE LA DEVOLUCION QUE ESTA CANCELANDO NO SE ENCUENTRA EN LA TABLA [bodega_paciente] CONTEXT: funciÃ³n PL/pgSQL bodega_paciente_control_bodegas() en la lÃ­nea 699 en RAISE
@@ -349,15 +380,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='824611';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='843400';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '824611', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '843400', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='824611'
+cargo='843400'
 
 
 INSERT INTO
@@ -384,18 +415,18 @@ cargo 865201
 tarifario 1003 
 centro de costo 610504
 
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='890309';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='890502';
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
 SELECT
 /*empresa*/                     '01',
 /*tarifario_id*/                tarifario_id,
-/*cargo*/                       '890309',
-/*centro de costo*/             611233,
+/*cargo*/                       '890502',
+/*centro de costo*/             611506,
 /*cuenta*/                      410501,
 /*cuenta naturaleza*/           'C',
-/*centro de costo destino*/     611233,
+/*centro de costo destino*/     611506,
 /*cuenta glosa*/                417520,
 /*cuenta honorario*/            61051001,
 /*centro de operacion*/         '001',
@@ -405,7 +436,7 @@ SELECT
 FROM
 tarifarios_detalle
 WHERE
-cargo='890309'
+cargo='890502'
 
 
 INSERT INTO
@@ -675,10 +706,12 @@ LEFT  JOIN cg_mov_01.cg_mov_contable_01 b ON ( a.empresa_id=b.empresa_id
 AND a.prefijo=b.prefijo AND a.factura_fiscal=b.numero)
 
 WHERE
-a.fecha_registro BETWEEN '2024-05-01' AND NOW()
+a.fecha_registro BETWEEN '2024-05-09' AND NOW()
 AND a.prefijo='CN'
 GROUP BY 1,2,3,4,5,6
 ORDER BY  SUM(b.total_debitos-b.total_creditos) ASC
+
+Se verifica desde la fecha del dia 05/08/2024 hasta el momento NOW() y no se encuentran diferencias.
 
 ------------------------------------------------------------------------------------------------------------------------------
 -- ingresos porteria.
@@ -714,6 +747,101 @@ SELECT
 cuando no le permita cambiar el profesional de una orden, primero hay que revisar si ya esta facturado, si es asi, no le va a permitir.
 
 ------------------------------------------------------------------------------------------------------------------------------
--- PArametrizacion de cuentas contables
+-- PArametrizacion de cuentas contables por documentos, ticket recurrente de la jefe Estefania, de compras y suministros.
 ------------------------------------------------------------------------------------------------------------------------------
-cuenta_debito  parametros	cuenta_credito   costos_parametros
+nos tiene que entregar el documento, ya sea SA NE NC, con este, en la tabla documentos traemos el tipo de documento y lo buscamos 
+en este caso el SA es un E006, enotnces buscamos en la BD asi.
+E006
+y abrimos las tablas que tienen estos nombres parecidos.
+doc_inv_e006_costos_parametros
+doc_inv_e006_parametros
+cuenta_debito  parametros,	cuenta_credito   costos_parametros
+------------------------------------------------------------------------------------------------------------------------------
+-- Quitar chulo a producto
+------------------------------------------------------------------------------------------------------------------------------
+se quita el chulo poniendo en estado 0 el sw_facturado de cuentas_detalle
+
+------------------------------------------------------------------------------------------------------------------------------
+-- No integra documentos contables a la DIAN o por medio de la interface contable FACTURE
+------------------------------------------------------------------------------------------------------------------------------
+Se debe de buscar en el modulo de contailidad, luego en integracion de documentos facture, y luego no integrados.
+si aparece ahi debe de decir un mensaje que indique que no encuentra informacion de esta
+por lo general es por que es una factura vieja y esta fue interfazada por el anterior gestor de interface, Carvajal.
+entonces se debe de buscar la factura de este documento, esto lo hacemos en la tabla notas_credito, de ahi sacamos la factura
+se revisa si existe, lo comun es que no se encuentre nada.
+Si es asi, debemos ir a la tabla fact_electronica_registro_integracion, en esta debemos buscar con el prefijo que nos entregan
+por ejemplo NE y a este lo cambiamos a estado 1 y le borramos el mensaje.
+
+notas_credito
+fact_electronica_registro_integracion
+
+------------------------------------------------------------------------------------------------------------------------------
+-- cancelar programacion de cirugias, y quirofano
+------------------------------------------------------------------------------------------------------------------------------
+estacion_enfermeria_qx_pacientes_ingresados
+
+------------------------------------------------------------------------------------------------------------------------------
+-- Cambio de lapso de vencimiento de formulas y ordenes medicas.
+------------------------------------------------------------------------------------------------------------------------------
+tabla: system_modulos_variables
+modulo: Central_de_Autorizaciones
+modulo_tipo: app
+variable: vencimiento_formula_medica	
+valor: 90
+------------------------------------------------------------------------------------------------------------------------------
+-- query para realcionar cargos a departameotns
+------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO departamentos_cargos VALUES ('612502','890287',1,1,1,1,0,0,1,0);
+
+------------------------------------------------------------------------------------------------------------------------------
+-- actualizar estado de venta en listas precios
+------------------------------------------------------------------------------------------------------------------------------
+=CONCATENAR("UPDATE listas_precios SET sw_venta=0 WHERE codigo_lista='";B2;"';")
+UPDATE listas_precios SET sw_venta=0 WHERE codigo_lista='0001';
+
+SELECT
+lis.codigo_lista,
+lis.descripcion,
+CASE
+    WHEN lis.sw_venta='1' THEN 'ACTIVO'
+    ELSE  'INACTIVO'
+END AS estado,
+lpr.codigo_producto,
+ip.descripcion,
+lpr.precio,
+lpr.sw_porcentaje,
+lpr.porcentaje,
+lpr.valor_inicial
+FROM listas_precios lis
+JOIN listas_precios_detalle lpr ON lis.codigo_lista = lpr.codigo_lista
+JOIN inventarios_productos ip ON lpr.codigo_producto = ip.codigo_producto
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- error de cuadre de cuenta, en citas medicamentos no aparece nada SOLICITUD MEDICAMENTOS APOYOS DX
+------------------------------------------------------------------------------------------------------------------------------
+hc_solicitudes_medicamentos
+con el ingreso en la tabla 
+hc_solicitudes_nmedicamentos
+cuando son del departamento cercano a imagenologia la columna sw_apdx debe estar en 1
+
+------------------------------------------------------------------------------------------------------------------------------
+-- *cuando al hacer una devolucion resulta un erro que dice:
+-- La consulta falloERROR:  INSERT tiene mÃ¡s expresiones que columnas de destino
+-- LINE 1: ...LUES  (   435624,   '0206080985',   2,   3105722, 3105723  )...
+------------------------------------------------------------------------------------------------------------------------------
+*debemos de ver que los ultimos numeros que empiezan por 310... son los documento_despacho_id, estos encuentran mas de 1, por eso el error
+*entonces hay 2 formas de arreglas este.
+*buscamos en la tabla bodegas_documento_despacho_med con los codigos que encontramos en el error, vemos que estan ambos registrados.
+*uno de ellos 2 esta malo, por lo tanto, hay que borrar 1.
+*tomamos uno por uno de los codigos y buscamos en esta tabla, lo mejor es hacer la busqueda de todos los codigos al mismo tiempo, bodegas_documento_despacho_med_d
+*si uno trae informacion y el otro no, se borra el que no trae inforamacion, lo borramos de la tabla bodegas_documento_despacho_med
+*Si ninguno trae informacion, entonces vamos a la tabla de atras, hc_solicitudes_medicamentos y buscamos con los numeros documento_despacho_id
+*si encuentra un solo documento, entonces borramos el que no tiene informacion de la tabla bodegas_documento_despacho_med, y listo, hacemos la devolucion y ya esta.
+
+hc_solicitudes_medicamentos
+bodegas_documento_despacho_med
+bodegas_documento_despacho_med_d
