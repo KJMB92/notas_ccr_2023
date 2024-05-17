@@ -150,6 +150,10 @@ ON (maes.orden_servicio_id=orden.orden_servicio_id)
 WHERE
 maes.sw_estado='1'
 AND orden.plan_id IN(4328,4323,4313))
+
+5358197
+3501327
+25067
 ------------------------------------------------------------------------------------------------------------------------------
 -- ver el error de laboratorio, de no tiene cuenta creada
 ------------------------------------------------------------------------------------------------------------------------------
@@ -625,7 +629,9 @@ userpermisos_tipos_doc_generales?:
 tipos_doc_generales
 cg_mov_contable_01_202404
 
-
+------------------------------------------------------------------------------------------------------------------------------
+-- query para cambiar el tarifario a las cuentas que estan mal en cuestion del tarifario
+------------------------------------------------------------------------------------------------------------------------------
 
 UPDATE
 cuentas_detalle
@@ -845,3 +851,53 @@ cuando son del departamento cercano a imagenologia la columna sw_apdx debe estar
 hc_solicitudes_medicamentos
 bodegas_documento_despacho_med
 bodegas_documento_despacho_med_d
+
+------------------------------------------------------------------------------------------------------------------------------
+-- Permisos Tinvas para llenar en evolucion de diligenciar una evolucion:
+-- VALORACION
+-- INSERCION
+-- CURACION
+-- SEGUIMIENTO
+-- RETIRO
+------------------------------------------------------------------------------------------------------------------------------
+system_hc_submodulos_variables
+
+SELECT "submodulo","variable","valor","descripcion" FROM "public"."system_hc_submodulos_variables" WHERE "variable" ILIKE '%tinva%'
+
+EvolucionCompletaII
+medicoTinvas
+1468|1848|1452|2122	
+usuario autirizado para realizar proyecto tinvas
+
+------------------------------------------------------------------------------------------------------------------------------
+-- verificar solicitudes de imagenologia
+------------------------------------------------------------------------------------------------------------------------------
+interface_datalab_solicitudes
+interface_datalab_resultados
+resultados_integracion
+estudios_integracion
+
+A90X | A970
+
+A972 220
+A91X 220
+
+los demas 210
+
+------------------------------------------------------------------------------------------------------------------------------
+-- Cambio de fecha de vencimiento de ordenes medicas.
+------------------------------------------------------------------------------------------------------------------------------
+os_maestro WHERE numero_orden_id = '5358197'
+os_ordenes_servicios WHERE orden_servicio_id = '3501327'
+
+
+
+INSERT INTO cg_conf.doc_fv01_cargos_por_cc 
+SELECT '01', tarifario_id, '865202', 610504, 410504, 'C', 611211, 417505, null, '001', null, null, null
+FROM
+tarifarios_detalle
+WHERE
+cargo='865202'
+
+
+INSERT INTO cg_conf.doc_fv01_cargos_por_cc VALUES ('01', '0002', '865202', 610504, 410504, 'C', 611211, 417505, null, '001', null, null, null)
