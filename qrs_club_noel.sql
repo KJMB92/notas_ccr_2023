@@ -901,3 +901,11 @@ cargo='865202'
 
 
 INSERT INTO cg_conf.doc_fv01_cargos_por_cc VALUES ('01', '0002', '865202', 610504, 410504, 'C', 611211, 417505, null, '001', null, null, null)
+
+
+INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A971', 'DENGUE CON SIGNOS DE ALARMA', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '220');
+INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A972', 'DENGUE SEVERO', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '220');
+INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A979', 'DENGUE NO ESPECIFICADO', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '210');
+INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A970', 'DENGUE SIN SIGNOS DE ALARMA', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '210');
+INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A91X', 'FIEBRE DEL DENGUE HEMORRAGICO', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 5, '0', '220');
+INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A90X', 'FIEBRE DEL DENGUE [DENGUE CLASICO]', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 5, '0', '210');
