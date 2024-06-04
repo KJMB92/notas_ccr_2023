@@ -17,7 +17,7 @@ cuentas_detalle cd
 JOIN bodegas_documentos_d dbd ON cd.consecutivo = dbd.consecutivo
 JOIN inventarios_productos ip ON dbd.codigo_producto = ip.codigo_producto
 WHERE
-cd.numerodecuenta = 2055126
+cd.numerodecuenta = 2060979
 
 
 SELECT 
@@ -40,8 +40,8 @@ bodegas_doc_numeraciones d,
 system_usuarios e,
 cuentas_codigos_agrupamiento f
 WHERE a.consecutivo=b.consecutivo 
-AND a.numerodecuenta=2023170  
-AND b.codigo_producto='0206080988' 
+AND a.numerodecuenta=2071558  
+AND b.codigo_producto ='0206082458' 
 AND b.numeracion=c.numeracion 
 AND b.bodegas_doc_id=c.bodegas_doc_id 
 AND c.bodegas_doc_id=d.bodegas_doc_id  
@@ -195,8 +195,8 @@ cuentas
 os_maestro
 hc_os_solicitudes
 
-4359
-3443244
+orden 3410682
+cuenta 2064506
 
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
 Error DB : ERROR: EL REGISTRO DE LA DEVOLUCION QUE ESTA CANCELANDO NO SE ENCUENTRA EN LA TABLA [bodega_paciente] CONTEXT: funciÃ³n PL/pgSQL bodega_paciente_control_bodegas() en la lÃ­nea 699 en RAISE
@@ -386,13 +386,15 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='843400';
 
+
+
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '843400', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '862326', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='843400'
+cargo='862326'
 
 
 INSERT INTO
@@ -412,6 +414,46 @@ VALUES (
 /*id user configura cc*/        null,
 /* descripcion configura cc*/   null
 )
+
+
+INSERT INTO
+    cg_conf.doc_fv01_cargos_por_cc (
+        empresa_id,
+        tarifario_id,
+        cargo,
+        centro_de_costo_id,
+        cuenta,
+        cuenta_naturaleza,
+        centro_costo_destino,
+        cuenta_glosa,
+        cuenta_honorario,
+        centro_de_operacion_id,
+        centro_operacion_id,
+        id_user_configura_cc,
+        descripcion_configura_cc
+    )
+VALUES
+    (
+        '01',
+        '1003',
+        '542102',
+        '612001',
+        '412001',
+        'C',
+        '612001',
+        '417520',
+        '61201001',
+        '001',
+        NULL,
+        NULL,
+        NULL
+    );
+
+Actualmente no se tiene una parametrizacion de referencia para este cargo.
+
+Se solicita inforamcion a centro de costos, estamos a la espera de su respuesta.
+
+
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
 ------------------------------------------------------------------------------------------------------------------------------
@@ -699,6 +741,13 @@ cargo,
 servicio
 FROM planes_paragrafados_cargos
 WHERE plan_id= '3843'
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- productos  paragrafados
+------------------------------------------------------------------------------------------------------------------------------
+paragrafados_qx_listas_detalle
+planes_paragrafados_medicamentos
 ------------------------------------------------------------------------------------------------------------------------------
 -- query para revisar el caso recurrente de sayli, para ver las diferencias de la facturacion.
 ------------------------------------------------------------------------------------------------------------------------------
@@ -822,9 +871,22 @@ FROM listas_precios lis
 JOIN listas_precios_detalle lpr ON lis.codigo_lista = lpr.codigo_lista
 JOIN inventarios_productos ip ON lpr.codigo_producto = ip.codigo_producto
 
+------------------------------------------------------------------------------------------------------------------------------
+-- actualizar precio de producto en listas precios
+------------------------------------------------------------------------------------------------------------------------------
+UPDATE 
+listas_precios_detalle 
+SET 
+precio= 301600
+WHERE 
+codigo_producto='0206082504';
 
 
 
+SELECT 
+*
+ FROM "public"."listas_precios_detalle" 
+ WHERE "codigo_producto" = '0206082504'
 
 ------------------------------------------------------------------------------------------------------------------------------
 -- error de cuadre de cuenta, en citas medicamentos no aparece nada SOLICITUD MEDICAMENTOS APOYOS DX
@@ -902,6 +964,9 @@ cargo='865202'
 
 INSERT INTO cg_conf.doc_fv01_cargos_por_cc VALUES ('01', '0002', '865202', 610504, 410504, 'C', 611211, 417505, null, '001', null, null, null)
 
+------------------------------------------------------------------------------------------------------------------------------
+-- Insert de diagnosticos.
+------------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A971', 'DENGUE CON SIGNOS DE ALARMA', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '220');
 INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A972', 'DENGUE SEVERO', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '220');
@@ -909,3 +974,19 @@ INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, ed
 INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A970', 'DENGUE SIN SIGNOS DE ALARMA', '3', NULL, NULL, 100, NULL, NULL, 'A97', NULL, '0', 5, '0', '210');
 INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A91X', 'FIEBRE DEL DENGUE HEMORRAGICO', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 5, '0', '220');
 INSERT INTO diagnosticos (diagnostico_id, diagnostico_nombre, nivel, sexo_id, edad_min, edad_max, categoria, grupo, capitulo, grupo_ficha_id, sw_alerta, sw_ficha, sw_cancerigeno, var_ficha) VALUES('A90X', 'FIEBRE DEL DENGUE [DENGUE CLASICO]', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 5, '0', '210');
+
+------------------------------------------------------------------------------------------------------------------------------
+-- formato de procedimientos a realizar para hacer un requerimiento correctamente.  INSTRUCTIVO GESTION DE DOCUMENTACION DE PROYECTO
+------------------------------------------------------------------------------------------------------------------------------
+https://docs.google.com/document/d/1mvmpyGYOr4DaD85lhrEO9dHVpDoh6lQr/edit?pli=1
+
+------------------------------------------------------------------------------------------------------------------------------
+-- ver movimientos de pacientes entre estaciones
+------------------------------------------------------------------------------------------------------------------------------
+estaciones_enfermeria_ingresos_pendientes
+estaciones_enfermeria_ingresos_realizados
+
+------------------------------------------------------------------------------------------------------------------------------
+-- encuentra las facturas en VE, de venta de farmacia
+------------------------------------------------------------------------------------------------------------------------------
+fac_facturas_contado
