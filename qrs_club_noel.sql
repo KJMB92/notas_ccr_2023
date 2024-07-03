@@ -195,7 +195,7 @@ cuentas
 os_maestro
 hc_os_solicitudes
 
-orden 3410682
+orden 3410694
 cuenta 2064506
 
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
@@ -990,3 +990,113 @@ estaciones_enfermeria_ingresos_realizados
 -- encuentra las facturas en VE, de venta de farmacia
 ------------------------------------------------------------------------------------------------------------------------------
 fac_facturas_contado
+
+
+-- Realizar un UPSERT
+INSERT INTO listas_precios_detalle 
+SELECT ('01', '0101021605', '0001', 6454200000, '0', 0, 0, NOW(), 3355
+)
+ON CONFLICT (codigo_producto, codigo_lista) DO UPDATE SET
+    precio = 6454200000
+WHERE listas_precios_detalle.codigo_producto = '0101021605';
+
+
+
+
+(SELECT codigo_lista FROM listas_precios WHERE sw_venta=1)
+
+
+
+SELECT
+DISTINCT 
+lp.*
+FROM
+listas_precios_detalle lpd
+JOIN listas_precios lp ON lpd.codigo_lista = lp.codigo_lista
+WHERE
+lp.sw_venta='1'
+
+ 
+INSERT INTO
+listas_precios_detalle
+SELECT SLE
+
+
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+SELECT '01', tarifario_id, '862326', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+FROM
+tarifarios_detalle
+WHERE
+cargo='862326'
+
+
+INSERT INTO
+listas_precios_detalle
+SELECT 
+'01',
+'0101010261',
+lpd.codigo_lista,
+10000000,
+'0',
+'0',
+'0',
+NOW(),
+NULL
+FROM 
+listas_precios_detalle lpd
+JOIN listas_precios lp ON lpd.codigo_lista = lp.codigo_lista
+WHERE
+lp.sw_venta='1'
+ON CONFLICT (codigo_producto, codigo_lista) 
+DO 
+UPDATE listas_precios_detalle lpds
+SET
+lpds.precio = 2
+WHERE codigo_producto='0101010261'
+
+------------------------------------------------------------------------------------------------------------------------------
+-- ERROR de bodega en las solicitud y las devoluciones de medicmaneots y devoluciones
+------------------------------------------------------------------------------------------------------------------------------
+--guardar las solicitudes que ya estan en FA
+
+UPDATE 
+hc_solicitudes_medicamentos
+SET 
+bodega='FA'
+WHERE
+ingreso=2043502 and bodega='UR'
+
+--para devolver a todo como estaba, ejecutar el siguiente, teniendo en cuenta solo los que estaban en UR
+
+UPDATE 
+hc_solicitudes_medicamentos
+SET 
+bodega='UR'
+WHERE
+ingreso=2043502
+AND bodega='FA'
+AND solicitud_id IN(3243447,
+3244976,
+3244974,
+3245362,
+3246009,
+3246303,
+3247233,
+3247232,
+3247006,
+3247005,
+3243243,
+3247540,
+3247530,
+3247533,
+3247701,
+3247700,
+3248124,
+3248560,
+3248761,
+3248765,
+3249055,
+3247534,
+3243236,
+3243439)
