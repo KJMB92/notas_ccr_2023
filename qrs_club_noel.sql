@@ -136,7 +136,7 @@ AND a.tipo_id_paciente='TI'
 --AND c.fecha_turno>='2023-07-17'
  ORDER BY c.fecha_turno DESC
 ------------------------------------------------------------------------------------------------------------------------------
--- para realizar el cambio del plan en las ordenes de servicio que tengan un mal plan
+-- para realizar el cambio del plan en las ordenes de servicio que tengan un mal plan malo
 ------------------------------------------------------------------------------------------------------------------------------
  UPDATE os_ordenes_servicios
 SET plan_id=4358 WHERE 
@@ -195,8 +195,8 @@ cuentas
 os_maestro
 hc_os_solicitudes
 
-orden 3410694
-cuenta 2064506
+orden 3578993
+cuenta 2087221
 
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
 Error DB : ERROR: EL REGISTRO DE LA DEVOLUCION QUE ESTA CANCELANDO NO SE ENCUENTRA EN LA TABLA [bodega_paciente] CONTEXT: funciÃ³n PL/pgSQL bodega_paciente_control_bodegas() en la lÃ­nea 699 en RAISE
@@ -319,6 +319,11 @@ hc_notas_operatorias_procedimientos
 hc_os_solicitudes
 hc_os_solicitudes_subprocedimientos
 ------------------------------------------------------------------------------------------------------------------------------
+-- cambiar cups en cirugia
+------------------------------------------------------------------------------------------------------------------------------
+hc_notas_operatorias_cirugias
+hc_notas_operatorias_procedimientos
+------------------------------------------------------------------------------------------------------------------------------
 -- historia clinica sin fecha de egreso
 ------------------------------------------------------------------------------------------------------------------------------
 validar en cual de estas no tiene registro
@@ -384,17 +389,17 @@ otros_tipos_abonos_recibos, si hay algun recibo en esta tabla, relacionado al re
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error en cuentas con centro de costos para departamento cirugia 61201001
 ------------------------------------------------------------------------------------------------------------------------------
-DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='843400';
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='586300';
 
 
 
 INSERT INTO
 cg_conf.doc_fv01_cargos_por_cc
-SELECT '01', tarifario_id, '862326', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
+SELECT '01', tarifario_id, '586300', 612001, 412001, 'C', 612001, 417520, 61201001, '001', null, null, null
 FROM
 tarifarios_detalle
 WHERE
-cargo='862326'
+cargo='586300'
 
 
 INSERT INTO
@@ -621,7 +626,6 @@ especialidades_cargos_tarifarios
 -- BOTON SOLICITAR EN PLAN TERAPEUTICO
 ------------------------------------------------------------------------------------------------------------------------------
 para que aparesca el boton de SOLICITAR en MP-PLAN TERAPEUTICO se debe de revisar que no tenga registro con ese ingreso  en la tabla hc_vistosok_salida_detalle
-<<<<<<< HEAD
 ------------------------------------------------------------------------------------------------------------------------------
 UPDATE 
 cuentas_detalle
@@ -630,7 +634,6 @@ tarifario_id='0094'
 WHERE
 numerodecuenta=2052081 AND
 tarifario_id='0078'
-=======
 ------------------------------------------------------------------------------------------------------------------------------
 -- TIPO CORTE pos a noppos no-pos0
 ------------------------------------------------------------------------------------------------------------------------------
@@ -1065,7 +1068,7 @@ hc_solicitudes_medicamentos
 SET 
 bodega='FA'
 WHERE
-ingreso=2043502 and bodega='UR'
+ingreso=2055899 and bodega='UR'
 
 --para devolver a todo como estaba, ejecutar el siguiente, teniendo en cuenta solo los que estaban en UR
 
@@ -1074,29 +1077,76 @@ hc_solicitudes_medicamentos
 SET 
 bodega='UR'
 WHERE
-ingreso=2043502
+ingreso=2055899
 AND bodega='FA'
-AND solicitud_id IN(3243447,
-3244976,
-3244974,
-3245362,
-3246009,
-3246303,
-3247233,
-3247232,
-3247006,
-3247005,
-3243243,
-3247540,
-3247530,
-3247533,
-3247701,
-3247700,
-3248124,
-3248560,
-3248761,
-3248765,
-3249055,
-3247534,
-3243236,
-3243439)
+AND solicitud_id IN(3271663,
+3272104,
+3272591,
+3272592,
+3271477,
+3271467,
+3271665,
+3271464,
+3271476)
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- cuando una interconsulta no le aparece para atender
+------------------------------------------------------------------------------------------------------------------------------
+especialidades_cargos_tarifarios
+especialidades_cargos
+especialidades
+
+INSERT INTO
+especialidades_cargos_tarifarios
+SELECT
+'102',
+tarifario_id,
+'890409'
+FROM tarifarios_detalle
+WHERE
+cargo='890409'
+AND
+tarifario_id NOT IN (SELECT tarifario_id FROM especialidades_cargos_tarifarios
+WHERE especialidad='102') 
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- cuando un paciente sequeda pegado en la estacion de consulta urgencias
+------------------------------------------------------------------------------------------------------------------------------
+buscar en la tabla pacientes_urgencias u poner estado en 5
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- 
+------------------------------------------------------------------------------------------------------------------------------
+
+
+cuando van a devolver una preparacion y no pasa del boton verde, se queda ahi sin hacer nada, 
+debemos ir al debug del F12, entonces abrimos el F12, luego en RED, 
+luego le damos click al boton verde y tomamos el ulñtimo
+
+La consulta falloERROR:  INSERT tiene mÃ¡s expresiones que columnas de destino
+LINE 1: ...LUES  (   448207,   '0102011325',   2,   3181314, 3181317  )...
+
+hc_solicitudes_medicamentos
+
+
+
+
+
+
+
+INSERT INTO bodegas_usuarios 
+SELECT '01', '01', bodega, 3355 FROM bodegas
+
+
+RC
+1062341778
+anestesiologia
+
+
+no le permite hacer devoluciones.
+paola andrea ramos guerrero
+paola.ramos
+urgencias 1
