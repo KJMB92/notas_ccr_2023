@@ -195,8 +195,11 @@ cuentas
 os_maestro
 hc_os_solicitudes
 
-orden 3578993
-cuenta 2087221
+orden 
+cuenta 2120785
+1109579249
+RC
+
 
 Error al Guardar en Bases de Datos - inv_solicitudes_devolucion_d SQL estado[1]
 Error DB : ERROR: EL REGISTRO DE LA DEVOLUCION QUE ESTA CANCELANDO NO SE ENCUENTRA EN LA TABLA [bodega_paciente] CONTEXT: funciÃ³n PL/pgSQL bodega_paciente_control_bodegas() en la lÃ­nea 699 en RAISE
@@ -303,6 +306,8 @@ INSERT INTO nomina.procesos_areas_usuarios (proceso_id, area_id, usuario_id, sw_
 SELECT proceso_id, area_id, 93, sw_estado
 FROM nomina.procesos_areas_usuarios
 WHERE usuario_id = 1973
+
+INSERT INTO nomina.procesos_areas_usuarios VALUES(28, 10, 2095, 1)
 ------------------------------------------------------------------------------------------------------------------------------
 -- solicitan cancelar una solicitud de medicamentos
 ------------------------------------------------------------------------------------------------------------------------------
@@ -560,7 +565,7 @@ otros_tipos_abonos_recibos
 -- asignar permisos para aprobar pedidos
 ------------------------------------------------------------------------------------------------------------------------------
 Solo debe de asignarse a una persona por departamento.
-lideres_proceso
+lideres_departamento
 ------------------------------------------------------------------------------------------------------------------------------
 -- No aparece medico en la creacion de agenda medica
 ------------------------------------------------------------------------------------------------------------------------------
@@ -692,6 +697,13 @@ AND tarifario_id='0089'
 hc_formulacion_medicamentos
 hc_formulacion_medicamentos_eventos
 hc_auditoria_formulacion_medicamentos_eventos_tratamiento
+
+------------------------------------------------------------------------------------------------------------------------------
+-- para cuando un usuario va a hacer un suministro diferente de medicamento 
+------------------------------------------------------------------------------------------------------------------------------
+userpermisos_suministro_diferente
+
+
 ------------------------------------------------------------------------------------------------------------------------------
 -- Error de fecha en la interface SIESA facturacion
 ------------------------------------------------------------------------------------------------------------------------------
@@ -1060,6 +1072,7 @@ WHERE codigo_producto='0101010261'
 
 ------------------------------------------------------------------------------------------------------------------------------
 -- ERROR de bodega en las solicitud y las devoluciones de medicmaneots y devoluciones
+-- medicamentos y o insumos que no se ven para devolver
 ------------------------------------------------------------------------------------------------------------------------------
 --guardar las solicitudes que ya estan en FA
 
@@ -1068,26 +1081,21 @@ hc_solicitudes_medicamentos
 SET 
 bodega='FA'
 WHERE
-ingreso=2055899 and bodega='UR'
+ingreso=1996891
 
 --para devolver a todo como estaba, ejecutar el siguiente, teniendo en cuenta solo los que estaban en UR
 
 UPDATE 
 hc_solicitudes_medicamentos
 SET 
-bodega='UR'
+bodega='CZ'
 WHERE
-ingreso=2055899
+ingreso=2012861
 AND bodega='FA'
-AND solicitud_id IN(3271663,
-3272104,
-3272591,
-3272592,
-3271477,
-3271467,
-3271665,
-3271464,
-3271476)
+AND solicitud_id IN(
+3183612,
+3213999
+)
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -1132,21 +1140,150 @@ LINE 1: ...LUES  (   448207,   '0102011325',   2,   3181314, 3181317  )...
 hc_solicitudes_medicamentos
 
 
+------------------------------------------------------------------------------------------------------------------------------
+-- Error cero delante de codigo CUM en estado activo
+------------------------------------------------------------------------------------------------------------------------------
+
+SELECT
+    med."codigo_medicamento",
+    ip.descripcion,
+    med."cod_anatomofarmacologico",
+    med."cod_principio_activo",
+    med."cod_forma_farmacologica",
+    med."cod_concentracion",
+    med."sw_pos",
+    med."unidad_medida_medicamento_id",
+    med."concentracion_forma_farmacologica",
+    med."codigo_cum",
+    med."cant_presentacion",
+    med."codigo_cum_sismed",
+    med."medicamentos_resolucion",
+    med.sw_activo
+FROM
+    "public"."medicamentos" med
+    JOIN inventarios_productos ip ON med.codigo_medicamento = ip.codigo_producto
+WHERE "codigo_medicamento" IN (
+        'SO02021524',
+        '0101021667',
+        
+    )
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- Para ver los bloqueos de la DB
+------------------------------------------------------------------------------------------------------------------------------
+
+    SELECT
+    blocked_locks.pid AS blocked_pid,
+    blocked_activity.query AS blocked_query,
+    blocking_locks.pid AS blocking_pid,
+    blocking_activity.query AS blocking_query,
+    blocking_activity.state AS blocking_state,
+    blocking_activity.query_start AS blocking_query_start
+FROM
+    pg_locks blocked_locks
+JOIN
+    pg_stat_activity blocked_activity ON blocked_activity.pid = blocked_locks.pid
+JOIN
+    pg_locks blocking_locks ON blocking_locks.locktype = blocked_locks.locktype
+    AND blocking_locks.DATABASE IS NOT DISTINCT FROM blocked_locks.DATABASE
+    AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
+    AND blocking_locks.page IS NOT DISTINCT FROM blocked_locks.page
+    AND blocking_locks.tuple IS NOT DISTINCT FROM blocked_locks.tuple
+    AND blocking_locks.transactionid IS NOT DISTINCT FROM blocked_locks.transactionid
+    AND blocking_locks.classid IS NOT DISTINCT FROM blocked_locks.classid
+    AND blocking_locks.objid IS NOT DISTINCT FROM blocked_locks.objid
+    AND blocking_locks.objsubid IS NOT DISTINCT FROM blocked_locks.objsubid
+JOIN
+    pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid
+WHERE
+    NOT blocked_locks.GRANTED
+ORDER BY
+    blocking_activity.query_start ASC;
+
+
+
+    ------------------------------------------------------------
+
+    SELECT 
+ing.ingreso,
+dep.departamento || ' - ' || dep.descripcion AS "departamento ingreso",
+ing.tipo_id_paciente || ' - ' || ing.paciente_id AS "documento paciente",
+pac.primer_nombre || ' - ' || pac.segundo_nombre || ' - ' || pac.primer_apellido || ' - ' || pac.segundo_apellido AS "full name paciente",
+cd.numerodecuenta,
+cd.cargo,
+ffc.prefijo || ' - ' || ffc.factura_fiscal AS "factura",
+envd.envio_id
+FROM cuentas_detalle cd
+JOIN cuentas cu ON cd.numerodecuenta = cu.numerodecuenta
+JOIN ingresos ing ON cu.ingreso = ing.ingreso
+JOIN departamentos dep ON ing.departamento = dep.departamento
+JOIN pacientes pac ON ing.tipo_id_paciente = pac.tipo_id_paciente AND ing.paciente_id = pac.paciente_id
+JOIN fac_facturas_cuentas ffc ON cu.numerodecuenta = ffc.numerodecuenta
+JOIN envios_detalle envd ON ffc.prefijo = envd.prefijo AND ffc.factura_fiscal = envd.factura_fiscal
+WHERE cd.cargo = '890783'
+ORDER BY envd.envio_id DESC
+
+------------------------------------------------------------------------------------------------------------------------------
+-- cuando una orden medica aparece como orden de servicio.
+------------------------------------------------------------------------------------------------------------------------------
+fue solicitada en consulta externa, de orden de servicio para orden ambulatoria, cambiar en la tabla hc_os_solicitudes
+el estado a 1 
+y eliminar en os_maestro, os internar y otra tabla
+
+
+------------------------------------------------------------------------------------------------------------------------------
+-- PEDIDOS INTERNOS -> CREAR TRASLADO INTERNO -> cualquier bodega
+-- se queda pegado la cantidad de DEBE y muestra cantidad en rojo
+------------------------------------------------------------------------------------------------------------------------------
+SELECT 
+ptid.pedido_traslado_internodetalle_id,
+ptid.pedido_traslado_interno_id,
+ptid.codigo_producto,
+ptid.cantidad,
+ptid.estado || ' - ' || epd.nombre_estado AS "estado pedido d",
+pti.bodega,
+pti.estado_pedido || ' - ' || ep.nombre_estado AS "estado pedido",
+pti.observacion
+FROM pedido_traslado_interno_d ptid
+JOIN estado_pedido_d epd ON ptid.estado = epd.estado
+JOIN pedido_traslado_interno pti ON ptid.pedido_traslado_interno_id = pti.pedido_traslado_interno_id
+JOIN estado_pedido ep ON pti.estado_pedido = ep.estado
+WHERE ptid.cantidad != '0' AND ptid.estado = 'S' AND pti.bodega='FA'
+
+
+
+UPDATE 
+pedido_traslado_interno_d
+SET 
+estado = 'C'
+WHERE
+pedido_traslado_internodetalle_id IN 
+(   SELECT 
+    ptid.pedido_traslado_internodetalle_id
+    --ptid.pedido_traslado_interno_id,
+    --ptid.codigo_producto,
+    --ptid.cantidad,
+    --ptid.estado || ' - ' || epd.nombre_estado AS "estado pedido d",
+    --pti.bodega,
+    --pti.estado_pedido || ' - ' || ep.nombre_estado AS "estado pedido",
+    --pti.observacion
+    FROM pedido_traslado_interno_d ptid
+    JOIN estado_pedido_d epd ON ptid.estado = epd.estado
+    JOIN pedido_traslado_interno pti ON ptid.pedido_traslado_interno_id = pti.pedido_traslado_interno_id
+    JOIN estado_pedido ep ON pti.estado_pedido = ep.estado
+    WHERE ptid.cantidad != '0' AND ptid.estado = 'S' AND pti.bodega='FA'
+)
 
 
 
 
 
-INSERT INTO bodegas_usuarios 
-SELECT '01', '01', bodega, 3355 FROM bodegas
+76627
 
-
-RC
-1062341778
-anestesiologia
-
-
-no le permite hacer devoluciones.
-paola andrea ramos guerrero
-paola.ramos
-urgencias 1
+------------------------------------------------------------------------------------------------------------------------------
+-- cambiar contraseña de base de datos de implmentacion
+------------------------------------------------------------------------------------------------------------------------------
+ALTER USER "peter.mosquera" WITH PASSWORD 'espiterman';
