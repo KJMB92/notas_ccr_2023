@@ -1287,3 +1287,925 @@ pedido_traslado_internodetalle_id IN
 -- cambiar contraseña de base de datos de implmentacion
 ------------------------------------------------------------------------------------------------------------------------------
 ALTER USER "peter.mosquera" WITH PASSWORD 'espiterman';
+
+
+
+--- NOTAS OPERATORIAS
+
+--- QUERY para realizar cambios a las notas opertatorias solo se ponen los datos que se solicitan en el ticket
+
+--- AGREGAR AYUDANTE 
+
+UPDATE hc_notas_operatorias_cirugias
+SET
+tipo_id_ayudante='CC',ayudante_id='1143832755'
+WHERE 
+hc_nota_operatoria_cirugia_id IN (
+SELECT 
+hc_nota_operatoria_cirugia_id     
+FROM 
+hc_notas_operatorias_cirugias
+WHERE
+evolucion_id='20539471' 
+)
+
+--- AGREGAR CIRUJANO 
+
+UPDATE hc_notas_operatorias_cirugias
+SET
+tipo_id_cirujano='CC',cirujano_id='52961241'
+WHERE 
+hc_nota_operatoria_cirugia_id IN (
+SELECT 
+hc_nota_operatoria_cirugia_id     
+FROM 
+hc_notas_operatorias_cirugias
+WHERE
+evolucion_id='20519289'
+)
+
+
+--- AGREGAR PROCEDIMENTOS 
+
+UPDATE hc_notas_operatorias_procedimientos
+SET
+procedimiento_qx='786201'
+WHERE 
+procedimiento_qx=''  AND hc_nota_operatoria_cirugia_id IN (
+SELECT 
+hc_nota_operatoria_cirugia_id     
+FROM 
+hc_notas_operatorias_cirugias
+WHERE
+evolucion_id= '18798126' 
+)
+
+--- AGREGAR ANESTESIOLOGO 
+
+UPDATE hc_notas_operatorias_cirugias
+SET
+tipo_id_anestesiologo='CC',anestesiologo_id='1098610345'
+WHERE 
+hc_nota_operatoria_cirugia_id IN (
+SELECT 
+hc_nota_operatoria_cirugia_id     
+FROM 
+hc_notas_operatorias_cirugias
+WHERE
+evolucion_id=20737755   
+)
+
+---------------------------------------------------------------------------------
+
+--- Actualizacion De Listado De Precios De Medicamento
+--- Tablas: listas_precios en esta tabla vemos la cantidad de codigos que se deben actualizar
+--- listas_precios_detalle en esta tabla actualizamos o insertamos el precio de los medcamentos
+
+update listas_precios_detalle
+set precio = '133308.00'
+where codigo_producto in (
+'0102011529')
+
+SELECT precio, codigo_producto FROM listas_precios_detalle
+WHERE codigo_producto = '0102011529'
+
+---------------------------------------------------------------------------------
+--- QUITAR CHULOS
+
+----buscar cargos para quitar chulos #1
+select cd.transaccion
+from cuentas_detalle cd
+join bodegas_documentos_d bd on bd.consecutivo = cd.consecutivo
+where cd.numerodecuenta = 1951465
+and bd. codigo_producto in ('0102010633', '0102011267', '0102011332', '0102020579','0102020580')
+and cd.departamento = '010109'
+
+----buscar cargos para quitar chulos #2
+SELECT
+    c.codigo_producto,
+    b.transaccion,
+    sum(c.cantidad) as cantidad,
+    sum(b.valor_cargo) as valor_cargo,
+    sum(b.valor_cubierto) as valor_cubierto,
+    sum(b.valor_nocubierto) as valor_nocubierto,
+    b.facturado,
+    (
+        SELECT
+            d.descripcion
+        FROM
+            inventarios_productos d
+        WHERE
+            c.codigo_producto = d.codigo_producto
+    ) as descripcion
+FROM
+    cuentas_codigos_agrupamiento a,
+    cuentas_detalle b,
+    bodegas_documentos_d c
+WHERE
+    a.cuenta_liquidacion_qx_id = '67665'
+    AND a.codigo_agrupamiento_id = b.codigo_agrupamiento_id
+    AND a.bodegas_doc_id = c.bodegas_doc_id
+    AND a.numeracion = c.numeracion
+    AND b.consecutivo = c.consecutivo
+    AND b.numerodecuenta = 1993635
+    AND b.paquete_codigo_id IS NULL
+    AND c.codigo_producto in ('0206082367')
+GROUP BY
+    c.codigo_producto,
+    b.facturado,
+    b.transaccion
+
+
+----quitar los chulos
+update cuentas_detalle
+set facturado = '0'
+where transaccion in (
+20011297)
+
+---------------------------------------------------------------------------------
+--- ACTUALIZACION DE CENTRO DE COSTOS
+
+INSERT INTO cg_conf.doc_fv01_cargos_por_cc
+SELECT  cgc.empresa_id, 
+        td.tarifario_id, 
+        cgc.cargo, 
+        cgc.centro_de_costo_id,
+        cgc.cuenta,
+        cgc.cuenta_naturaleza,
+        cgc.centro_costo_destino,
+        cgc.cuenta_glosa,
+        cgc.cuenta_honorario,
+        cgc.centro_de_operacion_id,
+        cgc.centro_operacion_id,
+        cgc.id_user_configura_cc,
+        cgc.descripcion_configura_cc
+FROM
+ 
+        (
+            SELECT  conf.empresa_id,
+                    conf.tarifario_id,
+                    conf.cargo,
+                    conf.centro_de_costo_id,
+                    conf.cuenta,
+                    conf.cuenta_naturaleza,
+                    conf.centro_costo_destino,
+                    conf.cuenta_glosa,
+                    conf.cuenta_honorario,
+                    conf.centro_de_operacion_id,
+                    conf.centro_operacion_id,
+                    conf.id_user_configura_cc,
+                    conf.descripcion_configura_cc
+            FROM    cg_conf.doc_fv01_cargos_por_cc AS conf
+            WHERE     conf.centro_de_costo_id='612001' 
+                    AND conf.cargo='446102' LIMIT 1
+        ) as cgc 
+        JOIN tarifarios_detalle td 
+        ON (cgc.cargo = td.cargo AND td.cargo = '446102') 
+WHERE       td.tarifario_id NOT IN (SELECT
+                                    tarifario_id 
+FROM  cg_conf.doc_fv01_cargos_por_cc
+WHERE centro_de_costo_id='612001' AND
+cargo='446102')
+--------------------------------------------------
+PARAMETRIZACION DE CENTRO DE COSTOS DE CIRUGIA
+
+INSERT INTO cg_conf.doc_fv01_cargos_por_cc VALUES (
+    '01',
+    '1003', --- > Aqui va el tarifario
+    '088011', ---> Aqui va el cargo 
+    '612001', ---> Aqui va el tarifario pero como este insert es de cirugia de aqui para abajo va igual no se modifica
+    '412001',
+    'C',
+    '612001',
+    '417520',
+    '61201001',
+    '001',
+    NULL,
+    NULL,
+    NULL
+)
+--------------------------------------------------
+PARAMETRIZACION DE CENTRO DE COSTOS  PARTICIPACION EN JUNTA MEDICA
+
+INSERT INTO cg_conf.doc_fv01_cargos_por_cc VALUES (
+    '01',
+    '1011', --- > Aqui va el tarifario
+    '890502', ---> Aqui va el cargo 
+    '611503', ---> Aqui va el tarifario pero como este insert es de cirugia de aqui para abajo va igual no se modifica
+    '411002',
+    'C',
+    '611503',
+    '417510',
+    '61101001',
+    '001',
+    NULL,
+    NULL,
+    NULL
+)
+------------------------------------------------------------------------------------------------------------------------------
+-- Error en cuentas con centro de costos para cualquier otro departamento que no sea cirugia
+------------------------------------------------------------------------------------------------------------------------------
+cargo 865201
+tarifario 1003 
+centro de costo 610504
+
+DELETE FROM cg_conf.doc_fv01_cargos_por_cc WHERE cargo='890502';
+
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+SELECT
+/empresa/                     '01',
+/tarifario_id/                tarifario_id,
+/cargo/                       '890502',
+/centro de costo/             611506,
+/cuenta/                      410501,
+/cuenta naturaleza/           'C',
+/centro de costo destino/     611506,
+/cuenta glosa/                417520,
+/cuenta honorario/            61051001,
+/centro de operacion/         '001',
+/centro de operacion/         null,
+/id user configura cc/        null,
+/* descripcion configura cc*/   null
+FROM
+tarifarios_detalle
+WHERE
+cargo='890502'
+
+
+INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+VALUES (
+/empresa/                     '01',
+/tarifario_id/                '0079',
+/cargo/                       '790302',
+/centro de costo/             610504,
+/cuenta/                      412001,
+/cuenta naturaleza/           'C',
+/centro de costo destino/     610504,
+/cuenta glosa/                417520,
+/cuenta honorario/            61201001,
+/centro de operacion/         '001',
+/centro de operacion/         null,
+/id user configura cc/        null,
+/* descripcion configura cc*/   null
+)
+
+=CONCATENATE("INSERT INTO
+cg_conf.doc_fv01_cargos_por_cc
+VALUES (
+/empresa/                     '01',
+/tarifario_id/                '00";A139;"',
+/cargo/                       '";C139;"',
+/centro de costo/             ";E139;",
+/cuenta/                      ";F139;",
+/cuenta naturaleza/           '";G139;"',
+/centro de costo destino/     ";H139;",
+/cuenta glosa/                ";I139;",
+/cuenta honorario/            null,
+/centro de operacion/         '001',
+/centro de operacion/         null,
+/id user configura cc/        null,
+/* descripcion configura cc*/   null
+)")
+------------------------------------------------------------------------------------------------------------------------------
+-- Error en cuentas con centro de costos para productos que no son gases medicinales (solo cambiar producto)
+------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO
+cg_conf.doc_fv01_inv_productos_por_cc
+VALUES (
+'01',
+'613007',
+'0102011255',
+'413501',
+'C',
+'613007',
+'613007',
+'001'
+)
+---------------------------------------------------------------------------------
+--- PASAR DE NO CUBIERTO A CUBIERTO EN LA TABLA CUENTAS_DETALLE CON EL NUMER DE TRANSFERENCIA
+--- VALORES NEGATIVOS
+--- VALIDAR EN PAQUETES - DEVOLUCION DE MEDICAMENTOS 
+--- ACTOS QUIRURGICOS - DESCARGO DE MEDICAMENTOS
+SELECT 
+cd.transaccion ,  
+bd.codigo_producto , 
+cd.numerodecuenta , 
+cd.cargo , 
+cd.departamento ,  
+cd.cantidad ,  
+cd.precio , 
+Cd.facturado,
+cd.paquete_codigo_id,
+cd.sw_paquete_facturado
+FROM cuentas_detalle cd  
+INNER JOIN bodegas_documentos_d bd ON cd.consecutivo=bd.consecutivo  
+WHERE cd.numerodecuenta=2060979       
+AND bd.codigo_producto='0206081343'
+ORDER BY cd.paquete_codigo_id
+
+
+---------------------------------------------------------------------------------
+--- INSERTAR VARIOS REGISTROS 
+INSERT INTO public.bodegas_usuarios (empresa_id, centro_utilidad, bodega, usuario_id ) 
+VALUES ('01', '01', 'TF', 2869), ('01', '01', 'TF', 2156), ('01', '01', 'TF', 2957), 
+('01', '01', 'TF', 3042), ('01', '01', 'TF', 3025), ('01', '01', 'TF', 2901)
+
+---------------------------------------------------------------------------------
+--- INSERTAR DIAS FESTIVOS DEL AÃO
+INSERT INTO dias_festivos (dia) values ('2024-01-01'), ('2024-01-08'), ('2024-03-25'), ('2024-03-28'),
+('2024-03-29'), ('2024-05-01'), ('2024-05-13'), ('2024-06-03'),('2024-06-10'), ('2024-07-01'),
+('2024-07-20'), ('2024-08-07'), ('2024-08-19'), ('2024-10-14'), ('2024-11-04'), ('2024-11-11'),
+('2024-12-08'), ('2024-12-25')
+
+---------------------------------------------------------------------------------
+--- FACTURAS SIN SUBIR PORQUE NO TIENEN PDF, SE REALIZA ESTE PASO Y LUEGO SE DEJA COMO ESTABA
+--- Codigo para subir facturas que aparecen sin pdf
+
+alter table
+    fac_facturas disable trigger actualizar_saldo_factura;
+update
+    fac_facturas
+set
+    estado = '3'
+where
+    prefijo = 'CN'
+    and factura_fiscal in ('276416');
+alter table
+    fac_facturas enable trigger actualizar_saldo_factura;
+
+ --- si las dos facturas una esta en estado 0 y la otra en 1 entonces se utiliza solo esta parte del codigo para anular una de ellas
+update
+    fac_facturas
+set
+    estado = '0'
+where
+    prefijo = 'CN'
+    and factura_fiscal in (
+259761);--- si las dos facturas una esta en estado 0 y la otra en 1 entonces se utiliza solo esta parte del codigo para anular una de ellas
+
+alter table 
+    fac_facturas enable trigger actualizar_saldo_factura;
+
+alter table
+    fac_facturas disable trigger actualizar_saldo_factura;
+update
+    fac_facturas
+set
+    estado = '0',
+    saldo = '173600'
+where
+    prefijo = 'CN'
+    and factura_fiscal in (
+239974);
+
+---------------------------------------------------------------------------------
+ACTUALIZAR FECHA DE NE 
+
+update
+    notas_credito
+set
+    fecha_registro = '2024-07-17'
+where
+    prefijo = 'NE'
+    and nota_credito_id in ('63240');
+
+---------------------------------------------------------------------------------
+--- REINGRESO DE PACIENTES
+--- codigos para reingresar pacientes por pedidos de la jefe Lina o el Doctor Osorio 
+
+delete from hc_vistosok_salida_detalle where ingreso = '# de ingreso'
+
+delete from hc_ordenes_medicas where hc_tipo_orden_medica_id ='99' and ingreso = # de ingreso
+
+delete from ingresos_salidas where ingreso = '# de ingreso'
+
+update movimientos_habitacion set fecha_egreso = null where movimiento_id in (select max(movimiento_id) from movimientos_habitacion where ingreso = '# de ingreso' and
+to_char(fecha_egreso,'YYYY-MM-DD') = to_char(CURRENT_DATE,'YYYY-MM-DD'));
+
+update ingresos set estado = '1' where ingreso = '# de ingreso'
+
+--------------------------------------------------------------------------------
+--- NO DEJA HACER DEVOLUCION
+--- CUANDO EL BOTON DE ACEPTAR NO HAGA NADA REVISAR LO SIGUIENTE
+--- buscar # de preparacion en la tabla bodega_paciente con # de ingreso filtrarlo por stop para que
+--- aparezcan lo que tienen numero en stop, y buscar en las otras tablas del FROM para buscar si
+--- tiene mas registros
+
+SELECT a.documento_despacho_id
+FROM bodegas_documento_despacho_med_d a,
+hc_solicitudes_medicamentos_d b,
+hc_solicitudes_medicamentos c
+WHERE a.codigo_producto = '0102010356'
+AND  b.consecutivo_d = a.consecutivo_solicitud
+AND  c.solicitud_id = b.solicitud_id
+AND  c.preparacion_id = 37936 <--- aqui se pega el numero de la preparacion
+
+--------------------------------------------------------------------------------
+
+--- SABER LAS SOLICITUDES DE UN PRODUCTO
+
+SELECT
+    d.codigo_producto,
+    sum(d.cantidad) cantidad,
+    d.lote,
+    d.fecha_vencimiento,
+    a.solicitud_id
+FROM
+    hc_solicitudes_medicamentos a
+    INNER JOIN hc_solicitudes_medicamentos_d b ON (a.solicitud_id = b.solicitud_id)
+    INNER JOIN bodegas_documentos c ON (
+        a.bodegas_doc_id = c.bodegas_doc_id
+        AND a.numeracion = c.numeracion
+    )
+    INNER JOIN bodegas_documentos_d d ON (
+        a.bodegas_doc_id = d.bodegas_doc_id
+        AND a.numeracion = d.numeracion
+        AND b.medicamento_id = d.codigo_producto
+    )
+WHERE
+    a.ingreso = '1954413'  ---> # ingreso del paciente
+    AND a.sw_apdx NOT IN ('1')
+    AND a.sw_ges_solic_citas NOT IN ('1')
+    AND preparacion_id IS NULL
+    AND d.codigo_producto = 'SO02021431' ---> # de producto
+GROUP BY
+    1,
+    3,
+    4,
+    5
+UNION
+SELECT
+    d.codigo_producto,
+    sum(d.cantidad) cantidad,
+    d.lote,
+    d.fecha_vencimiento,
+    a.solicitud_id
+FROM
+    hc_solicitudes_medicamentos a
+    INNER JOIN hc_solicitudes_insumos_d b ON (a.solicitud_id = b.solicitud_id)
+    INNER JOIN bodegas_documentos c ON (
+        a.bodegas_doc_id = c.bodegas_doc_id
+        AND a.numeracion = c.numeracion
+    )
+    INNER JOIN bodegas_documentos_d d ON (
+        a.bodegas_doc_id = d.bodegas_doc_id
+        AND a.numeracion = d.numeracion
+        AND b.codigo_producto = d.codigo_producto
+    )
+WHERE
+    a.ingreso = '1954413' ---> # ingreso del paciente
+    AND a.sw_apdx NOT IN ('1')
+    AND a.sw_ges_solic_citas NOT IN ('1')
+    AND preparacion_id IS NULL
+    AND d.codigo_producto = 'SO02021431' ---> # de producto
+GROUP BY
+1,3,4,5
+
+--------------------------------------------------------------------------------
+--- INSERTAR O AGREGAR PRODUCTOS A CANASTAS DE FARMACIA CIRUGIA
+=CONCATENAR(INSERT INTO qx_paquetes_contiene_insumos (paquete_insumos_id, empresa_id,codigo_producto,cantidad ) VALUES ('76', '01', '";A16;"','";C2;"';)
+
+insert into qx_paquetes_contiene_insumos values (7, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (37, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (15, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (57, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (23, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (28, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (14, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (16, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (20, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (21, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (19, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (43, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (31, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (4, '01', '0201010201', 1);
+insert into qx_paquetes_contiene_insumos values (5, '01', '0201010201', 1);
+--------------------------------------------------------------------------------
+PARAGRAFAR MEDICAMENTOS EN TODOS LOS TARIFARIOS Y EN TODOS LOS SERVICIOS
+
+INSERT INTO planes_paragrafados_medicamentos (plan_id, servicio, departamento, codigo_producto)-- Primero se copia el select
+SELECT 3622, servicio, departamento, '0101021557'  -- NEW -- aqui se copia el nuevo codigo y el nuevo plan
+FROM planes_paragrafados_medicamentos
+WHERE plan_id = '4271' -- BASE -- aqui se pone el plan base y el codigo base
+AND codigo_producto IN ('0206081556','0206081563','0206080988')
+
+--- NEW INSERT
+
+INSERT INTO planes_paragrafados_medicamentos
+SELECT b.plan_id, a.servicio, a.departamento, '0206081322'
+FROM departamentos a, planes b 
+WHERE a.servicio IN ('1','2','4','6')
+AND b.estado = '1'
+
+--- MEJOR SE USAN ESTOS DOS CODIGOS
+INSERT INTO planes_paragrafados_medicamentos (plan_id, servicio, departamento, codigo_producto)
+SELECT 4490, servicio, departamento, codigo_producto ---> aqui se pone el codigo que esta nuevo por decirlo asi
+FROM planes_paragrafados_medicamentos
+WHERE plan_id = '4487' ---> aqui se pone el codigo que se desea clonar para el nuevo
+
+INSERT INTO planes_paragrafados_cargos (plan_id, tarifario_id, cargo, servicio)
+SELECT 4483, tarifario_id, cargo, servicio ---> aqui se pone el codigo que esta nuevo por decirlo asi
+FROM planes_paragrafados_cargos
+WHERE plan_id = '4487' ---> aqui se pone el codigo que se desea clonar para el nuevo
+
+--- PARAGRAFAR CARGOS EN TODOS LOS TARIFARIOS Y EN TODOS LOS PLANES
+
+INSERT INTO planes_paragrafados_cargos
+SELECT DISTINCT
+pt.plan_id,
+pt.tarifario_id,
+'903839',-- COLOCAR EL CODIGO  QUE SE VA A PARAGRAFAR
+'2'--VA EL SERVCIO
+FROM
+plan_tarifario pt
+INNER JOIN planes AS pl
+ON (pl.plan_id=pt.plan_id)
+INNER JOIN tarifarios_detalle AS td
+ON (td.tarifario_id=pt.tarifario_id AND td.cargo='903839')-- COLOCAR EL CODIGO  QUE SE VA A PARAGRAFAR
+WHERE
+pt.tarifario_id NOT IN ('SYS')
+AND pl.estado='1'
+
+--------------------------------------------------------------------------------
+CODIGO PARA ACTUALIZAR LOS PERMISOS DE UN USUARIO 
+
+UPDATE aprobacion_pedido_interno SET usuario_id= 1248 WHERE usuario_id= 1428 ---> despues del SET se pone el de la persona nueva
+---> despues del WHERE se pone el de la jefe vieja la cual tiene todos los permisos
+--------------------------------------------------------------------------------
+TRIAGE
+CON ESTE QUERY SE REVISA LOS PACIENTES QUE ESTAN EN EL PANEL DEL TRIAGE
+
+SELECT
+    "triage_id",
+    "hora_llegada",
+    "tipo_id_paciente",
+    "paciente_id",
+    "plan_id",
+    "nivel_triage_id",
+    "usuario_id",
+    "empresa_id",
+    "centro_utilidad",
+    "punto_admision_id",
+    "departamento",
+    "autorizacion_int",
+    "autorizacion_ext",
+    "tipo_afiliado_id",
+    "semanas_cotizadas",
+    "sw_estado",
+    "punto_triage_id",
+    "nivel_triage_asistencial",
+    "sw_no_atender",
+    "ingreso",
+    "impresion_diagnostica",
+    "rango",
+    "motivo_consulta",
+    "observacion_medico",
+    "observacion_enfermera",
+    "usuario_clasificacion",
+    "fecha_clasificacion",
+    "usuario_reclasifica",
+    "procedencia_id",
+    "fecha_reclasificacion",
+    "plan_id_respaldo",
+    "firma",
+    "ingresos_porteria_id",
+    "sw_validacion_derechos",
+    "sw_valida_plan"
+FROM
+    "public"."triages"
+WHERE
+    "tipo_id_paciente" = 'TI'
+    AND "paciente_id" = '1109924859'
+
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1112064440';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1113374202';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1111701944';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1112042632';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1111569488';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1109684216';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1104833004';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1191227045';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1111706191';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1112487704';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1105385814';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1104820659';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1104825919';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1106519828';
+UPDATE triages SET sw_estado = '5' WHERE paciente_id = '1232803082';
+
+
+--------------------------------------------------------------------------------
+ERRROR DE SUMATORIA AL SUBIR FACTURAS 
+primero se buscan los codigos de autroizacion a cambiar 
+
+select transaccion from cuentas_detalle where numerodecuenta = '1986583' and codigo_autorizacion = '251861540'
+
+aqui se actualizan los codigos de autorizacion 
+
+update cuentas detalle set codigo_autorizacion = '2023003198835'
+where transaccion in (
+18961978
+)
+--------------------------------------------------------------------------------
+CODIGO PARA SABER PORQUE AL HACER UNA DEVOLUCION DE INSUMO NO APARECE NADA
+
+SELECT 
+SUM (bdd.cantidad),
+bdd.codigo_producto,
+bdd.numeracion,
+bdd.bodegas_doc_id,
+bdd.lote,
+bdd.fecha_vencimiento,
+cd.cargo    
+FROM 
+cuentas_detalle cd
+INNER JOIN 
+bodegas_documentos_d bdd
+ON (cd.consecutivo=bdd.consecutivo)
+INNER JOIN bodegas_documentos bd
+ON (bdd.numeracion=bd.numeracion AND bdd.bodegas_doc_id=bd.bodegas_doc_id)
+
+WHERE
+bdd.codigo_producto='0206082388'
+AND cd.numerodecuenta=2000181
+GROUP BY 2,3,4,5,6,7
+ORDER BY cd.cargo DESC
+
+--------------------------------------------------------------------------------
+INSERTAT PROFESIONALES A LOS DEPARTAMENOS DE IMAGENES
+
+INSERT INTO profesionales_departamentos (tipo_id_tercero, tercero_id, departamento) 
+VALUES ('CC','9999999999','612504'), ('CC','9999999999','010108'), ('CC','9999999999','010113'), ('CC','9999999999','010116'),
+('CC','9999999999','010119'), ('CC','9999999999','613012')
+
+--------------------------------------------------------------------------------
+
+ELIMINAR PROFESIONALES DIFERENTES A LOS QUE ESTAN EN ESTE QUERY
+eliminar profesionales de esta profesionales_departamentos, los usuarios que se pongan en esta tabla son los que deben estar 
+cuando se ejecuta borra los que no estan inscritos en este QUERY
+delete from
+    profesionales_departamentos
+where
+    tercero_id not in ('1112462077', '16580754', '16930334','34602428','52067133','66999154','79797450','94466554')
+    and departamento in (
+        '010108',
+        '010113',
+        '010116',
+        '010119',
+        '612504',
+        '613012'
+    )
+----------------------------------------------------------------------------------
+INACTIVAR O ELIMINAR CUPS 
+
+UPDATE cups SET sw_estado='0', sw_activo='0',sw_estadoa='0' WHERE cargo='237603';
+UPDATE cups SET sw_estado='0', sw_activo='0',sw_estadoa='0' WHERE cargo='360600';
+UPDATE cups SET sw_estado='0', sw_activo='0',sw_estadoa='0' WHERE cargo='385903';
+UPDATE cups SET sw_estado='0', sw_activo='0',sw_estadoa='0' WHERE cargo='399000';
+UPDATE cups SET sw_estado='0', sw_activo='0',sw_estadoa='0' WHERE cargo='881318';
+
+para esto se utiliza el CONCATENAR en un documento de excel
+
+=CONCATENAR("UPDATE cups SET sw_estado='0', sw_activo='0',sw_estadoa='0' WHERE cargo='";A1;"';")
+
+----------------------------------------------------------------------------------
+
+SELECT us.usuario_id
+su.nombre
+FROM usuarios_asigna_reportes us
+INNER JOIN system_usuario su ON (us.usuario_id = su.usuario_id)
+
+WHERE us.activo = '1'
+----------------------------------------------------------------------------------
+
+Actualizar tarifario en una cuenta
+UPDATE
+cuentas_detalle
+SET
+tarifario_id='1003'
+WHERE
+numerodecuenta=2060979
+AND tarifario_id='0089'
+
+----------------------------------------------------------------------------------
+PREFIJOS PARA INTEGRACION FACTURE 
+
+INSERT INTO userpermisos_tipos_doc_generales (usuario_id, tipo_doc_general_id)
+SELECT 3414, tipo_doc_general_id ---> aqui se pone el usuario que esta nuevo por decirlo asi
+FROM userpermisos_tipos_doc_generales
+WHERE usuario_id = '2865' --- > aqui se pone el usuario que se desea clonar
+
+----------------------------------------------------------------------------------
+ESTE QUERY ES PARA MOSTRAR EL MEDICO QUE LE DIO CUMPLIMIENTO A UNA CITA EN ESTE CASO ES DE CIRUGIA PLASTICA 
+
+SELECT 
+c.numero_orden_id,
+o.orden_servicio_id,
+c.numero_cumplimiento,
+m.fecha_cumplimiento,
+c.usuario_id,
+u.nombre,
+u.descripcion,
+p.tipo_id_paciente ||'-'|| p.paciente_id AS identificacion_paciente,
+p.primer_nombre ||' '|| p.segundo_nombre ||' '|| p.primer_apellido ||' '|| p.segundo_apellido AS nombre_paciente
+FROM
+os_cumplimientos_detalle AS c 
+JOIN os_maestro m ON (c.numero_orden_id = m.numero_orden_id)
+JOIN os_ordenes_servicios o ON (m.orden_servicio_id = o.orden_servicio_id)
+JOIN system_usuarios u ON (c.usuario_id = u.usuario_id)
+JOIN pacientes p ON (o.paciente_id = p.paciente_id)
+WHERE
+c.numero_orden_id = 5338980 AND
+u.usuario_id = '174'
+___________________________________________________________________________________________________________________________
+REVISAR FACTURAS QUE SE ENCUENTREN ANULADAS Y MIRAR SU SALDO
+
+SELECT
+prefijo,
+factura_fiscal,
+CASE WHEN estado = '0' THEN 'ACTIVA'
+WHEN estado = '3' THEN 'ANULADA' END AS estado,
+total_factura,
+saldo
+FROM
+fac_facturas
+WHERE
+prefijo = 'CN' 
+AND factura_fiscal IN ('257593','259555','259761','259789','261131') 
+
+___________________________________________________________________________________________________________________________
+DAR PERMISOS A LA BODEGA DE URGENCIAS EN EL MODULO DE KARDEX
+
+INSERT INTO inv_bodegas_userpermisos_admin VALUES ('01','01','ON','3392','1');
+
+___________________________________________________________________________________________________________________________
+
+DAR PERMISOS A LA BODEGA DE URGENCAS EN EL MODULO DE TRANSACCION DE BODEGA 
+
+INSERT INTO inv_bodegas_userpermisos VALUES ('12','01','01','FP','3289','2');
+INSERT INTO inv_bodegas_userpermisos VALUES ('19','01','01','FP','3289','2');
+
+___________________________________________________________________________________________________________________________
+DAR PERMISOS A LA BODEGA DE URGENCIAS EN EL MODULO DE ADMINISTRACION BODEGAS
+
+INSERT INTO userpermisos_solicitudes_bodegas VALUES ('01','01','3266','ON');
+
+___________________________________________________________________________________________________________________________
+
+DAR PERMISOS A LA BODEGA DE URGENCIAS EN EL MODULO DE INVENTARIO GENERAL - BODEGA EMPRESA
+
+INSERT INTO bodegas_usuarios VALUES ('01','01','UR','3289');
+
+___________________________________________________________________________________________________________________________
+INSERTAR TODAS LAS BODEGAS QUE TIENE SANDRA 2718 A EL USUARIO DE MARIA EUGENIA 2103
+ESTE QUERY SE EJECUTA EN EL DBEAVER
+
+begin; ---> CODIGO DEL DBEAVER
+INSERT INTO bodegas_usuarios (empresa_id, centro_utilidad, bodega, usuario_id)
+SELECT empresa_id, centro_utilidad, bodega, 2103 ---> USUARIO NUEVO
+FROM bodegas_usuarios
+WHERE usuario_id = '2718';  ---> USUARIO BASE QUE CONTIENE TODAS LAS BODEGAS
+commit;---> CODIGO DEL DBEAVER
+
+
+___________________________________________________________________________________________________________________________
+
+CAMBIAR BODEA PARA PODER HACER DEVOLUTIVO
+
+UPDATE hc_solicitudes_medicamentos SET bodega = 'FA' WHERE solicitud_id 
+IN (
+'3353131',
+'3353130',
+'3353355',
+'3353357',
+'3353358',
+'3353356') AND ingreso = '2091696';
+
+___________________________________________________________________________________________________________________________
+ACTUALIZAR EL MISMO CODIGO DE TRANSACCION PARA TODO EN CUENTAS DETALLE
+UPDATE cuentas_detalle
+set codigo_autorizacion='43891906', usuario_id_autorizacion=2681
+where transaccion IN ('20426463',
+'20426469',
+'20426468',
+'20426464',
+'20426460',
+'20426461',
+'20426462',
+'20426465',
+'20460073') AND numerodecuenta = '2060979'
+
+___________________________________________________________________________________________________________________________
+
+UNIFICAR HISTORIAS CLINICAS POR TABLAS
+
+update hc_evoluciones_submodulos set ingreso=2037087 where ingreso=2045352 
+update hc_evoluciones set ingreso=2037087,numerodecuenta=2082945 where ingreso=2045352
+update hc_evolucion_descripcion set ingreso=2037087 where ingreso=2045352
+update hc_notas_enfermeria_descripcion set ingreso=2037087 where ingreso=2045352
+update hc_os_solicitudes  set ingreso=2037087 where ingreso=2045352
+update hc_formulacion_medicamentos_eventos set ingreso=2037087 where ingreso=2045352
+update hc_formulacion_medicamentos set ingreso=2037087 where ingreso=2045352
+
+___________________________________________________________________________________________________________________________
+
+
+UPDATE hc_solicitudes_medicamentos SET estacion_id = '5' WHERE solicitud_id 
+IN (
+'3251143',
+'3251144',
+'3251451',
+'3251526',
+'3251703',
+'3251853',
+'3251878',
+'3251879') AND ingreso = '2047038';
+
+___________________________________________________________________________________________________________________________
+QUERY PARA HACER UN CASE CON VARIOS ESTADOS
+
+SELECT
+prefijo,
+factura_fiscal,
+CASE WHEN estado = '0' THEN 'ACTIVA'
+     WHEN estado = '1' THEN 'PAGADA'
+     WHEN estado = '2' THEN 'ANULADA SIN NE'
+     WHEN estado = '3' THEN 'ANULADA CON NE' END AS estado
+FROM
+fac_facturas
+WHERE
+prefijo = 'CN'
+AND factura_fiscal = '271647'
+___________________________________________________________________________________________________________________________
+PONER LA PRIMER GLUCOMETRIA DE LA UCI EN ESTADO FACTURADO CERO 
+
+UPDATE cuentas_detalle
+SET facturado=0 WHERE
+transaccion IN (
+SELECT
+transaccion
+FROM
+cuentas_detalle
+WHERE
+numerodecuenta=2134868
+AND cargo='903883' AND departamento='010106'
+ORDER BY 1 ASC
+LIMIT 1)
+___________________________________________________________________________________________________________________________
+UNIFICAR CUENTAS
+UPDATE cuentas_detalle SET numerodecuenta = '2136983' WHERE numerodecuenta = '2138070'
+___________________________________________________________________________________________________________________________
+QUERY PARA SABER QUE CUENTAS ESTAN CON LOS CARGOS DE GASES EN FACTURADO CERO Y CAMBIARLO A FACTURADO 1
+SELECT
+transaccion,
+numerodecuenta,
+departamento,
+tarifario_id,
+cargo,
+facturado,
+fecha_cargo
+FROM
+cuentas_detalle
+WHERE
+cargo = '903062'---903839 ---903062
+AND facturado = '0'
+AND fecha_cargo >= '2024-01-01'
+
+QUERY PARA ACTUALIZAR LAS CUENTAS QUE ESTAN EN FACTURADO CERO A FACTURADO 1
+UPDATE cuentas_detalle SET facturado = '1' WHERE numerodecuenta  ='2131465' AND departamento = '010107' AND tarifario_id = '0095' AND cargo='903062';
+UPDATE cuentas_detalle SET facturado = '1' WHERE numerodecuenta  ='2134868' AND departamento = '010107' AND tarifario_id = '1003' AND cargo='903062';
+UPDATE cuentas_detalle SET facturado = '1' WHERE numerodecuenta  ='2128248' AND departamento = '010107' AND tarifario_id = '0078' AND cargo='903062';
+___________________________________________________________________________________________________________________________
+
+___________________________________________________________________________________________________________________________
+
+Andres felipe florez bustamante se deja en facturado cero el cargo 908859 de la uci
+
+
+2024-04-19 13:52:54.550893
+2024-04-19 14:15:43.367541
+
+UPDATE listas_precios_detalle SET precio = '75171' WHERE codigo_producto = '0102011622';
+UPDATE listas_precios_detalle SET precio = '150341' WHERE codigo_producto = '0102011642';
+
+'3338346',
+'3338350',
+'3338349',
+'3338619',
+'3338634',
+'3339144',
+'3339723',
+'3339852',
+'3339853',
+'3340093',
+'3340095',
+'3340536',
+'3341222',
+'3341398',
+'3341435',
+'3341368',
+'3341365'
+
+EXT1120
