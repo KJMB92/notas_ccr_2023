@@ -1286,7 +1286,7 @@ pedido_traslado_internodetalle_id IN
 ------------------------------------------------------------------------------------------------------------------------------
 -- cambiar contraseña de base de datos de implmentacion
 ------------------------------------------------------------------------------------------------------------------------------
-ALTER USER "peter.mosquera" WITH PASSWORD 'espiterman';
+ALTER USER "santiago.martinez" WITH PASSWORD 'espiterman';
 
 
 
@@ -1425,7 +1425,8 @@ where transaccion in (
 ---------------------------------------------------------------------------------
 --- ACTUALIZACION DE CENTRO DE COSTOS
 
-INSERT INTO cg_conf.doc_fv01_cargos_por_cc
+INSERT
+ INTO cg_conf.doc_fv01_cargos_por_cc
 SELECT  cgc.empresa_id, 
         td.tarifario_id, 
         cgc.cargo, 
@@ -2149,7 +2150,7 @@ transaccion
 FROM
 cuentas_detalle
 WHERE
-numerodecuenta=2134868
+numerodecuenta=2140964
 AND cargo='903883' AND departamento='010106'
 ORDER BY 1 ASC
 LIMIT 1)
@@ -2209,3 +2210,74 @@ UPDATE listas_precios_detalle SET precio = '150341' WHERE codigo_producto = '010
 '3341365'
 
 EXT1120
+
+
+
+
+ALTER TABLE inv_solicitudes_devolucion DISABLE TRIGGER trig_inv_solicitudes_devolucion;
+ALTER TABLE inv_solicitudes_devolucion DISABLE TRIGGER trigger_hc_inv_solicitudes_devolucion_bodega_paciente;
+      
+UPDATE "public"."inv_solicitudes_devolucion" SET "empresa_id"='01', "centro_utilidad"='01', "documento"='465298', "bodega"='CZ', "fecha"='2024-10-15', "observacion"=NULL, "usuario_id"='1656', "fecha_registro"='2024-10-15 16:16:43.181886', "estacion_id"='5', "estado"='0', "ingreso"='2100157', "bodegas_doc_id"=NULL, "numeracion"=NULL, "parametro_devolucion_id"='1', "sw_apdx"='0', "sw_ges_solic_citas"='0', "sw_preparacion"='1', "preparacion_id"='44782' WHERE "documento"='465298'
+
+ALTER TABLE inv_solicitudes_devolucion ENABLE TRIGGER trig_inv_solicitudes_devolucion;  
+ALTER TABLE inv_solicitudes_devolucion ENABLE TRIGGER trigger_hc_inv_solicitudes_devolucion_bodega_paciente;  
+
+
+___________________________________________________________________________________________________________________________
+-- asociar un hc_submodulo a hc_modulos
+___________________________________________________________________________________________________________________________
+--miramos la estacion en 
+estaciones_enfermeria 
+--verificamos el sw de que tipo es, cirugia, enfermeria, hospitalizacion...
+historias_clinicas_templates
+--debemos tener en cuenta
+/* hc_modulo: */ system_hc_modulos
+/* submodulo: */ system_hc_submodulos
+/* hc_seccion:*/ historia_clinica_secciones
+
+
+----------------------------
+--reporte
+----------------------------
+-- By: Kevin Muriel
+-- Created: 21/10/2024
+-- Last Modified: 21/10/2024
+SELECT
+cd.numerodecuenta AS "numero de cuenta",
+ing.ingreso AS "numero de ingreso",
+cd.departamento AS "codigo departamento",
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(dep.descripcion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS "descripcion departamento",
+cu.plan_id AS "codigo plan",
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pl.plan_descripcion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS "descripcion plan",
+td.tarifario_id AS "codigo tarifario",
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(tf.descripcion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS "descripcion tarifario",
+cd.cargo AS "codigo cargo",
+count(cd.cargo) AS "cantidad de veces solicitado",
+TRIM(BOTH(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(td.descripcion, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) AS "descripcion cargo",
+ing.tipo_id_paciente AS "tido id paciente",
+ing.paciente_id AS "id paciente",
+TRIM(BOTH
+	(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.primer_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', ''))) || ' ' || 
+	(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.segundo_nombre, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', '')) || ' ' || 
+	(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.primer_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', '')) || ' ' || 
+	(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(pac.segundo_apellido, '"', ''), ',', ''), CHR(13), ''), CHR(10), ''),' ', ' '),'  ', '')
+) AS "full name paciente",
+ing.fecha_ingreso
+FROM 
+cuentas_detalle cd
+JOIN departamentos dep ON cd.departamento = dep.departamento
+JOIN tarifarios_detalle td ON cd.cargo =td.cargo AND cd.tarifario_id = td.tarifario_id
+JOIN tarifarios tf ON td.tarifario_id = tf.tarifario_id
+JOIN cuentas cu ON cd.numerodecuenta = cu.numerodecuenta
+JOIN planes pl ON cu.plan_id = pl.plan_id
+JOIN ingresos ing ON cu.ingreso = ing.ingreso
+JOIN pacientes pac ON ing.tipo_id_paciente = pac.tipo_id_paciente AND ing.paciente_id = pac.paciente_id
+WHERE
+cd.cargo NOT IN ('IMD', 'DIMD', 'APROVREDON')
+AND cd.facturado ='1'
+AND cd.valor_cargo >= 0
+--AND cd.numerodecuenta = 2051875
+AND ing.fecha_ingreso BETWEEN _1 AND _2
+--AND ing.fecha_ingreso BETWEEN '2024-10-01' AND '2024-10-31'
+GROUP BY cd.cargo, cd.departamento, dep.departamento, td.descripcion, cd.numerodecuenta, cu.plan_id, pl.plan_descripcion, ing.ingreso, pac.primer_nombre, pac.segundo_nombre, pac.primer_apellido, pac.segundo_apellido, td.tarifario_id, tf.descripcion, ing.fecha_ingreso
+ORDER BY cd.numerodecuenta, cd.departamento, ing.ingreso, 10 DESC
