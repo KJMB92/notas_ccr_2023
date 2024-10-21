@@ -2281,3 +2281,25 @@ AND ing.fecha_ingreso BETWEEN _1 AND _2
 --AND ing.fecha_ingreso BETWEEN '2024-10-01' AND '2024-10-31'
 GROUP BY cd.cargo, cd.departamento, dep.departamento, td.descripcion, cd.numerodecuenta, cu.plan_id, pl.plan_descripcion, ing.ingreso, pac.primer_nombre, pac.segundo_nombre, pac.primer_apellido, pac.segundo_apellido, td.tarifario_id, tf.descripcion, ing.fecha_ingreso
 ORDER BY cd.numerodecuenta, cd.departamento, ing.ingreso, 10 DESC
+
+------------------------------------------------------------------------------------------
+-- medicamentos con cum
+------------------------------------------------------------------------------------------
+SELECT 
+ip.codigo_producto,
+ip.descripcion,
+ip.estado AS "estado producto",
+ip.ium_1,
+ip.ium_2,
+ip.ium_3,
+med.sw_activo AS "sw_activo medicamento",
+med.codigo_cum,
+med.codigo_cum_sismed,
+tm.codigo_tipo_med_id,
+tm.nombre
+FROM inventarios_productos ip
+JOIN medicamentos med ON ip.codigo_producto = med.codigo_medicamento
+JOIN tipos_medicamento_pos_rips tm ON  med.codigo_tipo_med_id = tm.codigo_tipo_med_id
+WHERE med.codigo_cum IS NOT NULL
+OR tm.codigo_tipo_med_id = '02'
+ORDER BY tm.codigo_tipo_med_id
