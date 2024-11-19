@@ -675,7 +675,7 @@ cn 240859
 ------------------------------------------------------------------------------------------------------------------------------
 documentos
 cg_mov_contable_01
-userpermisos_tipos_doc_generales?: 
+userpermisos_tipos_doc_generales
 tipos_doc_generales
 cg_mov_contable_01_202404
 
@@ -2303,3 +2303,104 @@ JOIN tipos_medicamento_pos_rips tm ON  med.codigo_tipo_med_id = tm.codigo_tipo_m
 WHERE med.codigo_cum IS NOT NULL
 OR tm.codigo_tipo_med_id = '02'
 ORDER BY tm.codigo_tipo_med_id
+
+
+
+
+------------------------------------------------------------------------------------------
+-- no se ve la orden de cwm en el cwm 
+------------------------------------------------------------------------------------------
+
+os_cumplimientos: buscar con fecha de cumplimiento y departamento
+os_cumplimientos_detalle: buscar con fecha de cumplimiento y departamento
+os_maestro: buscar con el numero_orden_id de os_cumplimientos_detalle
+hc_os_solicitudes: buscar con el hc_os_solicitud_id de os_maestro
+cups_modalidad: validamos que el cargo del hc_os_solicitudes exista en esta tabla
+os_cumplimientos_detalle: eliminamos los numero_orden_id que no existan en la tabla integracion_cwm
+os_maestro: actualizamos el estado a 2 de los numero_orden_id que no existan en la tabla integracion_cwm
+
+------------------------------------------------------------------------------------------
+-- resultado CWM no visualiza en siis 
+------------------------------------------------------------------------------------------
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5709015
+
+2709772,
+5707308,
+5698581,
+5698580,
+5695624,
+5692667,
+5692256,
+5692254,
+5692256
+
+5117507
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5117507
+
+5707972
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5707972
+
+5702323  
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5702323
+
+5667698
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5667698
+
+5706270
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5706270
+
+
+
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=2709772
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5707308
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5698581
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5698580
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5695624
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5692667
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5692256
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5692254
+http://cwmnoel/SynapseReport/GetReport.aspx?acc=5692256
+
+
+------------------------------------------------------------------
+-- buscar la solicutd con el producto,
+------------------------------------------------------------------
+SELECT a.solicitud_id,a.sw_estado,b.medicamento_id,b.cant_solicitada
+FROM 
+hc_solicitudes_medicamentos a, hc_solicitudes_medicamentos_d b
+WHERE
+a.ingreso='2109339'  AND a.solicitud_id=b.solicitud_id 
+AND b.medicamento_id='0102011613'
+
+
+--
+-- insertar a los usuarios que tiene el reporte a otro reporte
+--
+INSERT
+INTO
+usuarios_asigna_reportes
+(reporte_empresa_id,usuario_id,usuario_registra,fecha_registro)
+SELECT
+445,
+usuario_id,
+3355,
+NOW()
+FROM
+usuarios_asigna_reportes
+WHERE
+reporte_empresa_id = 382
+
+
+
+--------------------------------------------------------------------
+-- ver el lenght de una columna de una tabla
+--------------------------------------------------------------------
+SELECT 
+    column_name,
+    data_type,
+    character_maximum_length
+FROM 
+    information_schema.columns
+WHERE 
+    table_name = 'cuentas' 
+    AND column_name = 'estado';
