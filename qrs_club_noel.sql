@@ -1286,7 +1286,7 @@ pedido_traslado_internodetalle_id IN
 ------------------------------------------------------------------------------------------------------------------------------
 -- cambiar contraseña de base de datos de implmentacion
 ------------------------------------------------------------------------------------------------------------------------------
-ALTER USER "santiago.martinez" WITH PASSWORD 'espiterman';
+ALTER USER "kevin.muriel" WITH PASSWORD 'Marranito';
 
 
 
@@ -2020,7 +2020,7 @@ JOIN pacientes p ON (o.paciente_id = p.paciente_id)
 WHERE
 c.numero_orden_id = 5338980 AND
 u.usuario_id = '174'
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 REVISAR FACTURAS QUE SE ENCUENTREN ANULADAS Y MIRAR SU SALDO
 
 SELECT
@@ -2036,30 +2036,30 @@ WHERE
 prefijo = 'CN' 
 AND factura_fiscal IN ('257593','259555','259761','259789','261131') 
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 DAR PERMISOS A LA BODEGA DE URGENCIAS EN EL MODULO DE KARDEX
 
 INSERT INTO inv_bodegas_userpermisos_admin VALUES ('01','01','ON','3392','1');
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
 DAR PERMISOS A LA BODEGA DE URGENCAS EN EL MODULO DE TRANSACCION DE BODEGA 
 
 INSERT INTO inv_bodegas_userpermisos VALUES ('12','01','01','FP','3289','2');
 INSERT INTO inv_bodegas_userpermisos VALUES ('19','01','01','FP','3289','2');
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 DAR PERMISOS A LA BODEGA DE URGENCIAS EN EL MODULO DE ADMINISTRACION BODEGAS
 
 INSERT INTO userpermisos_solicitudes_bodegas VALUES ('01','01','3266','ON');
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
 DAR PERMISOS A LA BODEGA DE URGENCIAS EN EL MODULO DE INVENTARIO GENERAL - BODEGA EMPRESA
 
 INSERT INTO bodegas_usuarios VALUES ('01','01','UR','3289');
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 INSERTAR TODAS LAS BODEGAS QUE TIENE SANDRA 2718 A EL USUARIO DE MARIA EUGENIA 2103
 ESTE QUERY SE EJECUTA EN EL DBEAVER
 
@@ -2071,7 +2071,7 @@ WHERE usuario_id = '2718';  ---> USUARIO BASE QUE CONTIENE TODAS LAS BODEGAS
 commit;---> CODIGO DEL DBEAVER
 
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
 CAMBIAR BODEA PARA PODER HACER DEVOLUTIVO
 
@@ -2084,7 +2084,7 @@ IN (
 '3353358',
 '3353356') AND ingreso = '2091696';
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 ACTUALIZAR EL MISMO CODIGO DE TRANSACCION PARA TODO EN CUENTAS DETALLE
 UPDATE cuentas_detalle
 set codigo_autorizacion='43891906', usuario_id_autorizacion=2681
@@ -2098,7 +2098,7 @@ where transaccion IN ('20426463',
 '20426465',
 '20460073') AND numerodecuenta = '2060979'
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
 UNIFICAR HISTORIAS CLINICAS POR TABLAS
 
@@ -2110,7 +2110,7 @@ update hc_os_solicitudes  set ingreso=2037087 where ingreso=2045352
 update hc_formulacion_medicamentos_eventos set ingreso=2037087 where ingreso=2045352
 update hc_formulacion_medicamentos set ingreso=2037087 where ingreso=2045352
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
 
 UPDATE hc_solicitudes_medicamentos SET estacion_id = '5' WHERE solicitud_id 
@@ -2124,7 +2124,7 @@ IN (
 '3251878',
 '3251879') AND ingreso = '2047038';
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 QUERY PARA HACER UN CASE CON VARIOS ESTADOS
 
 SELECT
@@ -2139,7 +2139,7 @@ fac_facturas
 WHERE
 prefijo = 'CN'
 AND factura_fiscal = '271647'
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 PONER LA PRIMER GLUCOMETRIA DE LA UCI EN ESTADO FACTURADO CERO 
 
 UPDATE cuentas_detalle
@@ -2154,10 +2154,10 @@ numerodecuenta=2140964
 AND cargo='903883' AND departamento='010106'
 ORDER BY 1 ASC
 LIMIT 1)
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 UNIFICAR CUENTAS
 UPDATE cuentas_detalle SET numerodecuenta = '2136983' WHERE numerodecuenta = '2138070'
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 QUERY PARA SABER QUE CUENTAS ESTAN CON LOS CARGOS DE GASES EN FACTURADO CERO Y CAMBIARLO A FACTURADO 1
 SELECT
 transaccion,
@@ -2178,9 +2178,9 @@ QUERY PARA ACTUALIZAR LAS CUENTAS QUE ESTAN EN FACTURADO CERO A FACTURADO 1
 UPDATE cuentas_detalle SET facturado = '1' WHERE numerodecuenta  ='2131465' AND departamento = '010107' AND tarifario_id = '0095' AND cargo='903062';
 UPDATE cuentas_detalle SET facturado = '1' WHERE numerodecuenta  ='2134868' AND departamento = '010107' AND tarifario_id = '1003' AND cargo='903062';
 UPDATE cuentas_detalle SET facturado = '1' WHERE numerodecuenta  ='2128248' AND departamento = '010107' AND tarifario_id = '0078' AND cargo='903062';
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 
 Andres felipe florez bustamante se deja en facturado cero el cargo 908859 de la uci
 
@@ -2223,9 +2223,9 @@ ALTER TABLE inv_solicitudes_devolucion ENABLE TRIGGER trig_inv_solicitudes_devol
 ALTER TABLE inv_solicitudes_devolucion ENABLE TRIGGER trigger_hc_inv_solicitudes_devolucion_bodega_paciente;  
 
 
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 -- asociar un hc_submodulo a hc_modulos
-___________________________________________________________________________________________________________________________
+--------------------------------------------------------------------
 --miramos la estacion en 
 estaciones_enfermeria 
 --verificamos el sw de que tipo es, cirugia, enfermeria, hospitalizacion...
@@ -2236,9 +2236,9 @@ historias_clinicas_templates
 /* hc_seccion:*/ historia_clinica_secciones
 
 
-----------------------------
+--------------------------------------------------------------------
 --reporte
-----------------------------
+--------------------------------------------------------------------
 -- By: Kevin Muriel
 -- Created: 21/10/2024
 -- Last Modified: 21/10/2024
@@ -2373,9 +2373,9 @@ a.ingreso='2109339'  AND a.solicitud_id=b.solicitud_id
 AND b.medicamento_id='0102011613'
 
 
---
+----------------------------------------------------------------------
 -- insertar a los usuarios que tiene el reporte a otro reporte
---
+----------------------------------------------------------------------
 INSERT
 INTO
 usuarios_asigna_reportes
@@ -2404,3 +2404,15 @@ FROM
 WHERE 
     table_name = 'cuentas' 
     AND column_name = 'estado';
+
+--------------------------------------------------------------------
+-- cambiar fecha de vigencia o validez de una orden medica.
+--------------------------------------------------------------------
+en la tabla system_modulos_variables
+con la variable vencimiento_formula_medica
+se cambia el valor de 30 
+esto quiere decir que el valor es la cantidad de dias de esa orden
+se debe cambiar, imprimir y volver a cambiar
+
+UPDATE system_modulos_variables SET valor= '90' WHERE variable = 'vencimiento_formula_medica' AND modulo= 'Central_de_Autorizaciones';
+UPDATE system_modulos_variables SET valor= '30' WHERE variable = 'vencimiento_formula_medica' AND modulo= 'Central_de_Autorizaciones';
